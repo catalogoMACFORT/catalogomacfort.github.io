@@ -1,54 +1,68 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escaleras Multipropósito Reforzado</title>
+  <title>Escaleras Multipropósito</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
-    .producto { background: white; padding: 15px; margin: 15px 0; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .precio-bs { font-weight: bold; color: green; }
-    .precio-usd { color: gray; font-size: 0.9em; }
-    .boton-wsp { background: #25D366; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px; }
-    .alerta { font-size: 0.9em; color: #b22222; margin-top: 10px; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .producto { margin: 15px 0; }
+    .oculto { display: none; }
+    .destacado { font-weight: bold; color: green; }
   </style>
-  <script>
-    // Tipo de cambio paralelo (puede ser actualizado dinámicamente desde un API real)
-    const tipoCambio = 7.1; // ejemplo: 1 USD = 7.1 Bsfunction convertirPrecios() {
-  const productos = document.querySelectorAll(".producto");
-  productos.forEach(producto => {
-    const precioUsd = parseFloat(producto.dataset.usd);
-    const precioBs = (precioUsd * tipoCambio).toFixed(2);
-    producto.querySelector(".precio-bs").textContent = `Bs ${precioBs}`;
-  });
-}
-
-window.onload = convertirPrecios;
-
-  </script>
 </head>
-<body>  <h2>Escaleras Multipropósito Reforzado</h2>  <div class="producto" data-usd="55.5">
-    <h3>Escalera 4x3</h3>
-    <p class="precio-bs"></p>
-    <p class="precio-usd">(USD 55.5)</p>
-    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x3%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
-    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
-  </div>  <div class="producto" data-usd="65.4">
-    <h3>Escalera 4x4</h3>
-    <p class="precio-bs"></p>
-    <p class="precio-usd">(USD 65.4)</p>
-    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x4%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
-    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
-  </div>  <div class="producto" data-usd="75.3">
-    <h3>Escalera 4x5</h3>
-    <p class="precio-bs"></p>
-    <p class="precio-usd">(USD 75.3)</p>
-    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x5%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
-    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
-  </div>  <div class="producto" data-usd="85.2">
-    <h3>Escalera 4x6</h3>
-    <p class="precio-bs"></p>
-    <p class="precio-usd">(USD 85.2)</p>
-    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x6%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
-    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
-  </div></body>
+<body>
+
+  <h2>Escaleras Multipropósito Reforzado</h2>
+
+  <!-- FORMULARIO PARA INGRESAR PIN -->
+  <label>Ingrese su PIN para ver precios en Bs:</label><br>
+  <input type="password" id="pin" placeholder="Ej: 1234">
+  <button onclick="verificarPIN()">Ver precios</button>
+
+  <div id="precios" class="oculto">
+    <div class="producto">4x3 👉 <span id="precio-4x3" class="destacado"></span></div>
+    <div class="producto">4x4 👉 <span id="precio-4x4" class="destacado"></span></div>
+    <div class="producto">4x5 👉 <span id="precio-4x5" class="destacado"></span></div>
+    <div class="producto">4x6 👉 <span id="precio-4x6" class="destacado"></span></div>
+  </div>
+
+  <script>
+    const PIN_VALIDO = "1234"; // PIN de ejemplo, puedes usar uno distinto por cliente
+    const preciosUSD = {
+      '4x3': 55.5,
+      '4x4': 65.4,
+      '4x5': 75.3,
+      '4x6': 85.2
+    };
+
+    async function obtenerTipoCambio() {
+      try {
+        const response = await fetch("https://dolarboliviahoy.com/api/tipo-cambio"); // Asegúrate de que este endpoint sea válido
+        const data = await response.json();
+        return parseFloat(data.tipo_cambio || data.oficial || data.paralelo); // Ajustar según estructura exacta del JSON
+      } catch (error) {
+        alert("Error al obtener tipo de cambio. Intente más tarde.");
+        console.error("Error API:", error);
+        return null;
+      }
+    }
+
+    async function verificarPIN() {
+      const pinIngresado = document.getElementById('pin').value.trim();
+      if (pinIngresado === PIN_VALIDO) {
+        const tipoCambio = await obtenerTipoCambio();
+        if (!tipoCambio) return;
+
+        for (const modelo in preciosUSD) {
+          const precioBs = (preciosUSD[modelo] * tipoCambio).toFixed(2);
+          document.getElementById(`precio-${modelo}`).textContent = `Bs ${precioBs}`;
+        }
+        document.getElementById('precios').classList.remove('oculto');
+      } else {
+        alert("PIN incorrecto. Intente nuevamente.");
+      }
+    }
+  </script>
+
+</body>
 </html>
