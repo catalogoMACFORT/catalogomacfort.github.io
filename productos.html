@@ -1,68 +1,87 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Escaleras Multipropósito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Escaleras Multipropósito Reforzadas</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .producto { margin: 15px 0; }
-    .oculto { display: none; }
-    .destacado { font-weight: bold; color: green; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    .producto {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .producto h2 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+    .boton-ws {
+      display: inline-block;
+      background: #25D366;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .precio {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: bold;
+    }
   </style>
 </head>
-<body>
-
-  <h2>Escaleras Multipropósito Reforzado</h2>
-
-  <!-- FORMULARIO PARA INGRESAR PIN -->
-  <label>Ingrese su PIN para ver precios en Bs:</label><br>
-  <input type="password" id="pin" placeholder="Ej: 1234">
-  <button onclick="verificarPIN()">Ver precios</button>
-
-  <div id="precios" class="oculto">
-    <div class="producto">4x3 👉 <span id="precio-4x3" class="destacado"></span></div>
-    <div class="producto">4x4 👉 <span id="precio-4x4" class="destacado"></span></div>
-    <div class="producto">4x5 👉 <span id="precio-4x5" class="destacado"></span></div>
-    <div class="producto">4x6 👉 <span id="precio-4x6" class="destacado"></span></div>
-  </div>
-
-  <script>
-    const PIN_VALIDO = "1234"; // PIN de ejemplo, puedes usar uno distinto por cliente
+<body>  <h1>Escaleras Multipropósito Reforzadas</h1>  <div class="producto">
+    <h2>Escalera Multipropósito 4x3 (MF-503)</h2>
+    <p class="precio" id="precio-503">Calculando precio en Bs...</p>
+    <a class="boton-ws" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista%20y%20me%20interesa%20la%20Escalera%20Multiprop%C3%B3sito%204x3%20(MF-503)%20por%20favor%20env%C3%ADame%20el%20PIN">Solicitar cotización por WhatsApp</a>
+  </div>  <div class="producto">
+    <h2>Escalera Multipropósito 4x4 (MF-504)</h2>
+    <p class="precio" id="precio-504">Calculando precio en Bs...</p>
+    <a class="boton-ws" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista%20y%20me%20interesa%20la%20Escalera%20Multiprop%C3%B3sito%204x4%20(MF-504)%20por%20favor%20env%C3%ADame%20el%20PIN">Solicitar cotización por WhatsApp</a>
+  </div>  <div class="producto">
+    <h2>Escalera Multipropósito 4x5 (MF-505)</h2>
+    <p class="precio" id="precio-505">Calculando precio en Bs...</p>
+    <a class="boton-ws" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista%20y%20me%20interesa%20la%20Escalera%20Multiprop%C3%B3sito%204x5%20(MF-505)%20por%20favor%20env%C3%ADame%20el%20PIN">Solicitar cotización por WhatsApp</a>
+  </div>  <div class="producto">
+    <h2>Escalera Multipropósito 4x6 (MF-506)</h2>
+    <p class="precio" id="precio-506">Calculando precio en Bs...</p>
+    <a class="boton-ws" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista%20y%20me%20interesa%20la%20Escalera%20Multiprop%C3%B3sito%204x6%20(MF-506)%20por%20favor%20env%C3%ADame%20el%20PIN">Solicitar cotización por WhatsApp</a>
+  </div>  <script>
     const preciosUSD = {
-      '4x3': 55.5,
-      '4x4': 65.4,
-      '4x5': 75.3,
-      '4x6': 85.2
+      503: 55.5,
+      504: 65.4,
+      505: 75.3,
+      506: 85.2
     };
 
     async function obtenerTipoCambio() {
       try {
-        const response = await fetch("https://dolarboliviahoy.com/api/tipo-cambio"); // Asegúrate de que este endpoint sea válido
-        const data = await response.json();
-        return parseFloat(data.tipo_cambio || data.oficial || data.paralelo); // Ajustar según estructura exacta del JSON
-      } catch (error) {
-        alert("Error al obtener tipo de cambio. Intente más tarde.");
-        console.error("Error API:", error);
-        return null;
+        const res = await fetch('https://dolarboliviahoy.com/api/v1/bcb/tipo-cambio');
+        const data = await res.json();
+        return parseFloat(data.paralelo.valor);
+      } catch (e) {
+        console.error('Error obteniendo tipo de cambio:', e);
+        return 7.0; // Valor por defecto
       }
     }
 
-    async function verificarPIN() {
-      const pinIngresado = document.getElementById('pin').value.trim();
-      if (pinIngresado === PIN_VALIDO) {
-        const tipoCambio = await obtenerTipoCambio();
-        if (!tipoCambio) return;
-
-        for (const modelo in preciosUSD) {
-          const precioBs = (preciosUSD[modelo] * tipoCambio).toFixed(2);
-          document.getElementById(`precio-${modelo}`).textContent = `Bs ${precioBs}`;
-        }
-        document.getElementById('precios').classList.remove('oculto');
-      } else {
-        alert("PIN incorrecto. Intente nuevamente.");
-      }
+    async function mostrarPrecios() {
+      const tc = await obtenerTipoCambio();
+      Object.keys(preciosUSD).forEach(id => {
+        const precioBs = (preciosUSD[id] * tc).toFixed(2);
+        document.getElementById(`precio-${id}`).textContent = `Precio referencial: Bs ${precioBs}`;
+      });
     }
-  </script>
 
-</body>
+    mostrarPrecios();
+  </script></body>
 </html>
