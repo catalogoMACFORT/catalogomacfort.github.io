@@ -5,6 +5,18 @@
     <p>Cargando productos...</p>
   </div>
 
+  <div style="margin-top: 20px;">
+    <label for="categoriaCliente"><strong>Selecciona tu tipo de cliente:</strong></label><br>
+    <select id="categoriaCliente" style="padding: 5px; margin-top: 5px;">
+      <option value="">-- Elige una opción --</option>
+      <option value="Distribuidor">Distribuidor</option>
+      <option value="Mayorista">Mayorista</option>
+      <option value="Cliente Final">Cliente Final</option>
+      <option value="Licitación">Cliente para Licitación</option>
+      <option value="Otro">Otro</option>
+    </select>
+  </div>
+
   <button onclick="enviarWhatsApp()" style="margin-top:20px; padding:10px; background:green; color:white;">
     Solicitar cotización por WhatsApp
   </button>
