@@ -1,44 +1,54 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Productos | Catálogo MACFORT</title>
-  <link rel="stylesheet" href="estilo.css">
+  <title>Escaleras Multipropósito Reforzado</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+    .producto { background: white; padding: 15px; margin: 15px 0; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .precio-bs { font-weight: bold; color: green; }
+    .precio-usd { color: gray; font-size: 0.9em; }
+    .boton-wsp { background: #25D366; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px; }
+    .alerta { font-size: 0.9em; color: #b22222; margin-top: 10px; }
+  </style>
+  <script>
+    // Tipo de cambio paralelo (puede ser actualizado dinámicamente desde un API real)
+    const tipoCambio = 7.1; // ejemplo: 1 USD = 7.1 Bsfunction convertirPrecios() {
+  const productos = document.querySelectorAll(".producto");
+  productos.forEach(producto => {
+    const precioUsd = parseFloat(producto.dataset.usd);
+    const precioBs = (precioUsd * tipoCambio).toFixed(2);
+    producto.querySelector(".precio-bs").textContent = `Bs ${precioBs}`;
+  });
+}
+
+window.onload = convertirPrecios;
+
+  </script>
 </head>
-<body>
-  <header class="encabezado">
-    <h1>Lista de Productos MACFORT</h1>
-    <p>Productos destacados de nuestro catálogo digital.</p>
-    <a href="index.html">← Volver al inicio</a>
-  </header>
-
-  <main class="contenedor-productos">
-    <div class="producto">
-      <img src="ruta-del-producto1.jpg" alt="Producto 1">
-      <h2>Escalera Extensible 2x10</h2>
-      <p>Aluminio reforzado, 10 peldaños por tramo.</p>
-      <span class="precio">Bs. 2200</span>
-    </div>
-
-    <div class="producto">
-      <img src="ruta-del-producto2.jpg" alt="Producto 2">
-      <h2>Escalera Extensible 2x12</h2>
-      <p>Modelo profesional, ligera y resistente.</p>
-      <span class="precio">Bs. 2500</span>
-    </div>
-
-    <div class="producto">
-      <img src="ruta-del-producto3.jpg" alt="Producto 3">
-      <h2>Escalera Extensible 2x14</h2>
-      <p>Ideal para trabajos de altura con seguridad.</p>
-      <span class="precio">Bs. 2850</span>
-    </div>
-    <!-- Puedes seguir agregando más productos con la misma estructura -->
-  </main>
-
-  <footer class="pie">
-    <p>© 2025 MACFORT. Todos los derechos reservados.</p>
-  </footer>
-</body>
+<body>  <h2>Escaleras Multipropósito Reforzado</h2>  <div class="producto" data-usd="55.5">
+    <h3>Escalera 4x3</h3>
+    <p class="precio-bs"></p>
+    <p class="precio-usd">(USD 55.5)</p>
+    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x3%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
+    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
+  </div>  <div class="producto" data-usd="65.4">
+    <h3>Escalera 4x4</h3>
+    <p class="precio-bs"></p>
+    <p class="precio-usd">(USD 65.4)</p>
+    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x4%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
+    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
+  </div>  <div class="producto" data-usd="75.3">
+    <h3>Escalera 4x5</h3>
+    <p class="precio-bs"></p>
+    <p class="precio-usd">(USD 75.3)</p>
+    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x5%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
+    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
+  </div>  <div class="producto" data-usd="85.2">
+    <h3>Escalera 4x6</h3>
+    <p class="precio-bs"></p>
+    <p class="precio-usd">(USD 85.2)</p>
+    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20interesado%20en%20la%20Escalera%204x6%20multiprop%C3%B3sito%20reforzado">Consultar por WhatsApp</a>
+    <p class="alerta">*Precio referencial. Puede variar por la situación cambiaria del país.</p>
+  </div></body>
 </html>
