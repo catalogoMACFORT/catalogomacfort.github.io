@@ -1,1 +1,61 @@
-body { font-family: Arial; background: #f4f4f4; color: #333; padding: 20px; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.encabezado {
+  background-color: #1d1f20;
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.contenedor-productos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.producto {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 280px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.producto img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.precio {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.pie {
+  text-align: center;
+  padding: 1rem;
+  background-color: #222;
+  color: white;
+}
