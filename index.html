@@ -2,20 +2,87 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MACFORT | Catálogo Oficial</title>
-  <link rel="stylesheet" href="estilo.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo MACFORT</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+    .producto { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .titulo { font-size: 1.2em; font-weight: bold; }
+    .precio, .precio-bs { margin: 10px 0; }
+    .bloqueado { color: red; font-weight: bold; }
+    .boton { background-color: green; color: white; padding: 10px; border-radius: 5px; text-decoration: none; display: inline-block; }
+  </style>
 </head>
 <body>
-  <header class="encabezado">
-    <img src="logo_macfort.png" alt="Logo MACFORT" />
-    <h1>Bienvenido al Catálogo Digital MACFORT</h1>
-    <p>Catálogo actualizado con nuestros productos exclusivos.</p>
-    <a href="productos.html" class="boton">Ver productos</a>
-  </header>
 
-  <footer class="pie">
-    <p>© 2025 MACFORT. Todos los derechos reservados.</p>
-  </footer>
+  <h2>Catálogo Escaleras Multipropósito Reforzado</h2>
+
+  <div id="catalogo"></div>
+
+  <br />
+  <a id="botonWhatsApp" class="boton" href="#" target="_blank">Contactar por WhatsApp</a>
+
+  <script>
+    // ✅ DATOS DEL CATÁLOGO
+    const productos = [
+      { codigo: "MF-503", nombre: "Escalera 4x3", precioUSD: 55.5 },
+      { codigo: "MF-504", nombre: "Escalera 4x4", precioUSD: 65.4 },
+      { codigo: "MF-505", nombre: "Escalera 4x5", precioUSD: 75.3 },
+      { codigo: "MF-506", nombre: "Escalera 4x6", precioUSD: 85.2 },
+    ];
+
+    const tipoCambioAPI = "https://dolarboliviahoy.com/api.php"; // ejemplo, ajustar si hay mejor opción
+    const tipoCliente = prompt("Ingrese su PIN de cliente:");
+
+    const pines = {
+      "100": "mayorista",
+      "200": "distribuidor",
+      "300": "final",
+      "400": "licitacion"
+    };
+
+    const accesoPermitido = pines[tipoCliente];
+    let tipoCambio = 7.5; // valor por defecto si la API falla
+
+    fetch(tipoCambioAPI)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.blue) {
+          tipoCambio = parseFloat(data.blue.value_sell.replace(",", "."));
+        }
+        mostrarCatalogo();
+      })
+      .catch(() => {
+        alert("No se pudo obtener el tipo de cambio. Se usa valor por defecto.");
+        mostrarCatalogo();
+      });
+
+    function mostrarCatalogo() {
+      const contenedor = document.getElementById("catalogo");
+      productos.forEach(prod => {
+        const div = document.createElement("div");
+        div.className = "producto";
+        if (accesoPermitido) {
+          const precioBs = (prod.precioUSD * tipoCambio).toFixed(2);
+          div.innerHTML = `
+            <div class="titulo">${prod.nombre} (${prod.codigo})</div>
+            <div class="precio">USD: ${prod.precioUSD}</div>
+            <div class="precio-bs">Bs: ${precioBs}</div>
+          `;
+        } else {
+          div.innerHTML = `
+            <div class="titulo">${prod.nombre} (${prod.codigo})</div>
+            <div class="bloqueado">🔒 Precio disponible con PIN válido</div>
+          `;
+        }
+        contenedor.appendChild(div);
+      });
+
+      // WhatsApp dinámico
+      const mensaje = encodeURIComponent(`Hola, soy cliente ${accesoPermitido || "visitante"}, estoy interesado en los productos del catálogo de escaleras.`);
+      document.getElementById("botonWhatsApp").href = `https://wa.me/59168099278?text=${mensaje}`;
+    }
+  </script>
+
 </body>
 </html>
