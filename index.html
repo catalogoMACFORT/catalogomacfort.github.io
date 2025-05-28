@@ -3,86 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo MACFORT</title>
+  <title>Catálogo Escaleras Multipropósito Reforzadas</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
-    .producto { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-    .titulo { font-size: 1.2em; font-weight: bold; }
-    .precio, .precio-bs { margin: 10px 0; }
-    .bloqueado { color: red; font-weight: bold; }
-    .boton { background-color: green; color: white; padding: 10px; border-radius: 5px; text-decoration: none; display: inline-block; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #2a7ae2;
+    }
+    .producto {
+      border: 1px solid #ddd;
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .producto h2 {
+      margin-top: 0;
+    }
+    .precio {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #28a745;
+    }
+    .boton {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Catálogo Escaleras Multipropósito Reforzado</h2>
+<h1>Escaleras Multipropósito Reforzadas</h1>
 
-  <div id="catalogo"></div>
+<div class="producto">
+  <h2>MF-503 | Escalera Multipropósito 4x3</h2>
+  <p>Precio: <span class="precio" data-usd="55.5">$55.5</span> <span class="precio-bs"></span></p>
+  <a class="boton" href="#" onclick="enviarWhatsApp('MF-503', 'Escalera Multipropósito 4x3')">Solicitar Cotización</a>
+</div>
 
-  <br />
-  <a id="botonWhatsApp" class="boton" href="#" target="_blank">Contactar por WhatsApp</a>
+<div class="producto">
+  <h2>MF-504 | Escalera Multipropósito 4x4</h2>
+  <p>Precio: <span class="precio" data-usd="65.4">$65.4</span> <span class="precio-bs"></span></p>
+  <a class="boton" href="#" onclick="enviarWhatsApp('MF-504', 'Escalera Multipropósito 4x4')">Solicitar Cotización</a>
+</div>
 
-  <script>
-    // ✅ DATOS DEL CATÁLOGO
-    const productos = [
-      { codigo: "MF-503", nombre: "Escalera 4x3", precioUSD: 55.5 },
-      { codigo: "MF-504", nombre: "Escalera 4x4", precioUSD: 65.4 },
-      { codigo: "MF-505", nombre: "Escalera 4x5", precioUSD: 75.3 },
-      { codigo: "MF-506", nombre: "Escalera 4x6", precioUSD: 85.2 },
-    ];
+<div class="producto">
+  <h2>MF-505 | Escalera Multipropósito 4x5</h2>
+  <p>Precio: <span class="precio" data-usd="75.3">$75.3</span> <span class="precio-bs"></span></p>
+  <a class="boton" href="#" onclick="enviarWhatsApp('MF-505', 'Escalera Multipropósito 4x5')">Solicitar Cotización</a>
+</div>
 
-    const tipoCambioAPI = "https://dolarboliviahoy.com/api.php"; // ejemplo, ajustar si hay mejor opción
-    const tipoCliente = prompt("Ingrese su PIN de cliente:");
+<div class="producto">
+  <h2>MF-506 | Escalera Multipropósito 4x6</h2>
+  <p>Precio: <span class="precio" data-usd="85.2">$85.2</span> <span class="precio-bs"></span></p>
+  <a class="boton" href="#" onclick="enviarWhatsApp('MF-506', 'Escalera Multipropósito 4x6')">Solicitar Cotización</a>
+</div>
 
-    const pines = {
-      "100": "mayorista",
-      "200": "distribuidor",
-      "300": "final",
-      "400": "licitacion"
-    };
+<script>
+  const tipoCambioURL = "https://api.tuservidor.com/dolar-bolivia"; // REEMPLAZA por API real de tipo de cambio paralelo
 
-    const accesoPermitido = pines[tipoCliente];
-    let tipoCambio = 7.5; // valor por defecto si la API falla
-
-    fetch(tipoCambioAPI)
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.blue) {
-          tipoCambio = parseFloat(data.blue.value_sell.replace(",", "."));
-        }
-        mostrarCatalogo();
-      })
-      .catch(() => {
-        alert("No se pudo obtener el tipo de cambio. Se usa valor por defecto.");
-        mostrarCatalogo();
+  async function actualizarPrecios() {
+    try {
+      const response = await fetch(tipoCambioURL);
+      const data = await response.json();
+      const tipoCambio = data.paralelo || 7.20; // Valor predeterminado si falla
+      
+      document.querySelectorAll('.precio').forEach(span => {
+        const precioUSD = parseFloat(span.dataset.usd);
+        const precioBS = (precioUSD * tipoCambio).toFixed(2);
+        span.nextElementSibling.innerText = `(${precioBS} Bs)`;
       });
-
-    function mostrarCatalogo() {
-      const contenedor = document.getElementById("catalogo");
-      productos.forEach(prod => {
-        const div = document.createElement("div");
-        div.className = "producto";
-        if (accesoPermitido) {
-          const precioBs = (prod.precioUSD * tipoCambio).toFixed(2);
-          div.innerHTML = `
-            <div class="titulo">${prod.nombre} (${prod.codigo})</div>
-            <div class="precio">USD: ${prod.precioUSD}</div>
-            <div class="precio-bs">Bs: ${precioBs}</div>
-          `;
-        } else {
-          div.innerHTML = `
-            <div class="titulo">${prod.nombre} (${prod.codigo})</div>
-            <div class="bloqueado">🔒 Precio disponible con PIN válido</div>
-          `;
-        }
-        contenedor.appendChild(div);
-      });
-
-      // WhatsApp dinámico
-      const mensaje = encodeURIComponent(`Hola, soy cliente ${accesoPermitido || "visitante"}, estoy interesado en los productos del catálogo de escaleras.`);
-      document.getElementById("botonWhatsApp").href = `https://wa.me/59168099278?text=${mensaje}`;
+    } catch (error) {
+      console.error("Error obteniendo el tipo de cambio", error);
     }
-  </script>
+  }
+
+  function enviarWhatsApp(codigo, nombreProducto) {
+    const numero = "59168099278";
+    const mensaje = `Hola, soy cliente interesado en el producto: ${nombreProducto} (Código: ${codigo}). ¿Podría enviarme más información?`;
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, "_blank");
+  }
+
+  actualizarPrecios();
+</script>
 
 </body>
 </html>
