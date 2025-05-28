@@ -1,4 +1,4 @@
-const NUMERO_WHATSAPP = "59168099278"; // Tu número
+const NUMERO_WHATSAPP = "59168099278"; // Tu número real
 
 fetch("https://opensheet.vercel.app/1-7kNpYY-OjmPYSZnVAu5j9K4t8Q5pLal/Sheet1")
   .then(response => response.json())
@@ -22,8 +22,15 @@ fetch("https://opensheet.vercel.app/1-7kNpYY-OjmPYSZnVAu5j9K4t8Q5pLal/Sheet1")
 
 function enviarWhatsApp() {
   const seleccionados = Array.from(document.querySelectorAll("input[type='checkbox']:checked"));
+  const tipoCliente = document.getElementById("categoriaCliente").value;
+
   if (seleccionados.length === 0) {
     alert("Por favor selecciona al menos un producto.");
+    return;
+  }
+
+  if (!tipoCliente) {
+    alert("Por favor selecciona tu tipo de cliente.");
     return;
   }
 
@@ -32,7 +39,7 @@ function enviarWhatsApp() {
     mensaje += `- ${item.dataset.nombre} (${item.dataset.codigo})\n`;
   });
 
-  mensaje += "\nSoy cliente: [Selecciona tu categoría: Distribuidor / Mayorista / Final / Licitación]";
+  mensaje += `\nSoy cliente: ${tipoCliente}`;
   const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
 }
