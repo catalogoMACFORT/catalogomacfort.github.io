@@ -3,39 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo MACFORT 2025</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
-    .producto { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-    .producto img { width: 100px; }
-    .precio { font-weight: bold; color: green; }
-  </style>
+  <title>Catálogo Oficial MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css" />
 </head>
 <body>
-  <h1>Catálogo Oficial MACFORT 2025</h1>
-
-  <div id="productos"></div>
-
-  <script>
-    const tipoCambio = 16.3; // Tipo de cambio paralelo actualizado manualmente (puede conectarse a una API luego)
-
-    const productos = [
-      { codigo: "MF-503", nombre: "Escalera 4x3", precioUSD: 39.9, imagen: "https://via.placeholder.com/100" },
-      { codigo: "MF-504", nombre: "Escalera 4x4", precioUSD: 47.16, imagen: "https://via.placeholder.com/100" },
-      { codigo: "MF-505", nombre: "Escalera 4x5", precioUSD: 54.288, imagen: "https://via.placeholder.com/100" },
-      { codigo: "MF-506", nombre: "Escalera 4x6", precioUSD: 61.416, imagen: "https://via.placeholder.com/100" }
-    ];
-
-    const contenedor = document.getElementById("productos");
-    productos.forEach(p => {
-      const precioBs = (p.precioUSD * tipoCambio).toFixed(2);
-      contenedor.innerHTML += `
-        <div class="producto">
-          <h3>${p.nombre} (${p.codigo})</h3>
-          <img src="${p.imagen}" alt="${p.nombre}" />
-          <p class="precio">Bs ${precioBs}</p>
-        </div>`;
-    });
-  </script>
+  <div class="catalogo">
+    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
+    <div id="contenedor-productos">Cargando productos...</div>
+    <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola,%20quisiera%20consultar%20sobre%20algunos%20productos%20del%20catálogo%20MACFORT." target="_blank">
+      Solicitar PIN vía WhatsApp
+    </a>
+  </div>
+  <script src="productos.js"></script>
 </body>
 </html>
