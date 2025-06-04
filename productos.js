@@ -1,51 +1,35 @@
-const contenedor = document.getElementById('contenedor-productos');
-const urlCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
-const tipoCambioManual = 16.33;
+const URL_GOOGLE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-const pinCliente = {
-  distribuidor: "PIN1234",
-  mayorista: "PIN2345",
-  final: "PIN3456",
-  licitacion: "PIN4567"
-};
+const tipoCambio = 16.33; // Este valor se actualizará automáticamente si se conecta a una celda especial en Google Sheets.
 
-const tipoActual = new URLSearchParams(window.location.search).get("tipo");
-const pinIngresado = new URLSearchParams(window.location.search).get("pin");
+async function cargarProductos() {
+  const respuesta = await fetch(URL_GOOGLE_SHEET);
+  const datos = await respuesta.text();
+  const filas = datos.split("\n").slice(1); // Ignora cabecera
+  const contenedor = document.getElementById("contenedor-productos");
 
-const mostrarPrecio = () => pinIngresado === pinCliente[tipoActual];
+  filas.forEach(fila => {
+    const columnas = fila.split(",");
+    if (columnas.length >= 6) {
+      const codigo = columnas[0];
+      const producto = columnas[1];
+      const precioUSD = parseFloat(columnas[2]);
+      const precioBs = (precioUSD * tipoCambio).toFixed(2);
+      const qr = columnas[5];
 
-fetch(urlCSV)
-  .then(res => res.text())
-  .then(data => {
-    const rows = data.split("\n").slice(1);
-    rows.forEach(row => {
-      const cols = row.split(",");
-      if (cols.length < 6) return;
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "producto";
 
-      const codigo = cols[0].trim();
-      const nombre = cols[1].trim();
-      const precioUSD = parseFloat(cols[2]);
-      const qrBase64 = cols[cols.length - 1].trim();
-
-      const div = document.createElement('div');
-      div.className = 'producto';
-
-      const precioBs = (precioUSD * tipoCambioManual).toFixed(2);
-
-      div.innerHTML = `
-        <div class="detalle">
-          <h3>${nombre}</h3>
-          <p><strong>Código:</strong> ${codigo}</p>
-          <p class="precio">${mostrarPrecio() ? `Precio: <span class='bs'>Bs ${precioBs}</span>` : `Precio con PIN autorizado`}</p>
-        </div>
-        <div class="qr">
-          <img src="${qrBase64}" alt="QR">
-        </div>
+      tarjeta.innerHTML = `
+        <h3>${producto}</h3>
+        <p><strong>Código:</strong> ${codigo}</p>
+        <p><strong>Precio:</strong> 🔒 <em>Precio con PIN autorizado</em></p>
+        <img src="${qr}" alt="QR" class="qr">
       `;
-      contenedor.appendChild(div);
-    });
-  })
-  .catch(error => {
-    contenedor.innerHTML = `<p class="error">❌ Error al cargar productos. Revisa el enlace del CSV o la estructura.</p>`;
-    console.error(error);
+
+      contenedor.appendChild(tarjeta);
+    }
   });
+}
+
+document.addEventListener("DOMContentLoaded", cargarProductos);
