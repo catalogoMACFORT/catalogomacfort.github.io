@@ -1,70 +1,50 @@
-<!DOCTYPE html>
-<html lang="es">
+<!-- acceso.html (o puedes integrarlo en index.html si prefieres) --><!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Acceso con PIN - MACFORT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="estilos.css">
-</head>
-<body>
-  <header>
-    <h2>🔐 Ingreso de Clientes</h2>
-    <p>Solicita tu PIN según tu tipo de cliente y accede a los precios.</p>
-  </header>
-
-  <main style="padding: 1rem;">
-    <form id="pinForm">
-      <label>Nombre completo:</label><br>
-      <input type="text" id="nombre" required><br><br>
-
-      <label>Nombre de tu negocio:</label><br>
-      <input type="text" id="negocio" required><br><br>
-
-      <label>Ubicación / Dirección:</label><br>
-      <input type="text" id="ubicacion" required><br><br>
-
-      <label>Selecciona tu tipo de cliente:</label><br>
-      <select id="tipo">
-        <option value="distribuidor">Distribuidor</option>
-        <option value="mayorista">Mayorista</option>
-        <option value="final">Cliente Final</option>
-        <option value="licitacion">Licitación u Otros</option>
-      </select><br><br>
-
-      <label>Ingresa tu PIN:</label><br>
-      <input type="password" id="pin" required><br><br>
-
-      <button type="submit">🔓 Ver Catálogo</button>
-    </form>
-
-    <p style="margin-top:1rem;">¿No tienes PIN? Solicítalo por WhatsApp:</p>
-    <a href="https://wa.me/59168099278?text=Hola%2C%20deseo%20acceder%20al%20cat%C3%A1logo%20MACFORT%20y%20ver%20precios.%20Mi%20nombre%20es..." target="_blank">
-      <button style="background-color:#25D366;">💬 Solicitar PIN</button>
-    </a>
-  </main>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Cliente - Plataforma Mercatto</title>
   <script>
-    const form = document.getElementById("pinForm");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const pin = document.getElementById("pin").value.trim();
-      const tipo = document.getElementById("tipo").value;
-
-      // Puedes modificar estos PINs
-      const pins = {
-        distribuidor: "1234",
-        mayorista: "2345",
-        final: "3456",
-        licitacion: "4567"
-      };
-
-      if (pin === pins[tipo]) {
-        alert("✅ PIN correcto. Accediendo al catálogo...");
-        window.location.href = "productos.html?tipo=" + tipo;
-      } else {
-        alert("❌ PIN incorrecto. Solicita el acceso por WhatsApp.");
-      }
+    let lat = "";
+    let lon = "";function detectarUbicacion() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+      document.getElementById("ubicacion").innerHTML = `Ubicación detectada: <br>Lat: ${lat} <br>Lon: ${lon}`;
+    }, function (error) {
+      document.getElementById("ubicacion").innerHTML = "No se pudo detectar la ubicación.";
     });
+  } else {
+    document.getElementById("ubicacion").innerHTML = "El navegador no soporta Geolocalización.";
+  }
+}
+
+function enviarWhatsApp(tipoCliente) {
+  const nombre = document.getElementById("nombre").value;
+  const negocio = document.getElementById("negocio").value;
+  const mensaje = `Hola, soy *${nombre}* y tengo un negocio llamado *${negocio}*.\nTipo de cliente: *${tipoCliente}*.\nUbicación GPS: https://maps.google.com/?q=${lat},${lon}`;
+  const numero = "59168099278";
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+}
+
   </script>
+</head>
+<body onload="detectarUbicacion()">
+  <h2>Solicitar Acceso a Precios</h2>
+  <form>
+    <label for="nombre">Nombre completo:</label><br>
+    <input type="text" id="nombre" required><br><br><label for="negocio">Nombre de su negocio o tienda:</label><br>
+<input type="text" id="negocio" required><br><br>
+
+<div id="ubicacion">Detectando ubicación GPS...</div><br>
+
+<h3>Seleccione su tipo de cliente:</h3>
+<button type="button" onclick="enviarWhatsApp('Distribuidor')">Soy Distribuidor</button>
+<button type="button" onclick="enviarWhatsApp('Mayorista')">Soy Mayorista</button>
+<button type="button" onclick="enviarWhatsApp('Cliente Final')">Soy Cliente Final</button>
+<button type="button" onclick="enviarWhatsApp('Licitación / Otros')">Licitación / Otros</button>
+
+  </form>
 </body>
 </html>
