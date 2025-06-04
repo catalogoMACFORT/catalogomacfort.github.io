@@ -2,14 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Acceso por PIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso con PIN | MACFORT</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <h2>Acceso al Catálogo por Tipo de Cliente</h2>
-  <p>Seleccione su tipo de cliente y solicite su PIN:</p>
-  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20distribuidor,%20deseo%20el%20PIN'">Distribuidor</button>
-  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20mayorista,%20deseo%20el%20PIN'">Mayorista</button>
-  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20cliente%20final,%20deseo%20el%20PIN'">Cliente Final</button>
-  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20cliente%20de%20licitación,%20deseo%20el%20PIN'">Licitaciones</button>
+  <h2>Ingresa tu PIN para acceder a precios según tu categoría</h2>
+  <form onsubmit="verificarPIN(event)">
+    <label for="codigo">PIN recibido:</label>
+    <input type="text" id="codigo" required>
+    <button type="submit">Ver Catálogo</button>
+  </form>
+
+  <script>
+    function verificarPIN(event) {
+      event.preventDefault();
+      const pin = document.getElementById('codigo').value.trim();
+      if (pin === "MACDISTRIBUIDOR") {
+        window.location.href = "productos.html?cat=distribuidor";
+      } else if (pin === "MACMAYORISTA") {
+        window.location.href = "productos.html?cat=mayorista";
+      } else if (pin === "MACFINAL") {
+        window.location.href = "productos.html?cat=final";
+      } else if (pin === "MACLICITACION") {
+        window.location.href = "productos.html?cat=licitacion";
+      } else {
+        alert("PIN incorrecto. Solicítalo vía WhatsApp.");
+      }
+    }
+  </script>
 </body>
 </html>
