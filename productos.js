@@ -1,37 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
-  Papa.parse("catálogo_macfort_2025.csv", {
-    download: true,
-    header: true,
-    complete: function (results) {
-      const productos = results.data;
-      const contenedor = document.getElementById("lista-productos");
-      if (!contenedor) return;
+async function cargarProductos() {
+  try {
+    const response = await fetch("catálogo_macfort_2025.csv");
+    const data = await response.text();
+    const filas = data.split("\n").slice(1);
 
-      contenedor.innerHTML = "";
+    let html = "";
 
-      productos.forEach((item) => {
-        if (!item.Código || !item.Producto) return;
+    filas.forEach(fila => {
+      const columnas = fila.split(",");
+      if (columnas.length >= 4) {
+        const codigo = columnas[0].trim();
+        const producto = columnas[1].trim();
+        const precioUSD = parseFloat(columnas[2]);
+        const tipoCambio = 7.15;
+        const precioBs = (precioUSD * tipoCambio).toFixed(2);
+        const qr = columnas[3].trim();
 
-        const div = document.createElement("div");
-        div.className = "producto";
-        div.innerHTML = `
-          <img src="https://via.placeholder.com/100" alt="${item.Producto}">
-          <div class="info">
-            <strong>${item.Producto}</strong><br>
-            Código: ${item.Código}<br>
-            Procedencia: ${item.Procedencia}<br>
-            Marca: ${item.Marca}<br>
-            Unidad: ${item.Unidad}<br>
-            Precio Base: $${item["Precio Base (USD)"]}<br>
-            <span class="precio">Bs ${item["Distribuidor (con IVA)"]}</span>
+        html += `
+          <div class="producto">
+            <div class="info">
+              <strong>${producto}</strong><br>
+              Código: ${codigo}<br>
+              Precio en Bs: <span class="precio">Bs ${precioBs}</span><br>
+              <span class="pin-alerta">Precio oficial sujeto a PIN autorizado</span>
+            </div>
+            <img class="qr" src="${qr}" alt="QR">
           </div>
-          <img class="qr" src="${item["Código QR"]}" alt="QR">
         `;
-        contenedor.appendChild(div);
-      });
-    },
-    error: function (err) {
-      console.error("Error al leer el CSV:", err);
-    },
-  });
-});
+      }
+    });
+
+    document.getElementById("productos").innerHTML = html;
+
+  } catch (error) {
+    document.getElementById("productos").innerHTML =
+      "<p style='color:red;'>❌ Error al cargar productos. Revisa el enlace del CSV o la estructura.</p>";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", cargarProductos);
