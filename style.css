@@ -1,80 +1,114 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f2f2f2;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
   margin: 0;
   padding: 0;
-  color: #2c3e50;
 }
 
 header {
-  text-align: center;
+  background-color: #1e3a8a;
+  color: white;
   padding: 20px;
-  background: #fff;
+  text-align: center;
 }
 
 h1 {
-  font-size: 24px;
   margin: 0;
+  font-size: 1.6em;
+}
+
+.botones-pin {
+  margin-top: 15px;
 }
 
 .botones-pin button {
-  margin: 5px;
-  padding: 10px 15px;
-  border: none;
-  background-color: #2980b9;
+  background-color: #3b82f6;
   color: white;
-  border-radius: 5px;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: bold;
 }
 
-.botones-pin button:hover {
-  background-color: #3498db;
-}
-
-#contenedor-productos {
-  padding: 10px;
+main {
+  padding: 20px;
 }
 
 .producto {
-  background: white;
-  margin: 10px auto;
-  padding: 15px;
+  background-color: white;
   border-radius: 10px;
-  max-width: 500px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin: 15px auto;
+  padding: 15px;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.producto .qr {
+.info h3 {
+  margin: 0;
+  color: #1f2937;
+}
+
+.info .precio {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: green;
+}
+
+.pin-info {
+  color: #e67e22;
+  font-size: 0.85em;
+}
+
+.qr img {
   width: 80px;
-  float: right;
+  height: auto;
 }
 
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 15px;
+  background-color: #fff;
+  margin-top: 20px;
 }
 
 footer a {
-  background: #25D366;
+  display: inline-block;
+  background-color: #25D366;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 25px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: bold;
 }
 
-#formulario-datos {
-  background: #fff;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
+form {
+  background-color: #ffffff;
   max-width: 600px;
-  margin: auto;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-#formulario-datos input,
-#formulario-datos button {
+form input, form select {
   width: 100%;
   padding: 10px;
-  margin-top: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+form button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  font-weight: bold;
 }
