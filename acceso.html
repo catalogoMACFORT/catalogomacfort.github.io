@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acceso con PIN - MACFORT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h2>🔐 Ingreso de Clientes</h2>
+    <p>Solicita tu PIN según tu tipo de cliente y accede a los precios.</p>
+  </header>
+
+  <main style="padding: 1rem;">
+    <form id="pinForm">
+      <label>Nombre completo:</label><br>
+      <input type="text" id="nombre" required><br><br>
+
+      <label>Nombre de tu negocio:</label><br>
+      <input type="text" id="negocio" required><br><br>
+
+      <label>Ubicación / Dirección:</label><br>
+      <input type="text" id="ubicacion" required><br><br>
+
+      <label>Selecciona tu tipo de cliente:</label><br>
+      <select id="tipo">
+        <option value="distribuidor">Distribuidor</option>
+        <option value="mayorista">Mayorista</option>
+        <option value="final">Cliente Final</option>
+        <option value="licitacion">Licitación u Otros</option>
+      </select><br><br>
+
+      <label>Ingresa tu PIN:</label><br>
+      <input type="password" id="pin" required><br><br>
+
+      <button type="submit">🔓 Ver Catálogo</button>
+    </form>
+
+    <p style="margin-top:1rem;">¿No tienes PIN? Solicítalo por WhatsApp:</p>
+    <a href="https://wa.me/59168099278?text=Hola%2C%20deseo%20acceder%20al%20cat%C3%A1logo%20MACFORT%20y%20ver%20precios.%20Mi%20nombre%20es..." target="_blank">
+      <button style="background-color:#25D366;">💬 Solicitar PIN</button>
+    </a>
+  </main>
+
+  <script>
+    const form = document.getElementById("pinForm");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const pin = document.getElementById("pin").value.trim();
+      const tipo = document.getElementById("tipo").value;
+
+      // Puedes modificar estos PINs
+      const pins = {
+        distribuidor: "1234",
+        mayorista: "2345",
+        final: "3456",
+        licitacion: "4567"
+      };
+
+      if (pin === pins[tipo]) {
+        alert("✅ PIN correcto. Accediendo al catálogo...");
+        window.location.href = "productos.html?tipo=" + tipo;
+      } else {
+        alert("❌ PIN incorrecto. Solicita el acceso por WhatsApp.");
+      }
+    });
+  </script>
+</body>
+</html>
