@@ -34,12 +34,3 @@ function enviarWhatsApp() {
     return;
   }
 
-  let mensaje = "Hola, estoy interesado en los siguientes productos:\n\n";
-  seleccionados.forEach(item => {
-    mensaje += `- ${item.dataset.nombre} (${item.dataset.codigo})\n`;
-  });
-
-  mensaje += `\nSoy cliente: ${tipoCliente}`;
-  const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
