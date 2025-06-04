@@ -1,25 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo MACFORT 2025</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    .producto { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+    .producto img { width: 100px; }
+    .precio { font-weight: bold; color: green; }
+  </style>
+</head>
 <body>
-  <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
+  <h1>Catálogo Oficial MACFORT 2025</h1>
 
-  <div id="lista-productos">
-    <p>Cargando productos...</p>
-  </div>
+  <div id="productos"></div>
 
-  <div style="margin-top: 20px;">
-    <label for="categoriaCliente"><strong>Selecciona tu tipo de cliente:</strong></label><br>
-    <select id="categoriaCliente" style="padding: 5px; margin-top: 5px;">
-      <option value="">-- Elige una opción --</option>
-      <option value="Distribuidor">Distribuidor</option>
-      <option value="Mayorista">Mayorista</option>
-      <option value="Cliente Final">Cliente Final</option>
-      <option value="Licitación">Cliente para Licitación</option>
-      <option value="Otro">Otro</option>
-    </select>
-  </div>
+  <script>
+    const tipoCambio = 16.3; // Tipo de cambio paralelo actualizado manualmente (puede conectarse a una API luego)
 
-  <button onclick="enviarWhatsApp()" style="margin-top:20px; padding:10px; background:green; color:white;">
-    Solicitar cotización por WhatsApp
-  </button>
+    const productos = [
+      { codigo: "MF-503", nombre: "Escalera 4x3", precioUSD: 39.9, imagen: "https://via.placeholder.com/100" },
+      { codigo: "MF-504", nombre: "Escalera 4x4", precioUSD: 47.16, imagen: "https://via.placeholder.com/100" },
+      { codigo: "MF-505", nombre: "Escalera 4x5", precioUSD: 54.288, imagen: "https://via.placeholder.com/100" },
+      { codigo: "MF-506", nombre: "Escalera 4x6", precioUSD: 61.416, imagen: "https://via.placeholder.com/100" }
+    ];
 
-  <script src="precio.js"></script>
+    const contenedor = document.getElementById("productos");
+    productos.forEach(p => {
+      const precioBs = (p.precioUSD * tipoCambio).toFixed(2);
+      contenedor.innerHTML += `
+        <div class="producto">
+          <h3>${p.nombre} (${p.codigo})</h3>
+          <img src="${p.imagen}" alt="${p.nombre}" />
+          <p class="precio">Bs ${precioBs}</p>
+        </div>`;
+    });
+  </script>
 </body>
+</html>
