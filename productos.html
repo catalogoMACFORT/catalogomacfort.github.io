@@ -3,55 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo Oficial MACFORT 2025</title>
+  <title>Catálogo MACFORT 2025</title>
+  <link rel="stylesheet" href="style.css"/>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
       margin: 0;
       padding: 20px;
+      background: #f0f0f0;
     }
     h1 {
       text-align: center;
       color: #2c3e50;
     }
     .producto {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: white;
-      margin-bottom: 15px;
+      background: #fff;
+      margin: 15px auto;
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 600px;
     }
-    .info {
-      flex: 1;
-      padding-right: 15px;
-    }
-    .qr {
-      width: 100px;
-      height: 100px;
+    .producto img.qr {
+      width: 80px;
+      height: auto;
+      float: right;
     }
     .precio {
       font-weight: bold;
       color: green;
-      font-size: 18px;
     }
     .pin-alerta {
-      font-size: 12px;
+      font-size: 13px;
       color: #e67e22;
-      display: block;
-      margin-top: 5px;
     }
     .boton-wsp {
       display: block;
-      text-align: center;
-      margin: 20px auto;
       width: fit-content;
+      margin: 30px auto;
+      padding: 12px 24px;
       background: #25D366;
       color: white;
-      padding: 10px 20px;
+      text-align: center;
       border-radius: 6px;
       text-decoration: none;
       font-weight: bold;
@@ -59,11 +52,14 @@
   </style>
 </head>
 <body>
+
   <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
 
-  <div id="productos">Cargando productos...</div>
+  <div id="contenedor-productos">
+    <p style="text-align:center;">Cargando productos...</p>
+  </div>
 
-  <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20los%20productos%20del%20cat%C3%A1logo%20MACFORT%202025.%20Por%20favor%20env%C3%ADame%20el%20PIN%20para%20ver%20los%20precios." target="_blank">
+  <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20MACFORT.%20%C2%BFPodr%C3%ADa%20facilitarme%20el%20PIN%20para%20ver%20los%20precios%3F" target="_blank">
     Solicitar PIN vía WhatsApp
   </a>
 
