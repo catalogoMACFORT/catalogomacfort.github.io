@@ -1,62 +1,42 @@
-const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?gid=0&single=true&output=csv";
-const tipoCambio = 16.33; // Puedes cambiarlo directamente desde Google Sheets si deseas automatizar más adelante
+const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
+const tipoCambio = 16.33; // Puedes actualizar esto directamente desde Sheets más adelante.
 
-const preciosPIN = {
-  'distribuidor': 9,
-  'mayorista': 8,
-  'final': 7,
-  'licitacion': 10
-};
+fetch(URL_CSV)
+  .then(response => response.text())
+  .then(data => {
+    const filas = data.split('\n').slice(1); // Ignorar encabezado
+    const contenedor = document.getElementById('contenedor-productos');
+    contenedor.innerHTML = '';
 
-function obtenerPINDesdeURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('pin');
-}
+    filas.forEach(linea => {
+      const columnas = linea.split(',');
 
-function detectarTipoCliente(pin) {
-  const claves = {
-    'DISTRIBUIDOR123': 'distribuidor',
-    'MAYORISTA456': 'mayorista',
-    'FINAL789': 'final',
-    'LICITA000': 'licitacion'
-  };
-  return claves[pin] || null;
-}
+      const codigo = columnas[0]?.trim();
+      const nombre = columnas[1]?.trim();
+      const precioBase = parseFloat(columnas[4]);
+      const imagenQR = columnas[11];
 
-function cargarProductos() {
-  fetch(urlCSV)
-    .then(res => res.text())
-    .then(data => {
-      const filas = data.trim().split("\n").slice(1);
-      const pin = obtenerPINDesdeURL();
-      const tipoCliente = detectarTipoCliente(pin);
+      if (!codigo || !nombre || isNaN(precioBase)) return;
 
-      const contenedor = document.getElementById("contenedor-productos");
-      contenedor.innerHTML = "";
+      const precioBs = (precioBase * tipoCambio).toFixed(2);
 
-      filas.forEach(linea => {
-        const columnas = linea.split(",");
+      const card = document.createElement('div');
+      card.className = 'producto';
 
-        const codigo = columnas[0];
-        const producto = columnas[1];
-        const precioBase = parseFloat(columnas[4]);
-        const urlQR = columnas[11];
-        const precioCliente = tipoCliente ? (precioBase * tipoCambio).toFixed(2) : null;
+      card.innerHTML = `
+        <div class="info">
+          <strong>${nombre}</strong><br>
+          Código: ${codigo}<br>
+          <span class="precio">Precio: <b>Bs ${precioBs}</b></span><br>
+          <span class="pin-alerta">Precio con PIN autorizado</span>
+        </div>
+        <img class="qr" src="${imagenQR}" alt="QR">
+      `;
 
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "producto";
-        tarjeta.innerHTML = `
-          <h3>${producto}</h3>
-          <p><strong>Código:</strong> ${codigo}</p>
-          ${tipoCliente ? `<p class="precio">Precio: Bs ${precioCliente}</p>` : `<p class="precio bloqueado">Precio con PIN autorizado</p>`}
-          <img class="qr" src="${urlQR}" alt="QR ${codigo}">
-        `;
-        contenedor.appendChild(tarjeta);
-      });
-    })
-    .catch(err => {
-      document.getElementById("contenedor-productos").innerHTML = "<p>❌ Error al cargar productos. Revisa el enlace del CSV.</p>";
+      contenedor.appendChild(card);
     });
-}
-
-document.addEventListener("DOMContentLoaded", cargarProductos);
+  })
+  .catch(error => {
+    document.getElementById('contenedor-productos').innerHTML = '❌ Error al cargar productos.';
+    console.error('Error al cargar CSV:', error);
+  });
