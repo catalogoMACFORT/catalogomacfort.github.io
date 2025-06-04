@@ -1,69 +1,46 @@
-<!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
-  <script defer src="productos.js"></script>
-</head>
-<body>
-  <header>
-    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-    <p>Cargando productos...</p>
-    <div class="botones-pin">
-      <button onclick="enviarWhatsapp('distribuidor')">Soy Cliente Distribuidor</button>
-      <button onclick="enviarWhatsapp('mayorista')">Soy Cliente Mayorista</button>
-      <button onclick="enviarWhatsapp('final')">Soy Cliente Final</button>
-      <button onclick="enviarWhatsapp('licitacion')">Soy Cliente de Licitación</button>
+const tipoCambio = 16.33; // tipo de cambio que puedes actualizar manualmente
+const productos = [
+  {
+    nombre: "Escalera Multipropósito Reforzada 4x3",
+    codigo: "MF-503",
+    precioUSD: 39.9,
+    imagen: "https://via.placeholder.com/100",
+  },
+  {
+    nombre: "Escalera Multipropósito Reforzada 4x4",
+    codigo: "MF-504",
+    precioUSD: 47.16,
+    imagen: "https://via.placeholder.com/100",
+  },
+  {
+    nombre: "Escalera Multipropósito Reforzada 4x5",
+    codigo: "MF-505",
+    precioUSD: 54.288,
+    imagen: "https://via.placeholder.com/100",
+  },
+  {
+    nombre: "Escalera Multipropósito Reforzada 4x6",
+    codigo: "MF-506",
+    precioUSD: 61.416,
+    imagen: "https://via.placeholder.com/100",
+  },
+];
+
+const contenedor = document.getElementById("contenedor-productos");
+
+productos.forEach(prod => {
+  const precioBs = (prod.precioUSD * tipoCambio).toFixed(2);
+
+  const card = document.createElement("div");
+  card.className = "producto";
+  card.innerHTML = `
+    <div class="info">
+      <h3>${prod.nombre}</h3>
+      <p><strong>Código:</strong> ${prod.codigo}</p>
+      <p><strong>Precio:</strong> <span class="oculto">Bs ${precioBs}</span></p>
+      <p class="pin-alerta">Precio con PIN autorizado</p>
     </div>
-  </header>  <main id="contenedor-productos">
-    <!-- Aquí se generarán los productos dinámicamente -->
-  </main>  <section id="formulario-datos">
-    <h2>Registro de Cliente</h2>
-    <form id="registroCliente">
-      <label for="nombre">Nombre completo:</label>
-      <input type="text" id="nombre" name="nombre" required><label for="empresa">Nombre de negocio o empresa:</label>
-  <input type="text" id="empresa" name="empresa" required>
-
-  <label for="rubro">Rubro o sector comercial:</label>
-  <input type="text" id="rubro" name="rubro" placeholder="Ferretería, Construcción, Cachivaches, etc." required>
-
-  <label for="ubicacion">Ubicación de tu tienda o venta:</label>
-  <input type="text" id="ubicacion" name="ubicacion" placeholder="Calle y zona o ciudad">
-
-  <label for="telefono">Número de WhatsApp:</label>
-  <input type="tel" id="telefono" name="telefono" required>
-
-  <label for="pin">PIN recibido:</label>
-  <input type="text" id="pin" name="pin" placeholder="Ingresa el PIN facilitado">
-
-  <button type="submit">Enviar registro</button>
-</form>
-
-  </section>  <footer>
-    <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
-      Solicitar PIN vía WhatsApp
-    </a>
-  </footer>  <script>
-    function enviarWhatsapp(tipo) {
-      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
-      window.open(url, '_blank');
-    }
-
-    document.getElementById('registroCliente').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const nombre = document.getElementById('nombre').value;
-      const empresa = document.getElementById('empresa').value;
-      const rubro = document.getElementById('rubro').value;
-      const ubicacion = document.getElementById('ubicacion').value;
-      const telefono = document.getElementById('telefono').value;
-      const pin = document.getElementById('pin').value;
-
-      const mensaje = `Nuevo Registro%0ANombre: ${nombre}%0AEmpresa: ${empresa}%0ARubro: ${rubro}%0AUbicación: ${ubicacion}%0ATeléfono: ${telefono}%0APIN: ${pin}`;
-      const url = `https://wa.me/59168099278?text=${mensaje}`;
-      window.open(url, '_blank');
-    });
-
-    // Funcionalidad adicional para autocompletar y detectar ubicación se implementará desde productos.js o por backend seguro
-  </script></body>
-</html>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(prod.codigo + ' ' + prod.nombre)}" alt="QR">
+  `;
+  contenedor.appendChild(card);
+});
