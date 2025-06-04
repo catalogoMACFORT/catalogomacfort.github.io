@@ -1,40 +1,29 @@
 <!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo de Productos - MACFORT</title>
-  <link rel="stylesheet" href="estilos.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css">
   <script defer src="productos.js"></script>
 </head>
 <body>
   <header>
-    <h1>Catálogo Oficial de Productos MACFORT</h1>
-    <p>Seleccione su tipo de cliente para visualizar precios:</p>
-    <div id="tipoCliente">
-      <button onclick="seleccionarTipoCliente('distribuidor')">Distribuidor</button>
-      <button onclick="seleccionarTipoCliente('mayorista')">Mayorista</button>
-      <button onclick="seleccionarTipoCliente('final')">Cliente Final</button>
-      <button onclick="seleccionarTipoCliente('licitacion')">Licitación y Otros</button>
+    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
+    <p>Cargando productos...</p>
+    <div class="botones-pin">
+      <button onclick="enviarWhatsapp('distribuidor')">Soy Cliente Distribuidor</button>
+      <button onclick="enviarWhatsapp('mayorista')">Soy Cliente Mayorista</button>
+      <button onclick="enviarWhatsapp('final')">Soy Cliente Final</button>
+      <button onclick="enviarWhatsapp('licitacion')">Soy Cliente de Licitación</button>
     </div>
-    <div id="codigoPin">
-      <input type="password" id="pinCliente" placeholder="Ingrese su código PIN" />
-      <button onclick="validarPIN()">Ingresar</button>
-    </div>
-  </header>  <section id="registroCliente" style="display: none;">
-    <h2>Registre sus datos</h2>
-    <form id="formRegistro">
-      <input type="text" placeholder="Nombre de su negocio" required />
-      <input type="text" placeholder="Nombre del responsable" required />
-      <input type="text" placeholder="Ciudad / Departamento" required />
-      <input type="text" placeholder="Ubicación GPS o dirección exacta" required />
-      <button type="submit">Guardar Datos</button>
-    </form>
-  </section>  <main>
-    <div id="contenedorProductos">
-      <!-- Los productos se cargarán automáticamente desde productos.js -->
-    </div>
-  </main>  <footer>
-    <p>&copy; 2025 MACFORT | Todos los derechos reservados</p>
-  </footer>
-</body>
+  </header>  <main id="contenedor-productos"></main>  <footer>
+    <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
+      Solicitar PIN vía WhatsApp
+    </a>
+  </footer>  <script>
+    function enviarWhatsapp(tipo) {
+      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
+      window.open(url, '_blank');
+    }
+  </script></body>
 </html>
