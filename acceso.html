@@ -2,43 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso con PIN - MACFORT</title>
-  <link rel="stylesheet" href="estilo.css">
+  <title>Acceso por PIN</title>
 </head>
 <body>
-  <div class="acceso">
-    <h1>Ingrese su PIN de Cliente</h1>
-    <form onsubmit="verificarPin(event)">
-      <label for="pin">Código PIN:</label>
-      <input type="text" id="pin" name="pin" required>
-      <button type="submit">Ingresar</button>
-    </form>
-    <p style="margin-top:10px;">¿No tienes un PIN? <a href="https://wa.me/59168099278?text=Hola%2C%20quisiera%20solicitar%20mi%20PIN%20para%20ver%20precios%20del%20cat%C3%A1logo%20MACFORT.">Solicítalo vía WhatsApp</a></p>
-  </div>
-
-  <script>
-    function verificarPin(event) {
-      event.preventDefault();
-      const pin = document.getElementById('pin').value.trim();
-
-      switch(pin) {
-        case 'DISTRIBUIDOR2025':
-          window.location.href = 'productos.html?tipo=distribuidor';
-          break;
-        case 'MAYORISTA2025':
-          window.location.href = 'productos.html?tipo=mayorista';
-          break;
-        case 'FINAL2025':
-          window.location.href = 'productos.html?tipo=final';
-          break;
-        case 'LICITACION2025':
-          window.location.href = 'productos.html?tipo=licitacion';
-          break;
-        default:
-          alert('PIN inválido. Por favor verifica con el administrador.');
-      }
-    }
-  </script>
+  <h2>Acceso al Catálogo por Tipo de Cliente</h2>
+  <p>Seleccione su tipo de cliente y solicite su PIN:</p>
+  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20distribuidor,%20deseo%20el%20PIN'">Distribuidor</button>
+  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20mayorista,%20deseo%20el%20PIN'">Mayorista</button>
+  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20cliente%20final,%20deseo%20el%20PIN'">Cliente Final</button>
+  <button onclick="location.href='https://wa.me/59168099278?text=Hola,%20soy%20cliente%20de%20licitación,%20deseo%20el%20PIN'">Licitaciones</button>
 </body>
 </html>
