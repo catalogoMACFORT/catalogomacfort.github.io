@@ -1,114 +1,137 @@
+/* estilo.css */
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
+  color: #2c3e50;
 }
 
 header {
-  background-color: #1e3a8a;
-  color: white;
-  padding: 20px;
   text-align: center;
+  background-color: #ffffff;
+  padding: 20px 10px;
+  border-bottom: 2px solid #ddd;
 }
 
 h1 {
-  margin: 0;
-  font-size: 1.6em;
-}
-
-.botones-pin {
-  margin-top: 15px;
+  font-size: 26px;
+  margin: 10px 0;
+  color: #2c3e50;
 }
 
 .botones-pin button {
-  background-color: #3b82f6;
-  color: white;
-  margin: 5px;
-  padding: 10px 20px;
+  background-color: #2ecc71;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  color: white;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 8px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botones-pin button:hover {
+  background-color: #27ae60;
 }
 
 main {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .producto {
   background-color: white;
   border-radius: 10px;
-  margin: 15px auto;
-  padding: 15px;
-  max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.info h3 {
-  margin: 0;
-  color: #1f2937;
+.producto .info {
+  flex: 1;
+  padding-left: 15px;
 }
 
-.info .precio {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: green;
-}
-
-.pin-info {
-  color: #e67e22;
-  font-size: 0.85em;
-}
-
-.qr img {
-  width: 80px;
+.producto img {
+  width: 100px;
   height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.precio {
+  font-size: 18px;
+  color: green;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.pin-alerta {
+  font-size: 12px;
+  color: #e67e22;
 }
 
 footer {
+  padding: 20px;
   text-align: center;
-  padding: 15px;
-  background-color: #fff;
-  margin-top: 20px;
 }
 
-footer a {
+#boton-wsp {
   display: inline-block;
-  background-color: #25D366;
+  background-color: #25d366;
   color: white;
-  padding: 12px 25px;
-  text-decoration: none;
+  padding: 12px 20px;
   border-radius: 8px;
+  text-decoration: none;
   font-weight: bold;
 }
 
-form {
-  background-color: #ffffff;
+#formulario-datos {
+  background: white;
+  padding: 20px;
   max-width: 600px;
   margin: 30px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-form input, form select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+#formulario-datos h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-form button {
-  background-color: #10b981;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 6px;
-  width: 100%;
+#formulario-datos label {
+  display: block;
+  margin-top: 10px;
   font-weight: bold;
+}
+
+#formulario-datos input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#formulario-datos button {
+  margin-top: 15px;
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#formulario-datos button:hover {
+  background-color: #2980b9;
 }
