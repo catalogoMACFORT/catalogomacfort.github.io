@@ -1,112 +1,89 @@
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
   margin: 0;
   padding: 0;
 }
 
-.catalogo {
-  max-width: 1100px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+header {
+  background-color: #1b1f3b;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
 }
 
 h1 {
-  text-align: center;
-  color: #d84315;
-  font-size: 28px;
-  margin-bottom: 10px;
+  margin: 0;
+  font-size: 1.8rem;
 }
 
-h2 {
-  text-align: center;
-  color: #444;
-  font-size: 20px;
-  margin-bottom: 30px;
+#productos-contenedor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
 }
 
 .producto {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #ddd;
-  padding: 20px 0;
-  flex-wrap: wrap;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: scale(1.03);
 }
 
 .producto img {
-  width: 100px;
+  max-width: 100%;
   height: auto;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  object-fit: contain;
+  margin-bottom: 1rem;
 }
 
-.info {
-  flex: 1;
-  margin-left: 20px;
-  min-width: 240px;
+.producto h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #1b1f3b;
 }
 
-.info strong {
-  font-size: 18px;
-  color: #2c3e50;
+.producto p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: #555;
 }
 
-.precio {
-  font-size: 17px;
-  font-weight: bold;
-  color: #2e7d32;
-  margin-top: 5px;
-}
-
-.qr {
-  width: 100px;
-  height: auto;
-  margin-left: 20px;
-}
-
-.boton-wsp {
+.producto button {
   display: block;
   width: 100%;
-  background: #25d366;
+  padding: 0.7rem;
+  margin: 0.3rem 0;
+  background-color: #1b1f3b;
   color: white;
-  text-align: center;
-  padding: 12px;
-  margin-top: 30px;
+  border: none;
   border-radius: 6px;
-  text-decoration: none;
-  font-size: 16px;
+  cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-.boton-wsp:hover {
-  background: #20bf57;
-}
-
-.pin-alerta {
-  font-size: 13px;
-  color: #e67e22;
-  margin-top: 6px;
-  display: block;
+.producto button:hover {
+  background-color: #343a6b;
 }
 
 @media (max-width: 600px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  #productos-contenedor {
+    padding: 1rem;
+  }
+
   .producto {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .info {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-
-  .qr {
-    margin-left: 0;
-    margin-top: 10px;
+    padding: 1rem;
   }
 }
