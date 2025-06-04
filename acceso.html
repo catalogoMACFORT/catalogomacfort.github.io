@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acceso con PIN</title>
-  <link rel="stylesheet" href="estilo.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso con PIN - MACFORT</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <h1>Acceso con PIN</h1>
-  <form onsubmit="redirigir(event)">
-    <label for="pin">Ingresa tu PIN de cliente:</label>
-    <input type="text" id="pin" required />
-    <button type="submit">Ingresar</button>
-  </form>
+  <div class="acceso">
+    <h1>Ingrese su PIN de Cliente</h1>
+    <form onsubmit="verificarPin(event)">
+      <label for="pin">Código PIN:</label>
+      <input type="text" id="pin" name="pin" required>
+      <button type="submit">Ingresar</button>
+    </form>
+    <p style="margin-top:10px;">¿No tienes un PIN? <a href="https://wa.me/59168099278?text=Hola%2C%20quisiera%20solicitar%20mi%20PIN%20para%20ver%20precios%20del%20cat%C3%A1logo%20MACFORT.">Solicítalo vía WhatsApp</a></p>
+  </div>
 
   <script>
-    function redirigir(e) {
-      e.preventDefault();
-      const pin = document.getElementById("pin").value.trim();
-      switch (pin) {
-        case "DISTRIBUIDOR2025":
-          window.location.href = "productos.html?tipo=distribuidor";
+    function verificarPin(event) {
+      event.preventDefault();
+      const pin = document.getElementById('pin').value.trim();
+
+      switch(pin) {
+        case 'DISTRIBUIDOR2025':
+          window.location.href = 'productos.html?tipo=distribuidor';
           break;
-        case "MAYORISTA2025":
-          window.location.href = "productos.html?tipo=mayorista";
+        case 'MAYORISTA2025':
+          window.location.href = 'productos.html?tipo=mayorista';
           break;
-        case "FINAL2025":
-          window.location.href = "productos.html?tipo=final";
+        case 'FINAL2025':
+          window.location.href = 'productos.html?tipo=final';
           break;
-        case "LICITACION2025":
-          window.location.href = "productos.html?tipo=licitacion";
+        case 'LICITACION2025':
+          window.location.href = 'productos.html?tipo=licitacion';
           break;
         default:
-          alert("PIN no válido");
+          alert('PIN inválido. Por favor verifica con el administrador.');
       }
     }
   </script>
