@@ -1,39 +1,69 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const contenedor = document.getElementById("contenedor-productos");
-  const tipoCambio = 16.33; // Puedes cambiar este valor manualmente o leerlo desde Google Sheets si se automatiza
+const hojaPublicadaURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 
-  fetch("catálogo_macfort_2025.csv")
-    .then(response => response.text())
-    .then(data => {
-      const filas = data.split("\n").slice(1); // Salta el encabezado
-      filas.forEach(fila => {
-        const columnas = fila.split(",");
+const tipoCambioCelda = 'Tipo de Cambio'; // Nombre de columna exacto en Google Sheet
 
-        const codigo = columnas[0]?.trim();
-        const producto = columnas[1]?.trim();
-        const precioUSD = parseFloat(columnas[4]);
-        const precioBS = isNaN(precioUSD) ? "N/D" : (precioUSD * tipoCambio).toFixed(2);
-        const qr = columnas[columnas.length - 1]?.trim(); // Última columna
+const contenedor = document.getElementById("contenedor-productos");
 
-        if (!codigo || !producto || isNaN(precioUSD)) return;
-
-        const div = document.createElement("div");
-        div.className = "producto";
-        div.innerHTML = `
-          <img src="https://via.placeholder.com/100" alt="Producto ${producto}">
-          <div class="info">
-            <strong>${producto}</strong><br>
-            Código: ${codigo}<br>
-            Precio: <span class="precio">Bs ${precioBS}</span><br>
-            <span class="pin-alerta">Precio con PIN autorizado</span>
-          </div>
-          <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}%20${producto}%20MACFORT" alt="QR">
-        `;
-        contenedor.appendChild(div);
-      });
-    })
-    .catch(error => {
-      contenedor.innerHTML = "<p style='color: red;'>❌ Error al cargar productos. Verifica el CSV.</p>";
-      console.error("Error al cargar CSV:", error);
+fetch(hojaPublicadaURL)
+  .then(res => res.text())
+  .then(data => {
+    const filas = data.split("\n").map(f => f.split(","));
+    const encabezados = filas[0];
+    const productos = filas.slice(1).map(fila => {
+      const item = {};
+      encabezados.forEach((clave, i) => item[clave.trim()] = fila[i]);
+      return item;
     });
-});
+
+    const tipoCambioFila = productos.find(p => p["Código"] === tipoCambioCelda);
+    const tipoCambio = tipoCambioFila ? parseFloat(tipoCambioFila["Precio Base USD"]) : 7.15;
+
+    productos.filter(p => p["Código"] !== tipoCambioCelda).forEach(prod => {
+      const div = document.createElement("div");
+      div.className = "producto";
+
+      const img = document.createElement("img");
+      img.src = prod["Imagen"] || "https://via.placeholder.com/100";
+      img.alt = prod["Producto"];
+      div.appendChild(img);
+
+      const info = document.createElement("div");
+      info.className = "info";
+
+      const nombre = document.createElement("strong");
+      nombre.innerText = prod["Producto"];
+      info.appendChild(nombre);
+
+      info.innerHTML += `<br>Código: ${prod["Código"]}`;
+      
+      const precioFinal = (parseFloat(prod["Precio Base USD"]) * tipoCambio).toFixed(2);
+      info.innerHTML += `<br><span class="precio oculto" id="precio-${prod["Código"]}">Bs ${precioFinal}</span>`;
+      info.innerHTML += `<br><span class="pin-alerta">Precio con PIN autorizado</span>`;
+      div.appendChild(info);
+
+      const qr = document.createElement("img");
+      qr.className = "qr";
+      qr.alt = "QR";
+      qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${prod["Código"]}%20${prod["Producto"]}%20MACFORT`;
+      div.appendChild(qr);
+
+      contenedor.appendChild(div);
+    });
+  });
+
+// Mostrar precios con PIN correcto
+const urlParams = new URLSearchParams(window.location.search);
+const pin = urlParams.get('pin');
+
+// Lista de PIN válidos (simulados)
+const pines = {
+  distribuidor: "D123",
+  mayorista: "M123",
+  final: "F123",
+  licitacion: "L123"
+};
+
+if (Object.values(pines).includes(pin)) {
+  document.querySelectorAll(".precio").forEach(p => p.classList.remove("oculto"));
+  document.querySelectorAll(".pin-alerta").forEach(p => p.remove());
+}
