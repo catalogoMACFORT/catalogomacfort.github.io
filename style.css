@@ -1,89 +1,31 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7f7f7;
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
   margin: 0;
   padding: 0;
+  color: #333;
 }
-
-header {
-  background-color: #1b1f3b;
-  color: white;
-  text-align: center;
-  padding: 1rem 0;
-}
-
 h1 {
-  margin: 0;
-  font-size: 1.8rem;
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
-
-#productos-contenedor {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+main {
+  padding: 20px;
 }
-
-.producto {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
-}
-
-.producto:hover {
-  transform: scale(1.03);
-}
-
-.producto img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
-
-.producto h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #1b1f3b;
-}
-
-.producto p {
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.producto button {
-  display: block;
-  width: 100%;
-  padding: 0.7rem;
-  margin: 0.3rem 0;
-  background-color: #1b1f3b;
+.botones-pin button {
+  margin: 5px;
+  padding: 10px;
+  background: #25D366;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
 }
-
-.producto button:hover {
-  background-color: #343a6b;
-}
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.4rem;
-  }
-
-  #productos-contenedor {
-    padding: 1rem;
-  }
-
-  .producto {
-    padding: 1rem;
-  }
+footer {
+  padding: 15px;
+  background: #2c3e50;
+  color: white;
+  text-align: center;
 }
