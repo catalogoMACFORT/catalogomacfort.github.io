@@ -1,85 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 
-  fetch(url)
-    .then(response => response.text())
-    .then(data => {
-      const productos = csvToArray(data);
-      mostrarProductos(productos);
-    })
-    .catch(error => {
-      document.querySelector("#contenedor-productos").innerHTML = "<p style='color:red;'>❌ Error al cargar productos. Revisa el enlace del CSV o la estructura.</p>";
-      console.error("Error al cargar el catálogo:", error);
+const TIPO_CAMBIO = 16.33; // Tipo de cambio actualizado manualmente
+
+async function cargarProductos() {
+  try {
+    const response = await fetch(CSV_URL);
+    const data = await response.text();
+
+    const filas = data.trim().split('\n').slice(1);
+    const productos = filas.map(fila => {
+      const columnas = fila.split(',');
+      return {
+        codigo: columnas[0],
+        nombre: columnas[1],
+        precioUSD: parseFloat(columnas[4]),
+        qrBase64: columnas[10]
+      };
     });
-});
 
-function csvToArray(str, delimiter = ",") {
-  const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-  const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+    const contenedor = document.getElementById('contenedor-productos');
+    contenedor.innerHTML = '';
 
-  return rows
-    .map(row => {
-      const values = row.split(delimiter);
-      const item = {};
-      headers.forEach((header, index) => {
-        item[header.trim()] = values[index] ? values[index].trim() : "";
-      });
-      return item;
-    })
-    .filter(item => item.Código && item["Producto"]);
-}
+    productos.forEach(producto => {
+      const precioBS = (producto.precioUSD * TIPO_CAMBIO).toFixed(2);
 
-function mostrarProductos(productos) {
-  const contenedor = document.getElementById("contenedor-productos");
-  contenedor.innerHTML = "";
+      const card = document.createElement('div');
+      card.className = 'producto';
 
-  productos.forEach(producto => {
-    const precioBase = parseFloat(producto["Precio Base (usd)"]);
-    const tipoCambio = 16.33; // editable dinámicamente si deseas vincular a Google Sheets o usar fetch
-    const precioBs = (precioBase * tipoCambio).toFixed(2);
+      card.innerHTML = `
+        <h3>${producto.nombre}</h3>
+        <p><strong>Código:</strong> ${producto.codigo}</p>
+        <p><strong>Precio:</strong> <span class="protegido">Bs ${precioBS}</span></p>
+        <p class="pin-msg">Precio con PIN autorizado</p>
+        <img src="${producto.qrBase64}" alt="QR" class="qr">
+      `;
 
-    const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-producto";
-
-    const imagenURL = `https://api.dicebear.com/7.x/icons/svg?seed=${producto.Código || "producto"}`; // Imagen temporal por código
-
-    tarjeta.innerHTML = `
-      <img src="${imagenURL}" alt="QR" class="qr-imagen">
-      <div class="info">
-        <h3>${producto.Producto}</h3>
-        <p><strong>Código:</strong> ${producto.Código}</p>
-        <p><strong>Procedencia:</strong> ${producto.Procedencia}</p>
-        <p><strong>Marca:</strong> ${producto.Marca}</p>
-        <p class="precio">Precio: <span class="ocultar-precio">🔒 Precio con PIN autorizado</span><span class="mostrar-precio" style="display:none;">Bs ${precioBs}</span></p>
-        <button onclick="mostrarPrecio('${producto.Código}')">🔑 Ingresar PIN</button>
-      </div>
-    `;
-
-    contenedor.appendChild(tarjeta);
-  });
-}
-
-function mostrarPrecio(codigo) {
-  const pin = prompt("Introduce el PIN de acceso:");
-  const pinDistribuidor = "DISTRIB123";
-  const pinMayorista = "MAYOR123";
-  const pinFinal = "FINAL123";
-  const pinLicitacion = "LICIT123";
-
-  if (
-    pin === pinDistribuidor ||
-    pin === pinMayorista ||
-    pin === pinFinal ||
-    pin === pinLicitacion
-  ) {
-    const tarjetas = document.querySelectorAll(".tarjeta-producto");
-    tarjetas.forEach(tarjeta => {
-      if (tarjeta.innerHTML.includes(codigo)) {
-        tarjeta.querySelector(".ocultar-precio").style.display = "none";
-        tarjeta.querySelector(".mostrar-precio").style.display = "inline";
-      }
+      contenedor.appendChild(card);
     });
-  } else {
-    alert("PIN inválido.");
+  } catch (error) {
+    document.getElementById('contenedor-productos').innerHTML = '<p class="error">❌ Error al cargar productos. Verifica el enlace CSV o la estructura.</p>';
+    console.error('Error cargando CSV:', error);
   }
 }
+
+document.addEventListener('DOMContentLoaded', cargarProductos);
