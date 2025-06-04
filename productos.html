@@ -1,40 +1,37 @@
-<!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
-</head>
-<body>
-  <div class="contenedor">
-    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-    <div class="filtros">
-      <input type="text" id="busqueda" placeholder="Buscar por nombre o marca">
-      <select id="filtro-categoria">
-        <option value="">Todas las Categorías</option>
-      </select>
-      <select id="filtro-subcategoria">
-        <option value="">Todas las Subcategorías</option>
-      </select>
-    </div><div class="tipo-cliente">
-  <h3>Selecciona tu tipo de cliente:</h3>
-  <button onclick="solicitarPin('distribuidor')">Distribuidor</button>
-  <button onclick="solicitarPin('mayorista')">Mayorista</button>
-  <button onclick="solicitarPin('final')">Cliente Final</button>
-  <button onclick="solicitarPin('licitacion')">Licitaciones / Otros</button>
-</div>
+// productos.js actualizado completo
 
-<div class="formulario-pin" id="formularioPin" style="display:none">
-  <p>Ingresa tu PIN:</p>
-  <input type="text" id="inputPin" placeholder="PIN de acceso">
-  <button onclick="verificarPin()">Ver precios</button>
-</div>
+const urlCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 
-<div id="productos" class="productos">
-  <p>Cargando productos...</p>
-</div>
+const tipoCambio = 16.33; // Tipo de cambio editable manualmente const pines = { distribuidor: 'PIN-DISTRIBUIDOR-2025', mayorista: 'PIN-MAYORISTA-2025', final: 'PIN-FINAL-2025', licitacion: 'PIN-LICITACION-2025' };
 
-<a class="boton-wsp" id="whatsappLink" href="https://wa.me/59168099278?text=Hola%2C%20quiero%20acceder%20a%20los%20precios%20de%20MACFORT" target="_blank">Solicitar PIN vía WhatsApp</a>
+let tipoCliente = ''; let pinCorrecto = false;
 
-  </div>  <script src="productos.js"></script></body>
-</html>
+function cargarProductos() { Papa.parse(urlCSV, { download: true, header: true, complete: function(results) { const productos = results.data; mostrarSelectorTipoCliente(productos); } }); }
+
+function mostrarSelectorTipoCliente(productos) { const app = document.getElementById('app'); app.innerHTML = <h1>CATÁLOGO OFICIAL MACFORT 2025</h1> <p>Seleccione su tipo de cliente:</p> <div style="display: flex; flex-direction: column; gap: 10px;"> <button onclick="pedirPin('distribuidor')">🤝 Soy Distribuidor</button> <button onclick="pedirPin('mayorista')">📦 Soy Mayorista</button> <button onclick="pedirPin('final')">🛍️ Soy Cliente Final</button> <button onclick="pedirPin('licitacion')">📑 Licitación u Otros</button> </div> <div id="pin-form" style="margin-top: 20px;"></div>; window.pedirPin = (tipo) => { tipoCliente = tipo; document.getElementById('pin-form').innerHTML = <p>Ingrese su PIN de acceso para ${tipo.toUpperCase()}:</p> <input type="password" id="pin" placeholder="PIN autorizado"> <button onclick="verificarPin('${tipo}', ${JSON.stringify(productos)})">Ver catálogo</button>; }; }
+
+function verificarPin(tipo, productos) { const pinIngresado = document.getElementById('pin').value; if (pinIngresado === pines[tipo]) { pinCorrecto = true; mostrarProductos(productos); } else { alert('❌ PIN incorrecto. Verifique su código.'); } }
+
+function mostrarProductos(productos) { const app = document.getElementById('app'); app.innerHTML = <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>;
+
+productos.forEach(prod => { if (!prod["Código"] || !prod["Precio Base (c/u + IVA)"]) return; const precioBase = parseFloat(prod["Precio Base (c/u + IVA)"]); // asumiendo esta columna const precioBs = (precioBase * tipoCambio).toFixed(2);
+
+const mensajeWsp = encodeURIComponent(`Hola, estoy interesado en el producto:\nProducto: ${prod["Producto"]}\nCódigo: ${prod["Código"]}\nTipo de Cliente: ${tipoCliente.toUpperCase()}\n¿Podría facilitarme el PIN autorizado?`);
+const enlaceWsp = `https://wa.me/59168099278?text=${mensajeWsp}`;
+
+const contenedor = document.createElement('div');
+contenedor.className = 'producto';
+contenedor.innerHTML = `
+  <div class="info">
+    <strong>${prod["Producto"]}</strong><br>
+    Código: ${prod["Código"]}<br>
+    Precio: <span class="precio">Bs ${pinCorrecto ? precioBs : '🔒 Requiere PIN'}</span><br>
+    <small class="pin-alerta">${pinCorrecto ? 'Precio oficial válido al tipo de cambio actual' : 'Precio disponible con PIN autorizado'}</small>
+  </div>
+  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${prod["Código"]}%20${prod["Producto"]}" alt="QR">
+  <a class="boton-wsp" href="${enlaceWsp}" target="_blank">📲 Contactar vía WhatsApp</a>
+`;
+app.appendChild(contenedor);
+
+}); }
+
