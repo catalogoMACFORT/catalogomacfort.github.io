@@ -1,37 +1,39 @@
-const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
-const tipoCambio = 16.33; // Puedes actualizar este valor manualmente si no se usa desde Google Sheets
+document.addEventListener("DOMContentLoaded", () => {
+  const contenedor = document.getElementById("contenedor-productos");
+  const tipoCambio = 16.33; // Puedes cambiar este valor manualmente o leerlo desde Google Sheets si se automatiza
 
-fetch(URL_CSV)
-  .then(res => res.text())
-  .then(text => {
-    const rows = text.split("\n").slice(1);
-    const contenedor = document.getElementById("contenedor-productos");
+  fetch("catálogo_macfort_2025.csv")
+    .then(response => response.text())
+    .then(data => {
+      const filas = data.split("\n").slice(1); // Salta el encabezado
+      filas.forEach(fila => {
+        const columnas = fila.split(",");
 
-    rows.forEach(row => {
-      const cols = row.split(",");
-      const codigo = cols[0]?.trim();
-      const nombre = cols[1]?.trim();
-      const precioUSD = parseFloat(cols[4]) || 0;
-      const imagenQR = cols[10]?.trim();
+        const codigo = columnas[0]?.trim();
+        const producto = columnas[1]?.trim();
+        const precioUSD = parseFloat(columnas[4]);
+        const precioBS = isNaN(precioUSD) ? "N/D" : (precioUSD * tipoCambio).toFixed(2);
+        const qr = columnas[columnas.length - 1]?.trim(); // Última columna
 
-      if (!codigo || !nombre) return;
+        if (!codigo || !producto || isNaN(precioUSD)) return;
 
-      const precioBs = (precioUSD * tipoCambio).toFixed(2);
-      const tarjeta = document.createElement("div");
-      tarjeta.className = "producto";
-
-      tarjeta.innerHTML = `
-        <div class="info">
-          <h3>${nombre}</h3>
-          <p><strong>Código:</strong> ${codigo}</p>
-          <p class="precio">Precio: <span class="oculto">Bs ${precioBs}</span></p>
-          <p class="pin-info">Precio con PIN autorizado</p>
-        </div>
-        <div class="qr">
-          <img src="${imagenQR}" alt="QR del producto">
-        </div>
-      `;
-
-      contenedor.appendChild(tarjeta);
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.innerHTML = `
+          <img src="https://via.placeholder.com/100" alt="Producto ${producto}">
+          <div class="info">
+            <strong>${producto}</strong><br>
+            Código: ${codigo}<br>
+            Precio: <span class="precio">Bs ${precioBS}</span><br>
+            <span class="pin-alerta">Precio con PIN autorizado</span>
+          </div>
+          <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}%20${producto}%20MACFORT" alt="QR">
+        `;
+        contenedor.appendChild(div);
+      });
+    })
+    .catch(error => {
+      contenedor.innerHTML = "<p style='color: red;'>❌ Error al cargar productos. Verifica el CSV.</p>";
+      console.error("Error al cargar CSV:", error);
     });
-  });
+});
