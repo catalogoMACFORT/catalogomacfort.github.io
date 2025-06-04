@@ -1,62 +1,51 @@
-const googleSheetURL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const contenedor = document.getElementById('contenedor-productos');
+const urlCSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
+const tipoCambioManual = 16.33;
 
-// Valor predeterminado del tipo de cambio (se puede actualizar desde la hoja)
-let tipoCambio = 1;
+const pinCliente = {
+  distribuidor: "PIN1234",
+  mayorista: "PIN2345",
+  final: "PIN3456",
+  licitacion: "PIN4567"
+};
 
-// Almacenar datos del catálogo
-let productosData = [];
+const tipoActual = new URLSearchParams(window.location.search).get("tipo");
+const pinIngresado = new URLSearchParams(window.location.search).get("pin");
 
-// Obtener datos CSV desde Google Sheets
-fetch(googleSheetURL)
-  .then((response) => response.text())
-  .then((data) => {
-    const filas = data.split("\n").map((row) => row.split(","));
-    const headers = filas.shift();
+const mostrarPrecio = () => pinIngresado === pinCliente[tipoActual];
 
-    tipoCambio = parseFloat(headers[headers.length - 1]); // Última columna = tipo de cambio
-    productosData = filas.map((fila) => {
-      const item = {};
-      headers.forEach((header, i) => {
-        item[header.trim()] = fila[i]?.trim() || "";
-      });
-      return item;
+fetch(urlCSV)
+  .then(res => res.text())
+  .then(data => {
+    const rows = data.split("\n").slice(1);
+    rows.forEach(row => {
+      const cols = row.split(",");
+      if (cols.length < 6) return;
+
+      const codigo = cols[0].trim();
+      const nombre = cols[1].trim();
+      const precioUSD = parseFloat(cols[2]);
+      const qrBase64 = cols[cols.length - 1].trim();
+
+      const div = document.createElement('div');
+      div.className = 'producto';
+
+      const precioBs = (precioUSD * tipoCambioManual).toFixed(2);
+
+      div.innerHTML = `
+        <div class="detalle">
+          <h3>${nombre}</h3>
+          <p><strong>Código:</strong> ${codigo}</p>
+          <p class="precio">${mostrarPrecio() ? `Precio: <span class='bs'>Bs ${precioBs}</span>` : `Precio con PIN autorizado`}</p>
+        </div>
+        <div class="qr">
+          <img src="${qrBase64}" alt="QR">
+        </div>
+      `;
+      contenedor.appendChild(div);
     });
-
-    mostrarProductos(productosData);
   })
-  .catch((error) => console.error("Error al cargar datos:", error));
-
-function mostrarProductos(data) {
-  const contenedor = document.getElementById("productos-contenedor");
-  contenedor.innerHTML = "";
-
-  data.forEach((producto, index) => {
-    const div = document.createElement("div");
-    div.classList.add("producto");
-
-    const nombre = producto["Nombre"] || "Producto sin nombre";
-    const descripcion = producto["Descripción"] || "";
-    const imagen = producto["Imagen"] || "https://via.placeholder.com/200x200?text=Imagen+no+disponible";
-
-    div.innerHTML = `
-      <img src="${imagen}" alt="${nombre}">
-      <h3>${nombre}</h3>
-      <p>${descripcion}</p>
-      <button onclick="enviarWhatsApp('${nombre}', 'Distribuidor')">Cliente Distribuidor</button>
-      <button onclick="enviarWhatsApp('${nombre}', 'Mayorista')">Cliente Mayorista</button>
-      <button onclick="enviarWhatsApp('${nombre}', 'Final')">Cliente Final</button>
-      <button onclick="enviarWhatsApp('${nombre}', 'Licitación')">Cliente en Licitaciones y Otros</button>
-    `;
-
-    contenedor.appendChild(div);
+  .catch(error => {
+    contenedor.innerHTML = `<p class="error">❌ Error al cargar productos. Revisa el enlace del CSV o la estructura.</p>`;
+    console.error(error);
   });
-}
-
-function enviarWhatsApp(nombreProducto, tipoCliente) {
-  const numero = "59168099278"; // Tu número de WhatsApp
-  const mensaje = `Hola, estoy interesado en el producto: *${nombreProducto}* como *Cliente ${tipoCliente}*. 
-¿Podrías proporcionarme el PIN para ver precios?\n\n🔍 También estoy dispuesto a registrar mis datos comerciales.`;
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
