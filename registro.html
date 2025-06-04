@@ -2,54 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Cliente - MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
+  <title>Registro de Cliente</title>
 </head>
 <body>
-  <header>
-    <h1>REGISTRO DE CLIENTES</h1>
-    <p>Completa tus datos para recibir el PIN de acceso según tu tipo de cliente.</p>
-  </header>
-
-  <main>
-    <form id="registroCliente">
-      <label for="nombre">👤 Nombre completo:</label>
-      <input type="text" id="nombre" name="nombre" required>
-
-      <label for="empresa">🏢 Nombre del negocio o empresa:</label>
-      <input type="text" id="empresa" name="empresa" required>
-
-      <label for="rubro">📦 Rubro o sector comercial:</label>
-      <input type="text" id="rubro" name="rubro" placeholder="Ej: Ferretería, Construcción, etc." required>
-
-      <label for="ubicacion">📍 Ubicación de tu venta (zona/ciudad):</label>
-      <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Av. Busch, La Paz">
-
-      <label for="telefono">📱 Número de WhatsApp:</label>
-      <input type="tel" id="telefono" name="telefono" required>
-
-      <button type="submit">📤 Enviar Registro por WhatsApp</button>
-    </form>
-  </main>
-
-  <footer>
-    <p style="text-align:center;font-size:12px;color:gray">Tu información será usada únicamente para contacto comercial con MACFORT.</p>
-  </footer>
+  <h2>Registro del Cliente</h2>
+  <form onsubmit="enviarRegistro(event)">
+    <label>Nombre Completo:</label><input type="text" id="nombre" required><br>
+    <label>Nombre del Negocio:</label><input type="text" id="negocio" required><br>
+    <label>Rubro:</label><input type="text" id="rubro" required><br>
+    <label>Ubicación GPS:</label><input type="text" id="gps" placeholder="Ubicación detectada automáticamente"><br>
+    <label>WhatsApp:</label><input type="tel" id="wsp" required><br>
+    <label>PIN:</label><input type="text" id="pin" required><br>
+    <button type="submit">Enviar Registro</button>
+  </form>
 
   <script>
-    document.getElementById('registroCliente').addEventListener('submit', function(e) {
+    function enviarRegistro(e) {
       e.preventDefault();
       const nombre = document.getElementById('nombre').value;
-      const empresa = document.getElementById('empresa').value;
+      const negocio = document.getElementById('negocio').value;
       const rubro = document.getElementById('rubro').value;
-      const ubicacion = document.getElementById('ubicacion').value;
-      const telefono = document.getElementById('telefono').value;
-
-      const mensaje = `*Nuevo Registro MACFORT*%0A👤 Nombre: ${nombre}%0A🏢 Empresa: ${empresa}%0A📦 Rubro: ${rubro}%0A📍 Ubicación: ${ubicacion}%0A📱 WhatsApp: ${telefono}`;
-      const url = `https://wa.me/59168099278?text=${mensaje}`;
-      window.open(url, '_blank');
-    });
+      const gps = document.getElementById('gps').value;
+      const wsp = document.getElementById('wsp').value;
+      const pin = document.getElementById('pin').value;
+      const mensaje = `Nuevo Registro:%0A${nombre}%0A${negocio}%0A${rubro}%0AGPS: ${gps}%0AWhatsApp: ${wsp}%0APIN: ${pin}`;
+      window.open(`https://wa.me/59168099278?text=${mensaje}`, '_blank');
+    }
   </script>
 </body>
 </html>
