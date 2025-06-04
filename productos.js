@@ -1,43 +1,37 @@
-// Configuración general
-const URL_GOOGLE_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
-const TIPO_CAMBIO = 16.33; // valor actual editable desde Google Sheets en el futuro
+const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const tipoCambio = 16.33; // Puedes actualizar este valor manualmente si no se usa desde Google Sheets
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const contenedor = document.getElementById('contenedor-productos');
+fetch(URL_CSV)
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.split("\n").slice(1);
+    const contenedor = document.getElementById("contenedor-productos");
 
-  try {
-    const respuesta = await fetch(URL_GOOGLE_SHEET);
-    const texto = await respuesta.text();
-    const filas = texto.split('\n').slice(1);
+    rows.forEach(row => {
+      const cols = row.split(",");
+      const codigo = cols[0]?.trim();
+      const nombre = cols[1]?.trim();
+      const precioUSD = parseFloat(cols[4]) || 0;
+      const imagenQR = cols[10]?.trim();
 
-    filas.forEach(fila => {
-      const columnas = fila.split(',');
-      const codigo = columnas[0]?.trim();
-      const producto = columnas[1]?.trim();
-      const precioUSD = parseFloat(columnas[4]) || 0;
+      if (!codigo || !nombre) return;
 
-      if (!codigo || !producto || !precioUSD) return;
+      const precioBs = (precioUSD * tipoCambio).toFixed(2);
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "producto";
 
-      const precioBs = (precioUSD * TIPO_CAMBIO).toFixed(2);
-      const urlQR = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(codigo + ' ' + producto + ' MACFORT')}`;
-      const imagenAuto = `https://via.placeholder.com/120x120.png?text=${encodeURIComponent(producto)}`;
-
-      const card = document.createElement('div');
-      card.className = 'producto-card';
-      card.innerHTML = `
-        <img class="producto-img" src="${imagenAuto}" alt="${producto}">
-        <div class="producto-info">
-          <h3>${producto}</h3>
+      tarjeta.innerHTML = `
+        <div class="info">
+          <h3>${nombre}</h3>
           <p><strong>Código:</strong> ${codigo}</p>
-          <p class="precio">Precio: <span>Bs ${precioBs}</span></p>
-          <p class="pin-alerta">Precio con PIN autorizado</p>
+          <p class="precio">Precio: <span class="oculto">Bs ${precioBs}</span></p>
+          <p class="pin-info">Precio con PIN autorizado</p>
         </div>
-        <img class="qr" src="${urlQR}" alt="QR">
+        <div class="qr">
+          <img src="${imagenQR}" alt="QR del producto">
+        </div>
       `;
-      contenedor.appendChild(card);
+
+      contenedor.appendChild(tarjeta);
     });
-  } catch (error) {
-    contenedor.innerHTML = '<p style="color:red;">❌ Error al cargar productos. Verifica tu conexión o el enlace CSV.</p>';
-    console.error('Error al cargar productos:', error);
-  }
-});
+  });
