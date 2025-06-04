@@ -1,68 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial MACFORT 2025</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
       margin: 0;
       padding: 20px;
-      background: #f0f0f0;
     }
     h1 {
       text-align: center;
       color: #2c3e50;
     }
     .producto {
-      background: #fff;
-      margin: 15px auto;
+      background: white;
+      border-radius: 10px;
       padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      margin: 15px auto;
       max-width: 600px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
-    .producto img.qr {
-      width: 80px;
-      height: auto;
+    .producto img {
       float: right;
+      width: 60px;
+      height: 60px;
+    }
+    .nombre {
+      font-weight: bold;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+    .codigo, .precio {
+      font-size: 14px;
+      margin-top: 5px;
     }
     .precio {
-      font-weight: bold;
       color: green;
+      font-weight: bold;
     }
-    .pin-alerta {
+    .nota {
       font-size: 13px;
       color: #e67e22;
     }
     .boton-wsp {
       display: block;
-      width: fit-content;
+      width: 90%;
+      max-width: 600px;
       margin: 30px auto;
-      padding: 12px 24px;
+      padding: 15px;
+      text-align: center;
       background: #25D366;
       color: white;
-      text-align: center;
-      border-radius: 6px;
-      text-decoration: none;
       font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
-
   <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-
-  <div id="contenedor-productos">
-    <p style="text-align:center;">Cargando productos...</p>
+  <div id="catalogo">
+    <p>Cargando productos...</p>
   </div>
 
-  <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20MACFORT.%20%C2%BFPodr%C3%ADa%20facilitarme%20el%20PIN%20para%20ver%20los%20precios%3F" target="_blank">
+  <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20solicito%20el%20PIN%20para%20ver%20precios%20del%20cat%C3%A1logo%20MACFORT" target="_blank">
     Solicitar PIN vía WhatsApp
   </a>
 
-  <script src="productos.js"></script>
+  <script>
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+    const tipoCambio = 16.33; // Puedes actualizar este valor manualmente desde Google Sheets o aquí
+
+    fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.trim().split('\n').slice(1); // omite encabezado
+        const catalogo = document.getElementById("catalogo");
+        catalogo.innerHTML = '';
+
+        rows.forEach(row => {
+          const cols = row.split(',');
+
+          const codigo = cols[0].trim();
+          const producto = cols[1].trim();
+          const precioUSD = parseFloat(cols[2]);
+          const marca = cols[4].trim();
+          const qr = cols[9].trim();
+
+          const precioBs = isNaN(precioUSD) ? 'NaN' : `Bs ${ (precioUSD * tipoCambio).toFixed(2) }`;
+
+          const productoHTML = `
+            <div class="producto">
+              <div class="nombre">${producto}</div>
+              <div class="codigo">Código: ${codigo}</div>
+              <div class="precio">Precio: <span>${precioBs}</span></div>
+              <div class="nota">Precio con PIN autorizado</div>
+              <img src="${qr}" alt="QR">
+            </div>
+          `;
+          catalogo.innerHTML += productoHTML;
+        });
+      })
+      .catch(error => {
+        document.getElementById("catalogo").innerHTML = `<p style="color:red;">❌ Error al cargar productos: ${error.message}</p>`;
+      });
+  </script>
 </body>
 </html>
