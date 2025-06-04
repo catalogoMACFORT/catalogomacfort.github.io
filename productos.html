@@ -2,111 +2,80 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Catálogo de Productos - MACFORT & MACPRO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial MACFORT 2025</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f1f1f1;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    .producto {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 15px auto;
-      max-width: 600px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-    .producto img {
-      float: right;
-      width: 60px;
-      height: 60px;
-    }
-    .nombre {
-      font-weight: bold;
-      font-size: 16px;
-      color: #2c3e50;
-    }
-    .codigo, .precio {
-      font-size: 14px;
-      margin-top: 5px;
-    }
-    .precio {
-      color: green;
-      font-weight: bold;
-    }
-    .nota {
-      font-size: 13px;
-      color: #e67e22;
-    }
-    .boton-wsp {
-      display: block;
-      width: 90%;
-      max-width: 600px;
-      margin: 30px auto;
-      padding: 15px;
-      text-align: center;
-      background: #25D366;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 1rem; background: #f9f9f9; color: #333; }
+    h1 { text-align: center; color: #444; }
+    #catalogo { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    #catalogo th, #catalogo td { padding: 0.5rem; border: 1px solid #ccc; text-align: center; }
+    #catalogo th { background-color: #eee; }
+    img { max-width: 100px; height: auto; }
+    .pin-btn { margin: 0.2rem; padding: 0.4rem 0.6rem; border: none; background-color: #007bff; color: #fff; border-radius: 4px; cursor: pointer; }
+    .pin-btn:hover { background-color: #0056b3; }
+    .input-pin { margin-top: 0.5rem; padding: 0.3rem; width: 60%; text-align: center; }
+    .oculto { display: none; }
+    .whatsapp-btn { background: green; color: white; border: none; padding: 0.4rem 0.6rem; border-radius: 5px; margin-top: 0.3rem; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-  <div id="catalogo">
-    <p>Cargando productos...</p>
+
+<h1>Catálogo de Productos MACFORT & MACPRO</h1>
+
+<div>
+  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pubhtml?gid=0&single=true&widget=true&headers=false" width="100%" height="600" style="border:none;"></iframe>
+</div>
+
+<div style="margin-top: 2rem; text-align: center;">
+  <h3>¿Deseas ver los precios?</h3>
+  <p>Selecciona tu tipo de cliente:</p>
+  <button class="pin-btn" onclick="enviarWhatsapp('Distribuidor')">Soy cliente Distribuidor</button>
+  <button class="pin-btn" onclick="enviarWhatsapp('Mayorista')">Soy cliente Mayorista</button>
+  <button class="pin-btn" onclick="enviarWhatsapp('Final')">Soy cliente Final</button>
+  <button class="pin-btn" onclick="enviarWhatsapp('Licitaciones')">Soy cliente Licitación / Otros</button>
+  
+  <div style="margin-top:1rem;">
+    <label for="pin">Introduce tu PIN para ver precios:</label><br>
+    <input class="input-pin" id="pin" type="password" placeholder="Ej: DIST123" onchange="verificarPin(this.value)">
   </div>
+</div>
 
-  <a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20solicito%20el%20PIN%20para%20ver%20precios%20del%20cat%C3%A1logo%20MACFORT" target="_blank">
-    Solicitar PIN vía WhatsApp
-  </a>
+<div id="preciosAutorizados" class="oculto" style="margin-top: 2rem; text-align: center;">
+  <p>✅ Acceso concedido. Los precios están habilitados.</p>
+  <p>Actualiza la página si deseas recargar la vista.</p>
+</div>
 
-  <script>
-    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
-    const tipoCambio = 16.33; // Puedes actualizar este valor manualmente desde Google Sheets o aquí
+<script>
+  function enviarWhatsapp(tipo) {
+    const numero = '59168099278';
+    const mensaje = encodeURIComponent(`Hola, soy cliente ${tipo} y deseo recibir el PIN para acceder al catálogo de precios. Aquí están mis datos:
 
-    fetch(url)
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.trim().split('\n').slice(1); // omite encabezado
-        const catalogo = document.getElementById("catalogo");
-        catalogo.innerHTML = '';
+📛 Nombre completo:
+🏢 Nombre del negocio:
+📍 Dirección o zona:
+📌 Ubicación GPS (opcional):
 
-        rows.forEach(row => {
-          const cols = row.split(',');
+Gracias.`);
 
-          const codigo = cols[0].trim();
-          const producto = cols[1].trim();
-          const precioUSD = parseFloat(cols[2]);
-          const marca = cols[4].trim();
-          const qr = cols[9].trim();
+    window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+  }
 
-          const precioBs = isNaN(precioUSD) ? 'NaN' : `Bs ${ (precioUSD * tipoCambio).toFixed(2) }`;
+  function verificarPin(pin) {
+    const pines = {
+      'Distribuidor': 'DIST123',
+      'Mayorista': 'MAY456',
+      'Final': 'FIN789',
+      'Licitaciones': 'LIC000'
+    };
 
-          const productoHTML = `
-            <div class="producto">
-              <div class="nombre">${producto}</div>
-              <div class="codigo">Código: ${codigo}</div>
-              <div class="precio">Precio: <span>${precioBs}</span></div>
-              <div class="nota">Precio con PIN autorizado</div>
-              <img src="${qr}" alt="QR">
-            </div>
-          `;
-          catalogo.innerHTML += productoHTML;
-        });
-      })
-      .catch(error => {
-        document.getElementById("catalogo").innerHTML = `<p style="color:red;">❌ Error al cargar productos: ${error.message}</p>`;
-      });
-  </script>
+    const valores = Object.values(pines);
+    if (valores.includes(pin)) {
+      document.getElementById('preciosAutorizados').classList.remove('oculto');
+    } else {
+      alert('❌ PIN incorrecto. Solicítalo por WhatsApp.');
+    }
+  }
+</script>
+
 </body>
 </html>
