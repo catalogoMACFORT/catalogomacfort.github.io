@@ -1,61 +1,112 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
-  color: #333;
 }
 
-.encabezado {
-  background-color: #1d1f20;
-  color: white;
-  padding: 1.5rem;
+.catalogo {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
   text-align: center;
+  color: #d84315;
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
-a {
-  color: #4a90e2;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.contenedor-productos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+h2 {
+  text-align: center;
+  color: #444;
+  font-size: 20px;
+  margin-bottom: 30px;
 }
 
 .producto {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 280px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+  flex-wrap: wrap;
 }
 
 .producto img {
-  width: 100%;
+  width: 100px;
   height: auto;
-  border-radius: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.info {
+  flex: 1;
+  margin-left: 20px;
+  min-width: 240px;
+}
+
+.info strong {
+  font-size: 18px;
+  color: #2c3e50;
 }
 
 .precio {
-  display: block;
-  margin-top: 10px;
+  font-size: 17px;
   font-weight: bold;
-  color: #28a745;
+  color: #2e7d32;
+  margin-top: 5px;
 }
 
-.pie {
-  text-align: center;
-  padding: 1rem;
-  background-color: #222;
+.qr {
+  width: 100px;
+  height: auto;
+  margin-left: 20px;
+}
+
+.boton-wsp {
+  display: block;
+  width: 100%;
+  background: #25d366;
   color: white;
+  text-align: center;
+  padding: 12px;
+  margin-top: 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.boton-wsp:hover {
+  background: #20bf57;
+}
+
+.pin-alerta {
+  font-size: 13px;
+  color: #e67e22;
+  margin-top: 6px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .producto {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .qr {
+    margin-left: 0;
+    margin-top: 10px;
+  }
 }
