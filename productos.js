@@ -1,37 +1,43 @@
-const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?gid=0&single=true&output=csv';
-const tipoCambio = 16.33; // Puedes actualizar este valor manualmente en Google Sheets
+// Configuración general
+const URL_GOOGLE_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
+const TIPO_CAMBIO = 16.33; // valor actual editable desde Google Sheets en el futuro
 
-const container = document.getElementById('contenedor-productos');
+document.addEventListener('DOMContentLoaded', async () => {
+  const contenedor = document.getElementById('contenedor-productos');
 
-fetch(URL_CSV)
-  .then(response => response.text())
-  .then(data => {
-    const filas = data.trim().split('\n').slice(1);
-    filas.forEach(linea => {
-      const columnas = linea.split(',');
+  try {
+    const respuesta = await fetch(URL_GOOGLE_SHEET);
+    const texto = await respuesta.text();
+    const filas = texto.split('\n').slice(1);
 
-      const codigo = columnas[0].trim();
-      const producto = columnas[1].trim();
+    filas.forEach(fila => {
+      const columnas = fila.split(',');
+      const codigo = columnas[0]?.trim();
+      const producto = columnas[1]?.trim();
       const precioUSD = parseFloat(columnas[4]) || 0;
-      const precioBS = (precioUSD * tipoCambio).toFixed(2);
-      const imagen = columnas[12] || `https://via.placeholder.com/100?text=${codigo}`;
-      const qr = columnas[13] || `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}`;
 
-      const item = document.createElement('div');
-      item.className = 'producto';
-      item.innerHTML = `
-        <div class="info">
-          <strong>${producto}</strong><br>
-          Código: ${codigo}<br>
-          <span class="precio">Precio: <span style="color: green">Bs ${precioBS}</span></span><br>
-          <span class="pin-alerta">Precio con PIN autorizado</span>
+      if (!codigo || !producto || !precioUSD) return;
+
+      const precioBs = (precioUSD * TIPO_CAMBIO).toFixed(2);
+      const urlQR = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(codigo + ' ' + producto + ' MACFORT')}`;
+      const imagenAuto = `https://via.placeholder.com/120x120.png?text=${encodeURIComponent(producto)}`;
+
+      const card = document.createElement('div');
+      card.className = 'producto-card';
+      card.innerHTML = `
+        <img class="producto-img" src="${imagenAuto}" alt="${producto}">
+        <div class="producto-info">
+          <h3>${producto}</h3>
+          <p><strong>Código:</strong> ${codigo}</p>
+          <p class="precio">Precio: <span>Bs ${precioBs}</span></p>
+          <p class="pin-alerta">Precio con PIN autorizado</p>
         </div>
-        <img class="qr" src="${qr}" alt="QR">
+        <img class="qr" src="${urlQR}" alt="QR">
       `;
-      container.appendChild(item);
+      contenedor.appendChild(card);
     });
-  })
-  .catch(err => {
-    container.innerHTML = '<p style="color:red;">❌ Error al cargar productos. Revisa el CSV o el formato de publicación.</p>';
-    console.error(err);
-  });
+  } catch (error) {
+    contenedor.innerHTML = '<p style="color:red;">❌ Error al cargar productos. Verifica tu conexión o el enlace CSV.</p>';
+    console.error('Error al cargar productos:', error);
+  }
+});
