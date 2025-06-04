@@ -1,65 +1,33 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MACFORT 2025</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-    h1, h2 { text-align: center; color: #2c3e50; }
-    .catalogo { max-width: 1100px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
-    .producto { border-bottom: 1px solid #ccc; padding: 10px 0; display: flex; align-items: center; justify-content: space-between; }
-    .producto img { width: 100px; height: auto; border: 1px solid #ccc; }
-    .info { flex: 1; margin-left: 20px; }
-    .qr { width: 100px; }
-    .precio { font-size: 18px; font-weight: bold; color: green; }
-    .boton-wsp { display: block; width: 100%; padding: 10px; background: #25D366; color: white; text-align: center; text-decoration: none; border-radius: 5px; margin-top: 20px; font-weight: bold; }
-    .pin-alerta { font-size: 13px; color: #e67e22; margin-top: 5px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MACFORT - Catálogo Oficial</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-  <div class="catalogo">
-    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-    <h2>Escaleras Multipropósito Reforzadas</h2><div class="producto">
-  <img src="https://via.placeholder.com/100" alt="Escalera 4x3">
-  <div class="info">
-    <strong>Escalera Multipropósito Reforzada 4x3</strong><br>
-    Código: MF-503<br>
-    Unidad: 1 u. / Caja: 1 u.<br>
-    <span class="precio" id="precio-503">Consultando precio...</span><br>
-    <span class="pin-alerta">Precio disponible solo con PIN autorizado</span>
-  </div>
-  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=MF-503%20Escalera%204x3%20MACFORT%20Escaleras%20Multipropósito" alt="QR">
-</div>
+  <header>
+    <h1>CATÁLOGO MACFORT & MACPRO 2025</h1>
+    <p>Distribución Nacional e Internacional</p>
+  </header>
 
-<div class="producto">
-  <img src="https://via.placeholder.com/100" alt="Escalera 4x4">
-  <div class="info">
-    <strong>Escalera Multipropósito Reforzada 4x4</strong><br>
-    Código: MF-504<br>
-    Unidad: 1 u. / Caja: 1 u.<br>
-    <span class="precio" id="precio-504">Consultando precio...</span><br>
-    <span class="pin-alerta">Precio disponible solo con PIN autorizado</span>
-  </div>
-  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=MF-504%20Escalera%204x4%20MACFORT%20Escaleras%20Multipropósito" alt="QR">
-</div>
+  <main style="text-align:center; padding:2rem;">
+    <img src="logo.png" alt="Logo MACFORT" style="max-width:150px; margin-bottom: 1rem;">
+    <h2>Bienvenido(a)</h2>
+    <p>Explora nuestro catálogo de productos clasificados por categorías y accede con tu PIN para ver precios exclusivos.</p>
 
-<a class="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20mayorista.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20escaleras%20multiprop%C3%B3sito.%20%C2%BFPodr%C3%ADa%20facilitarme%20el%20PIN%20para%20ver%20los%20precios%3F" target="_blank">Solicitar PIN vía WhatsApp</a>
+    <a href="productos.html">
+      <button style="margin-top: 1rem;">📦 Ver Catálogo de Productos</button>
+    </a>
 
-<p style="font-size: 12px; color: #c0392b; margin-top: 20px; text-align: center;">
-  🔒 Los precios están sujetos a cambios sin previo aviso debido a la situación cambiaria del país. El precio solo se congela al momento del pago.
-</p>
+    <a href="https://wa.me/59168099278?text=Hola%20deseo%20acceder%20al%20catálogo%20de%20productos%20MACFORT.%20Mi%20nombre%20es..." target="_blank">
+      <button style="background-color:#25D366; margin-top:1rem;">💬 Contactar por WhatsApp</button>
+    </a>
+  </main>
 
-  </div>  <script>
-    // Simulación de API de tipo de cambio paralelo (reemplazar luego por fetch real)
-    const tipoCambio = 7.15; // Simulado. Aquí se debería usar la API real del tipo de cambio paralelo.
-    const preciosUSD = {
-      '503': 55.5,
-      '504': 65.4
-    };
-
-    Object.keys(preciosUSD).forEach(codigo => {
-      const precioBs = (preciosUSD[codigo] * tipoCambio).toFixed(2);
-      document.getElementById('precio-' + codigo).innerText = `Bs ${precioBs}`;
-    });
-  </script></body>
+  <footer style="text-align:center; padding:1rem; background:#eee;">
+    <p>&copy; 2025 MACFORT & MACPRO. Todos los derechos reservados.</p>
+  </footer>
+</body>
 </html>
