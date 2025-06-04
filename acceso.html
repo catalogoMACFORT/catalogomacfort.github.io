@@ -1,50 +1,40 @@
-<!-- acceso.html (o puedes integrarlo en index.html si prefieres) --><!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso Cliente - Plataforma Mercatto</title>
-  <script>
-    let lat = "";
-    let lon = "";function detectarUbicacion() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
-      document.getElementById("ubicacion").innerHTML = `Ubicación detectada: <br>Lat: ${lat} <br>Lon: ${lon}`;
-    }, function (error) {
-      document.getElementById("ubicacion").innerHTML = "No se pudo detectar la ubicación.";
-    });
-  } else {
-    document.getElementById("ubicacion").innerHTML = "El navegador no soporta Geolocalización.";
-  }
-}
-
-function enviarWhatsApp(tipoCliente) {
-  const nombre = document.getElementById("nombre").value;
-  const negocio = document.getElementById("negocio").value;
-  const mensaje = `Hola, soy *${nombre}* y tengo un negocio llamado *${negocio}*.\nTipo de cliente: *${tipoCliente}*.\nUbicación GPS: https://maps.google.com/?q=${lat},${lon}`;
-  const numero = "59168099278";
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
-
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso con PIN</title>
+  <link rel="stylesheet" href="estilo.css" />
 </head>
-<body onload="detectarUbicacion()">
-  <h2>Solicitar Acceso a Precios</h2>
-  <form>
-    <label for="nombre">Nombre completo:</label><br>
-    <input type="text" id="nombre" required><br><br><label for="negocio">Nombre de su negocio o tienda:</label><br>
-<input type="text" id="negocio" required><br><br>
-
-<div id="ubicacion">Detectando ubicación GPS...</div><br>
-
-<h3>Seleccione su tipo de cliente:</h3>
-<button type="button" onclick="enviarWhatsApp('Distribuidor')">Soy Distribuidor</button>
-<button type="button" onclick="enviarWhatsApp('Mayorista')">Soy Mayorista</button>
-<button type="button" onclick="enviarWhatsApp('Cliente Final')">Soy Cliente Final</button>
-<button type="button" onclick="enviarWhatsApp('Licitación / Otros')">Licitación / Otros</button>
-
+<body>
+  <h1>Acceso con PIN</h1>
+  <form onsubmit="redirigir(event)">
+    <label for="pin">Ingresa tu PIN de cliente:</label>
+    <input type="text" id="pin" required />
+    <button type="submit">Ingresar</button>
   </form>
+
+  <script>
+    function redirigir(e) {
+      e.preventDefault();
+      const pin = document.getElementById("pin").value.trim();
+      switch (pin) {
+        case "DISTRIBUIDOR2025":
+          window.location.href = "productos.html?tipo=distribuidor";
+          break;
+        case "MAYORISTA2025":
+          window.location.href = "productos.html?tipo=mayorista";
+          break;
+        case "FINAL2025":
+          window.location.href = "productos.html?tipo=final";
+          break;
+        case "LICITACION2025":
+          window.location.href = "productos.html?tipo=licitacion";
+          break;
+        default:
+          alert("PIN no válido");
+      }
+    }
+  </script>
 </body>
 </html>
