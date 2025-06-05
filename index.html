@@ -1,20 +1,20 @@
-<!-- Plan de acción y mejora integral para catalogomacfort.github.io --><!-- Archivo: index.html mejorado --><!DOCTYPE html><html lang="es">
+<!-- index.html FINAL mejorado para catalogomacfort.github.io --><!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MACFORT 2025</title>
+  <title>CATÁLOGO MACFORT 2025</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="productos.js"></script>
 </head>
 <body>
   <header>
     <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-    <p>Categorías, precios y productos disponibles</p>
+    <p class="subtitulo">Categorías, precios y productos disponibles</p>
     <nav class="filtros">
       <input type="text" id="buscador" placeholder="🔍 Buscar producto...">
       <select id="filtroCategoria">
         <option value="">Todas las categorías</option>
-        <!-- Opciones dinámicas cargadas en productos.js -->
+        <!-- Opciones cargadas automáticamente -->
       </select>
       <button onclick="reiniciarFiltros()">🔄 Reiniciar</button>
     </nav>
@@ -40,6 +40,8 @@
     function reiniciarFiltros() {
       document.getElementById('buscador').value = '';
       document.getElementById('filtroCategoria').value = '';
+      localStorage.removeItem('categoria_filtro');
+      localStorage.removeItem('busqueda');
       cargarProductos();
     }
   </script></body>
