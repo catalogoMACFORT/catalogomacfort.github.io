@@ -1,45 +1,60 @@
-const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+// Configura tu link público de Google Sheets en formato CSV
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?gid=0&single=true&output=csv';
 
-// Asignación de PIN por tipo de cliente
-const PINES = {
-  distribuidor: "MACD2025",
-  mayorista: "MACM2025",
-  final: "MACF2025",
-  licitacion: "MACL2025"
+// Configura tipo de cambio editable desde hoja (manual en esta versión)
+const tipoCambio = 16.33; // Puedes cambiarlo desde Google Sheets en una celda luego
+
+// Mapeo de precios por tipo de cliente
+const preciosColumnas = {
+  distribuidor: 'Distribuidor',
+  mayorista: 'Mayorista',
+  final: 'Cliente Final',
+  licitacion: 'Licitación'
 };
 
-const PIN = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+async function cargarProductos() {
+  try {
+    const response = await fetch(CSV_URL);
+    const data = await response.text();
 
-fetch(URL_CSV)
-  .then(res => res.text())
-  .then(csv => {
-    const filas = csv.split("\n").slice(1); // omitir encabezado
-    const contenedor = document.getElementById("contenedor-productos");
+    const filas = data.split('\n').map(row => row.split(','));
+    const encabezados = filas.shift();
+    const contenedor = document.getElementById('contenedor-productos');
+    contenedor.innerHTML = '';
+
+    const tipoCliente = localStorage.getItem('cliente_registrado');
+    const pin = localStorage.getItem('pin_cliente');
+
+    const colPrecio = encabezados.findIndex(h => h.trim() === preciosColumnas[tipoCliente]);
 
     filas.forEach(fila => {
-      const columnas = fila.split(",");
-      const [codigo, producto, precioUSD, marca, categoria, urlQR, imagenURL, pinDistribuidor, pinMayorista, pinFinal, pinLicitacion] = columnas;
+      const codigo = fila[0]?.trim();
+      const producto = fila[1]?.trim();
+      const imagen = fila[14] || 'https://via.placeholder.com/100';
+      const qr = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}`;
 
-      let precio = null;
+      const precioRaw = parseFloat(fila[colPrecio]);
+      const precio = isNaN(precioRaw) ? '🔒' : `Bs ${(precioRaw * tipoCambio).toFixed(2)}`;
 
-      if (PIN === PINES.distribuidor) precio = parseFloat(pinDistribuidor);
-      else if (PIN === PINES.mayorista) precio = parseFloat(pinMayorista);
-      else if (PIN === PINES.final) precio = parseFloat(pinFinal);
-      else if (PIN === PINES.licitacion) precio = parseFloat(pinLicitacion);
-
-      if (precio) {
-        contenedor.innerHTML += `
-          <div class="producto">
-            <img src="${imagenURL}" alt="${producto}">
-            <div class="info">
-              <h2>${producto}</h2>
-              <p><strong>Código:</strong> ${codigo}</p>
-              <p><strong>Precio:</strong> Bs ${precio.toFixed(2)}</p>
-              <p class="nota">Precio visible solo con PIN autorizado</p>
-            </div>
-            <img src="${urlQR}" alt="QR" class="qr">
-          </div>
-        `;
-      }
+      const card = document.createElement('div');
+      card.className = 'producto-card';
+      card.innerHTML = `
+        <img src="${imagen}" alt="${producto}">
+        <div>
+          <h3>${producto}</h3>
+          <p><strong>Código:</strong> ${codigo}</p>
+          <p><strong>Precio:</strong> ${precio}</p>
+          <p style="font-size:12px; color:#e67e22">Precio con PIN autorizado</p>
+          <button onclick="solicitarAccesoProducto('${codigo}')">Solicitar vía WhatsApp</button>
+        </div>
+        <img class="qr" src="${qr}" alt="QR ${codigo}">
+      `;
+      contenedor.appendChild(card);
     });
-  });
+
+  } catch (error) {
+    document.getElementById('contenedor-productos').innerHTML = `<p style="color:red">❌ Error al cargar productos. Verifica el CSV o tu conexión.</p>`;
+  }
+}
+
+cargarProductos();
