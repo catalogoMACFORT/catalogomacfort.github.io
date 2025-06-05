@@ -11,19 +11,35 @@
     <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
     <p>Cargando productos...</p>
     <div class="botones-pin">
-      <button onclick="enviarWhatsapp('distribuidor')">Soy Cliente Distribuidor</button>
-      <button onclick="enviarWhatsapp('mayorista')">Soy Cliente Mayorista</button>
-      <button onclick="enviarWhatsapp('final')">Soy Cliente Final</button>
-      <button onclick="enviarWhatsapp('licitacion')">Soy Cliente de Licitación</button>
+      <button onclick="solicitarPin('distribuidor')">Soy Cliente Distribuidor</button>
+      <button onclick="solicitarPin('mayorista')">Soy Cliente Mayorista</button>
+      <button onclick="solicitarPin('final')">Soy Cliente Final</button>
+      <button onclick="solicitarPin('licitacion')">Soy Cliente de Licitación</button>
     </div>
   </header>  <main id="contenedor-productos"></main>  <footer>
-    <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
-      Solicitar PIN vía WhatsApp
-    </a>
+    <p style="text-align:center; color:#888; font-size:12px;">© 2025 MACFORT | Todos los derechos reservados</p>
   </footer>  <script>
-    function enviarWhatsapp(tipo) {
-      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
-      window.open(url, '_blank');
+    let tipoCliente = '';
+    let clienteRegistrado = localStorage.getItem('cliente_registrado');
+
+    function solicitarPin(tipo) {
+      tipoCliente = tipo;
+      if (!clienteRegistrado || clienteRegistrado !== tipoCliente) {
+        const pin = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+        if (pin) {
+          localStorage.setItem('cliente_registrado', tipoCliente);
+          localStorage.setItem('pin_cliente', pin);
+          window.location.reload();
+        }
+      }
+    }
+
+    function solicitarAccesoProducto(codigo) {
+      const tipo = localStorage.getItem('cliente_registrado') || 'no definido';
+      const pin = localStorage.getItem('pin_cliente') || '';
+      if (pin) {
+        window.location.href = `https://wa.me/59168099278?text=Hola%2C%20ingres%C3%A9%20el%20PIN%20para%20el%20producto%20${codigo}%20y%20mi%20tipo%20de%20cliente%20es%20${tipo}.%20Mi%20PIN%20es%3A%20${pin}`;
+      }
     }
 
     // Captura y envío de ubicación GPS
@@ -32,6 +48,7 @@
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         localStorage.setItem('ubicacion_cliente', `${lat},${lng}`);
+        // También podrías enviar esto a tu base o registrar en Google Sheets mediante API
       });
     }
   </script></body>
