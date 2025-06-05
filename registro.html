@@ -1,33 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
+<!-- registro.html - Registro de Cliente MACFORT Mejorado --><!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Cliente MACFORT</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 20px; }
+    form { background: white; max-width: 600px; margin: auto; padding: 25px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px; }
+    button { background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; width: 100%; font-size: 16px; }
+    button:hover { background: #218838; }
+  </style>
 </head>
 <body>
-  <h2>Registro del Cliente</h2>
+  <h2 style="text-align:center">📝 Registro de Nuevo Cliente MACFORT</h2>
   <form onsubmit="enviarRegistro(event)">
-    <label>Nombre Completo:</label><input type="text" id="nombre" required><br>
-    <label>Nombre del Negocio:</label><input type="text" id="negocio" required><br>
-    <label>Rubro:</label><input type="text" id="rubro" required><br>
-    <label>Ubicación GPS:</label><input type="text" id="gps" placeholder="Ubicación detectada automáticamente"><br>
-    <label>WhatsApp:</label><input type="tel" id="wsp" required><br>
-    <label>PIN:</label><input type="text" id="pin" required><br>
-    <button type="submit">Enviar Registro</button>
-  </form>
+    <label>Nombre completo:</label>
+    <input type="text" id="nombre" required><label>Nombre del negocio o empresa:</label>
+<input type="text" id="negocio" required>
 
-  <script>
+<label>Rubro / Actividad:</label>
+<input type="text" id="rubro" required>
+
+<label>Número de WhatsApp:</label>
+<input type="tel" id="wsp" required placeholder="+591...">
+
+<label>¿Requiere factura?</label>
+<select id="factura">
+  <option value="Sí">Sí</option>
+  <option value="No">No</option>
+</select>
+
+<label>PIN asignado:</label>
+<input type="text" id="pin" required placeholder="MACD2025 / MACM2025 / etc">
+
+<input type="hidden" id="gps">
+<button type="submit">📨 Enviar registro por WhatsApp</button>
+
+  </form>  <script>
     function enviarRegistro(e) {
       e.preventDefault();
       const nombre = document.getElementById('nombre').value;
       const negocio = document.getElementById('negocio').value;
       const rubro = document.getElementById('rubro').value;
-      const gps = document.getElementById('gps').value;
       const wsp = document.getElementById('wsp').value;
+      const factura = document.getElementById('factura').value;
       const pin = document.getElementById('pin').value;
-      const mensaje = `Nuevo Registro:%0A${nombre}%0A${negocio}%0A${rubro}%0AGPS: ${gps}%0AWhatsApp: ${wsp}%0APIN: ${pin}`;
+      const gps = document.getElementById('gps').value;
+
+      const mensaje = `📌 Nuevo registro:%0A👤 Nombre: ${nombre}%0A🏢 Negocio: ${negocio}%0A🛠️ Rubro: ${rubro}%0A📱 WhatsApp: ${wsp}%0A🧾 Factura: ${factura}%0A🔐 PIN: ${pin}%0A📍 Ubicación GPS: ${gps}`;
       window.open(`https://wa.me/59168099278?text=${mensaje}`, '_blank');
     }
-  </script>
-</body>
+
+    // Captura de ubicación automática si está disponible
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const coords = `${pos.coords.latitude},${pos.coords.longitude}`;
+        document.getElementById('gps').value = coords;
+      });
+    }
+  </script></body>
 </html>
