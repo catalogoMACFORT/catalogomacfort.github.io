@@ -1,55 +1,66 @@
-const URL_GOOGLE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 const contenedor = document.getElementById('contenedor-productos');
-
-// Simular PIN ingresado manualmente (tú lo actualizarás dinámicamente según cliente)
-const tipoCliente = localStorage.getItem('cliente_tipo') || '';
-const PINES = {
-  distribuidor: "12345",
-  mayorista: "23456",
-  final: "34567",
-  licitacion: "45678"
+const tipoCambio = 16.33; // Cambiar manualmente según necesidad
+const pinCorrecto = {
+  distribuidor: "1234",
+  mayorista: "5678",
+  final: "0000",
+  licitacion: "9999"
 };
 
-// Usar tipo de cambio editable desde Google Sheets o por defecto
-let tipoCambio = 16.33;
+let pinIngresado = null;
+let tipoCliente = null;
 
-fetch(URL_GOOGLE_SHEET)
-  .then(response => response.text())
-  .then(csv => {
-    const filas = csv.split('\n').slice(1);
-    filas.forEach(linea => {
-      const datos = linea.split(',');
+async function cargarProductos() {
+  try {
+    const respuesta = await fetch(CSV_URL);
+    const datos = await respuesta.text();
+    const filas = datos.split("\n").slice(1);
 
-      const codigo = datos[0];
-      const nombre = datos[1];
-      const precioUSD = parseFloat(datos[4]);
-      const qr = datos[10];
+    filas.forEach(fila => {
+      const columnas = fila.split(",");
+      const [codigo, nombre, precioUSD, , , , , , , , , , , imagen, qr] = columnas;
 
-      // Mostrar precios solo si se tiene PIN correcto
-      let precioVisible = 'Precio con PIN autorizado';
-      let mostrarPrecio = false;
+      if (!codigo || !nombre || !precioUSD) return;
 
-      const pinActual = localStorage.getItem('pin_ingresado');
+      const div = document.createElement("div");
+      div.className = "producto";
 
-      if (pinActual) {
-        if (pinActual === PINES[tipoCliente]) {
-          const precioBs = (precioUSD * tipoCambio).toFixed(2);
-          precioVisible = `Precio: Bs ${precioBs}`;
-          mostrarPrecio = true;
-        } else {
-          precioVisible = 'PIN incorrecto';
-        }
-      }
+      const precioBs = (parseFloat(precioUSD) * tipoCambio).toFixed(2);
+      const mostrarPrecio = pinIngresado ? `Bs ${precioBs}` : '🔒 Precio con PIN autorizado';
+      const clasePrecio = pinIngresado ? 'visible' : 'oculto';
 
-      contenedor.innerHTML += `
-        <div class="producto">
-          <div class="info">
-            <strong>${nombre}</strong><br>
-            Código: ${codigo}<br>
-            ${mostrarPrecio ? `<span class="precio">${precioVisible}</span>` : `<span class="pin-alerta">${precioVisible}</span>`}
-          </div>
-          <img src="${qr}" alt="QR">
+      div.innerHTML = `
+        <img src="${imagen || 'https://via.placeholder.com/100'}" alt="${nombre}">
+        <div class="info">
+          <strong>${nombre}</strong><br>
+          Código: ${codigo}<br>
+          <span class="precio ${clasePrecio}">Precio: ${mostrarPrecio}</span><br>
+          <span class="pin-alerta">${!pinIngresado ? 'Solicite su PIN para acceder al precio' : ''}</span>
         </div>
+        <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(nombre)}" alt="QR">
       `;
+
+      contenedor.appendChild(div);
     });
-  });
+
+  } catch (error) {
+    contenedor.innerHTML = "<p style='color:red;'>❌ Error al cargar productos. Verifica el enlace del CSV.</p>";
+  }
+}
+
+// Almacenar tipo de cliente y solicitar PIN
+window.enviarWhatsapp = function(tipo) {
+  tipoCliente = tipo;
+  const pin = prompt(`Ingresa el PIN de acceso para cliente ${tipo.toUpperCase()}:`);
+  if (pin === pinCorrecto[tipo]) {
+    pinIngresado = true;
+    contenedor.innerHTML = '';
+    cargarProductos();
+  } else {
+    alert("PIN incorrecto. Solicite su PIN autorizado por WhatsApp.");
+    pinIngresado = false;
+  }
+};
+
+document.addEventListener("DOMContentLoaded", cargarProductos);
