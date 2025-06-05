@@ -1,36 +1,55 @@
-// Archivo productos.js
-const URL_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
+const URL_GOOGLE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const contenedor = document.getElementById('contenedor-productos');
 
-const tipoCambio = 16.33; // Actualizable desde Google Sheets próximamente
+// Simular PIN ingresado manualmente (tú lo actualizarás dinámicamente según cliente)
+const tipoCliente = localStorage.getItem('cliente_tipo') || '';
+const PINES = {
+  distribuidor: "12345",
+  mayorista: "23456",
+  final: "34567",
+  licitacion: "45678"
+};
 
-fetch(URL_CSV)
+// Usar tipo de cambio editable desde Google Sheets o por defecto
+let tipoCambio = 16.33;
+
+fetch(URL_GOOGLE_SHEET)
   .then(response => response.text())
-  .then(data => {
-    const rows = data.split('\n').slice(1);
-    const contenedor = document.getElementById('contenedor-productos');
-    rows.forEach(row => {
-      const columnas = row.split(',');
+  .then(csv => {
+    const filas = csv.split('\n').slice(1);
+    filas.forEach(linea => {
+      const datos = linea.split(',');
 
-      const codigo = columnas[0];
-      const nombre = columnas[1];
-      const precioUSD = parseFloat(columnas[4]);
+      const codigo = datos[0];
+      const nombre = datos[1];
+      const precioUSD = parseFloat(datos[4]);
+      const qr = datos[10];
 
-      if (!codigo || isNaN(precioUSD)) return;
+      // Mostrar precios solo si se tiene PIN correcto
+      let precioVisible = 'Precio con PIN autorizado';
+      let mostrarPrecio = false;
 
-      const precioBs = (precioUSD * tipoCambio).toFixed(2);
+      const pinActual = localStorage.getItem('pin_ingresado');
 
-      const div = document.createElement('div');
-      div.className = 'producto';
-      div.innerHTML = `
-        <h3>${nombre}</h3>
-        <p><strong>Código:</strong> ${codigo}</p>
-        <p><strong>Precio:</strong> <span class="precio">Bs ${precioBs}</span></p>
-        <p class="aviso">Precio con PIN autorizado</p>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo} - ${nombre}" alt="QR">
+      if (pinActual) {
+        if (pinActual === PINES[tipoCliente]) {
+          const precioBs = (precioUSD * tipoCambio).toFixed(2);
+          precioVisible = `Precio: Bs ${precioBs}`;
+          mostrarPrecio = true;
+        } else {
+          precioVisible = 'PIN incorrecto';
+        }
+      }
+
+      contenedor.innerHTML += `
+        <div class="producto">
+          <div class="info">
+            <strong>${nombre}</strong><br>
+            Código: ${codigo}<br>
+            ${mostrarPrecio ? `<span class="precio">${precioVisible}</span>` : `<span class="pin-alerta">${precioVisible}</span>`}
+          </div>
+          <img src="${qr}" alt="QR">
+        </div>
       `;
-      contenedor.appendChild(div);
     });
-  })
-  .catch(error => {
-    document.getElementById('contenedor-productos').innerHTML = '<p>❌ Error al cargar productos.</p>';
   });
