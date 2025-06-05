@@ -1,91 +1,67 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  background: #f4f4f4;
   margin: 0;
   padding: 0;
+  color: #2c3e50;
+}
+
+header, footer {
   text-align: center;
+  padding: 20px;
+  background: white;
 }
 
 h1 {
-  color: #2c3e50;
-  margin-top: 20px;
   font-size: 26px;
+  color: #2c3e50;
 }
 
 .botones-pin {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-  margin: 20px auto;
-  max-width: 300px;
+  margin-top: 15px;
 }
 
 button {
-  background-color: #2980b9;
+  padding: 10px 15px;
+  background: #3498db;
   color: white;
-  padding: 12px;
   border: none;
-  border-radius: 6px;
-  font-size: 15px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-weight: bold;
 }
 
-button:hover {
-  background-color: #3498db;
+main {
+  padding: 20px;
 }
 
-#contenedor-productos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 20px;
-}
-
-.tarjeta-producto {
-  background: white;
-  border: 1px solid #ddd;
+.producto {
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  width: 300px;
-  margin: 10px;
   padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
-.contenido-producto {
-  text-align: left;
+.producto img {
+  width: 80px;
+  height: 80px;
 }
 
 .precio {
+  font-size: 18px;
   font-weight: bold;
   color: green;
 }
 
-.pin-requerido {
-  color: orange;
-  font-weight: bold;
+.pin-alerta {
   font-size: 14px;
-}
-
-.qr-contenedor img {
-  width: 80px;
-  height: auto;
-}
-
-footer {
-  margin-top: 30px;
-  padding: 20px;
-}
-
-#boton-wsp {
-  display: inline-block;
-  background-color: #25D366;
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  padding: 12px 20px;
-  border-radius: 8px;
+  color: #e67e22;
 }
