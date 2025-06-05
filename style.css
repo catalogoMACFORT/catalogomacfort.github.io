@@ -1,66 +1,48 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f9f9f9;
-  margin: 0;
-  padding: 20px;
+  background-color: #f4f4f4;
+  margin: 20px;
+  padding: 0;
 }
-header h1 {
+
+h1 {
   text-align: center;
-  color: #2c3e50;
+  color: #34495e;
 }
-.botones-pin {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-.botones-pin button {
-  padding: 10px 15px;
-  background-color: #27ae60;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-main#contenedor-productos {
-  max-width: 900px;
+
+#productos-container {
+  max-width: 1000px;
   margin: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-  gap: 20px;
 }
-.producto-card {
+
+.producto {
   background: white;
-  padding: 15px;
+  margin: 10px 0;
+  padding: 10px 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
+  box-shadow: 0 0 5px #ccc;
+  position: relative;
 }
-.producto-card h3 {
-  margin-top: 0;
+
+.precio {
   font-weight: bold;
-  color: #222;
+  color: green;
 }
-.producto-card .precio {
-  font-weight: bold;
-  color: #2ecc71;
+
+.nota-precio {
+  color: #b47600;
+  font-style: italic;
 }
-.producto-card img {
-  margin-top: 10px;
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-}
-footer {
-  max-width: 900px;
+
+.boton-wsp {
+  display: block;
+  max-width: 300px;
   margin: 20px auto;
-  text-align: center;
-}
-footer a#boton-wsp {
-  display: inline-block;
-  padding: 12px 25px;
+  padding: 12px 0;
   background-color: #25d366;
   color: white;
-  font-weight: 700;
-  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
   border-radius: 5px;
+  text-decoration: none;
 }
