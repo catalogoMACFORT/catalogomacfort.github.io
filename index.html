@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css">
   <script defer src="productos.js"></script>
 </head>
 <body>
@@ -11,77 +12,33 @@
     <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
     <p>Cargando productos...</p>
     <div class="botones-pin">
-      <button onclick="seleccionarCliente('distribuidor')">Soy Cliente Distribuidor</button>
-      <button onclick="seleccionarCliente('mayorista')">Soy Cliente Mayorista</button>
-      <button onclick="seleccionarCliente('final')">Soy Cliente Final</button>
-      <button onclick="seleccionarCliente('licitacion')">Soy Cliente de Licitación</button>
+      <button onclick="enviarWhatsapp('distribuidor')">Soy Cliente Distribuidor</button>
+      <button onclick="enviarWhatsapp('mayorista')">Soy Cliente Mayorista</button>
+      <button onclick="enviarWhatsapp('final')">Soy Cliente Final</button>
+      <button onclick="enviarWhatsapp('licitacion')">Soy Cliente de Licitación</button>
     </div>
   </header>
-  <main id="productos-container"></main>
+
+  <main id="contenedor-productos"></main>
 
   <footer>
-    <a id="boton-whatsapp" href="#" target="_blank">Solicitar PIN vía WhatsApp</a>
+    <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
+      Solicitar PIN vía WhatsApp
+    </a>
   </footer>
 
   <script>
-    let tipoClienteSeleccionado = null;
-
-    function seleccionarCliente(tipo) {
-      tipoClienteSeleccionado = tipo;
-      const whatsappLink = `https://wa.me/59168099278?text=Hola,%20soy%20cliente%20${tipo}.%20Solicito%20el%20PIN%20para%20acceder%20al%20catálogo.`;
-      document.getElementById('boton-whatsapp').href = whatsappLink;
-      cargarProductos(tipoClienteSeleccionado);
+    function enviarWhatsapp(tipo) {
+      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
+      window.open(url, '_blank');
     }
 
-    function cargarProductos(tipo) {
-      const contenedor = document.getElementById('productos-container');
-      contenedor.innerHTML = '';
-
-      // Aquí va la lógica para cargar productos según el tipo
-      // Ejemplo simplificado (reemplaza con datos reales):
-      const productos = [
-        {
-          nombre: 'Escalera Multipropósito 4x3',
-          codigo: 'MF-503',
-          categoria: 'MAC FOR-T',
-          precioDistribuidor: '650.00',
-          precioMayorista: '620.00',
-          precioFinal: '680.00',
-          precioLicitacion: '600.00',
-          imagen: 'ruta/imagen1.jpg',
-          qr: 'ruta/qr1.png',
-        },
-        {
-          nombre: 'Escalera Multipropósito 4x4',
-          codigo: 'MF-504',
-          categoria: 'MAC FOR-T',
-          precioDistribuidor: '770.00',
-          precioMayorista: '740.00',
-          precioFinal: '800.00',
-          precioLicitacion: '720.00',
-          imagen: 'ruta/imagen2.jpg',
-          qr: 'ruta/qr2.png',
-        },
-      ];
-
-      productos.forEach(prod => {
-        const div = document.createElement('div');
-        div.classList.add('producto');
-        div.innerHTML = `
-          <img src="${prod.imagen}" alt="${prod.nombre}" />
-          <h2>${prod.nombre}</h2>
-          <p>Código: ${prod.codigo}</p>
-          <p>Categoría: ${prod.categoria}</p>
-          <p>Precio: Bs ${
-            tipo === 'distribuidor' ? prod.precioDistribuidor :
-            tipo === 'mayorista' ? prod.precioMayorista :
-            tipo === 'final' ? prod.precioFinal :
-            tipo === 'licitacion' ? prod.precioLicitacion : 'Consultar'
-          }</p>
-          <p>Precio con PIN autorizado</p>
-          <img src="${prod.qr}" alt="QR ${prod.nombre}" />
-        `;
-        contenedor.appendChild(div);
+    // Captura y guarda ubicación GPS del visitante
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        localStorage.setItem('ubicacion_cliente', `${lat},${lng}`);
       });
     }
   </script>
