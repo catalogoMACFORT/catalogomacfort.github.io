@@ -2,33 +2,36 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <title>Acceso Cliente</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso con PIN | MACFORT</title>
-  <link rel="stylesheet" href="estilo.css">
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    h1 { color: #2c3e50; }
+    .botones button {
+      display: block;
+      margin: 15px auto;
+      padding: 15px 25px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h2>Ingresa tu PIN para acceder a precios según tu categoría</h2>
-  <form onsubmit="verificarPIN(event)">
-    <label for="codigo">PIN recibido:</label>
-    <input type="text" id="codigo" required>
-    <button type="submit">Ver Catálogo</button>
-  </form>
+  <h1>¿Qué tipo de cliente eres?</h1>
+  <div class="botones">
+    <button onclick="acceder('distribuidor')">Cliente Distribuidor</button>
+    <button onclick="acceder('mayorista')">Cliente Mayorista</button>
+    <button onclick="acceder('final')">Cliente Final</button>
+    <button onclick="acceder('licitacion')">Cliente de Licitación u Otros</button>
+  </div>
 
   <script>
-    function verificarPIN(event) {
-      event.preventDefault();
-      const pin = document.getElementById('codigo').value.trim();
-      if (pin === "MACDISTRIBUIDOR") {
-        window.location.href = "productos.html?cat=distribuidor";
-      } else if (pin === "MACMAYORISTA") {
-        window.location.href = "productos.html?cat=mayorista";
-      } else if (pin === "MACFINAL") {
-        window.location.href = "productos.html?cat=final";
-      } else if (pin === "MACLICITACION") {
-        window.location.href = "productos.html?cat=licitacion";
-      } else {
-        alert("PIN incorrecto. Solicítalo vía WhatsApp.");
-      }
+    function acceder(tipo) {
+      window.location.href = `productos.html?tipo=${tipo}`;
     }
   </script>
 </body>
