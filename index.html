@@ -1,31 +1,30 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Catálogo Oficial MACFORT 2025</title>
-    <link rel="stylesheet" href="estilo.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <header>
-        <img src="logotipo.png" alt="Logo MACPro" class="logo" />
-        <h1>Catálogo Oficial MACFORT 2025</h1>
-        <p>Seleccione su tipo de cliente para ver precios personalizados</p>
-        <div class="botones">
-            <button onclick="seleccionarCliente('distribuidor')">Distribuidor</button>
-            <button onclick="seleccionarCliente('mayorista')">Mayorista</button>
-            <button onclick="seleccionarCliente('final')">Cliente Final</button>
-            <button onclick="seleccionarCliente('licitacion')">Licitación</button>
-        </div>
-    </header>
-    <main>
-        <div id="contenedor-productos">Cargando productos...</div>
-    </main>
-    <footer>
-        <p>© 2025 MACFORT | Todos los derechos reservados</p>
-        <a href="https://wa.me/59168099278" id="boton-wsp" target="_blank">📞 Contáctanos por WhatsApp</a>
-    </footer>
-    <script src="main.js"></script>
+  <header>
+    <img src="logo.png" alt="Logo MACPro" class="logo">
+    <h1>Catálogo Oficial MACFORT 2025</h1>
+    <p>Seleccione su tipo de cliente para ver precios personalizados</p>
+    <div class="filtros">
+      <button>Distribuidor</button>
+      <button>Mayorista</button>
+      <button>Cliente Final</button>
+      <button>Licitación</button>
+    </div>
+  </header>
+  <main id="contenedor-productos">
+    <p>Cargando productos...</p>
+  </main>
+  <footer>
+    <p>© 2025 MACFORT | Todos los derechos reservados</p>
+    <a href="https://wa.me/59168099278" class="btn-wsp">Contáctanos por WhatsApp</a>
+  </footer>
+  <script src="productos.js"></script>
 </body>
 </html>

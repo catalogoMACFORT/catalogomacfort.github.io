@@ -1,11 +1,10 @@
-
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 
 fetch(CSV_URL)
   .then(res => res.text())
   .then(data => {
     const contenedor = document.getElementById("contenedor-productos");
-    const filas = data.trim().split("\n").slice(1); // omitir encabezado
+    const filas = data.trim().split("\n").slice(1);
 
     filas.forEach(fila => {
       const columnas = fila.split(",");

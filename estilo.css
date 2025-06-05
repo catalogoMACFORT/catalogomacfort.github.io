@@ -1,66 +1,48 @@
-
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f8f9fa;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
 }
 header {
-    text-align: center;
-    padding: 20px;
-    background: #1b365d;
-    color: white;
+  background-color: #0c2d57;
+  color: white;
+  padding: 20px;
+  text-align: center;
 }
 .logo {
-    width: 100px;
-    margin-bottom: 10px;
+  width: 80px;
 }
-.botones button {
-    margin: 5px;
-    padding: 10px 15px;
-    border: none;
-    background: #28a745;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-main {
-    padding: 20px;
+.filtros button {
+  margin: 5px;
+  padding: 10px;
 }
 .producto {
-    background: white;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
+  background: white;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-.producto img {
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
-}
-.info {
-    margin-left: 15px;
-    flex: 1;
+.producto-img {
+  max-width: 100px;
+  float: left;
+  margin-right: 15px;
 }
 .qr {
-    width: 60px;
-    height: 60px;
+  float: right;
+  max-width: 60px;
 }
 footer {
-    text-align: center;
-    padding: 20px;
-    background: #e9ecef;
+  text-align: center;
+  padding: 20px;
+  background: #eee;
 }
-#boton-wsp {
-    display: inline-block;
-    margin-top: 10px;
-    background: #25d366;
-    padding: 10px 20px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 5px;
+.btn-wsp {
+  display: inline-block;
+  background: #25d366;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  text-decoration: none;
+  border-radius: 5px;
 }
