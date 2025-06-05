@@ -1,45 +1,66 @@
-const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
-
-// Asignación de PIN por tipo de cliente
-const PINES = {
-  distribuidor: "MACD2025",
-  mayorista: "MACM2025",
-  final: "MACF2025",
-  licitacion: "MACL2025"
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
+const contenedor = document.getElementById('contenedor-productos');
+const tipoCambio = 16.33; // Cambiar manualmente según necesidad
+const pinCorrecto = {
+  distribuidor: "1234",
+  mayorista: "5678",
+  final: "0000",
+  licitacion: "9999"
 };
 
-const PIN = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+let pinIngresado = null;
+let tipoCliente = null;
 
-fetch(URL_CSV)
-  .then(res => res.text())
-  .then(csv => {
-    const filas = csv.split("\n").slice(1); // omitir encabezado
-    const contenedor = document.getElementById("contenedor-productos");
+async function cargarProductos() {
+  try {
+    const respuesta = await fetch(CSV_URL);
+    const datos = await respuesta.text();
+    const filas = datos.split("\n").slice(1);
 
     filas.forEach(fila => {
       const columnas = fila.split(",");
-      const [codigo, producto, precioUSD, marca, categoria, urlQR, imagenURL, pinDistribuidor, pinMayorista, pinFinal, pinLicitacion] = columnas;
+      const [codigo, nombre, precioUSD, , , , , , , , , , , imagen, qr] = columnas;
 
-      let precio = null;
+      if (!codigo || !nombre || !precioUSD) return;
 
-      if (PIN === PINES.distribuidor) precio = parseFloat(pinDistribuidor);
-      else if (PIN === PINES.mayorista) precio = parseFloat(pinMayorista);
-      else if (PIN === PINES.final) precio = parseFloat(pinFinal);
-      else if (PIN === PINES.licitacion) precio = parseFloat(pinLicitacion);
+      const div = document.createElement("div");
+      div.className = "producto";
 
-      if (precio) {
-        contenedor.innerHTML += `
-          <div class="producto">
-            <img src="${imagenURL}" alt="${producto}">
-            <div class="info">
-              <h2>${producto}</h2>
-              <p><strong>Código:</strong> ${codigo}</p>
-              <p><strong>Precio:</strong> Bs ${precio.toFixed(2)}</p>
-              <p class="nota">Precio visible solo con PIN autorizado</p>
-            </div>
-            <img src="${urlQR}" alt="QR" class="qr">
-          </div>
-        `;
-      }
+      const precioBs = (parseFloat(precioUSD) * tipoCambio).toFixed(2);
+      const mostrarPrecio = pinIngresado ? `Bs ${precioBs}` : '🔒 Precio con PIN autorizado';
+      const clasePrecio = pinIngresado ? 'visible' : 'oculto';
+
+      div.innerHTML = `
+        <img src="${imagen || 'https://via.placeholder.com/100'}" alt="${nombre}">
+        <div class="info">
+          <strong>${nombre}</strong><br>
+          Código: ${codigo}<br>
+          <span class="precio ${clasePrecio}">Precio: ${mostrarPrecio}</span><br>
+          <span class="pin-alerta">${!pinIngresado ? 'Solicite su PIN para acceder al precio' : ''}</span>
+        </div>
+        <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(nombre)}" alt="QR">
+      `;
+
+      contenedor.appendChild(div);
     });
-  });
+
+  } catch (error) {
+    contenedor.innerHTML = "<p style='color:red;'>❌ Error al cargar productos. Verifica el enlace del CSV.</p>";
+  }
+}
+
+// Almacenar tipo de cliente y solicitar PIN
+window.enviarWhatsapp = function(tipo) {
+  tipoCliente = tipo;
+  const pin = prompt(`Ingresa el PIN de acceso para cliente ${tipo.toUpperCase()}:`);
+  if (pin === pinCorrecto[tipo]) {
+    pinIngresado = true;
+    contenedor.innerHTML = '';
+    cargarProductos();
+  } else {
+    alert("PIN incorrecto. Solicite su PIN autorizado por WhatsApp.");
+    pinIngresado = false;
+  }
+};
+
+document.addEventListener("DOMContentLoaded", cargarProductos);
