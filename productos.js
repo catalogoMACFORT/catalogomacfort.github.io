@@ -37,6 +37,23 @@ filas.forEach(fila => {
       <p><strong>Precio:</strong> ${precioMostrar}</p>
       <p><strong>Marca:</strong> ${marca || 'No especificada'}</p>
       <p><strong>Categoría:</strong> ${categoria || 'General'}</p>
-      ${!
+      ${!precio ? '<p class="nota">Solicite su PIN para acceder al precio</p>' : ''}
+    </div>
+    <img class="qr" src="${urlQR || 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' + encodeURIComponent(nombre)}" alt="QR">
+  `;
 
-        
+  contenedor.appendChild(div);
+});
+
+cargarCategorias(Array.from(categorias));
+
+} catch (e) { contenedor.innerHTML = '<p style="color:red;">Error al cargar productos. Verifique su conexión o el enlace CSV.</p>'; } }
+
+function cargarCategorias(lista) { const select = document.getElementById('filtroCategoria'); select.innerHTML = '<option value="">Todas las categorías</option>'; lista.sort().forEach(cat => { const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; if (cat === categoriaSeleccionada) opt.selected = true; select.appendChild(opt); });
+
+select.addEventListener('change', () => { localStorage.setItem('categoria_filtro', select.value); location.reload(); }); }
+
+// Buscador const inputBuscador = document.getElementById('buscador'); if (inputBuscador) { inputBuscador.value = textoBusqueda; inputBuscador.addEventListener('input', () => { localStorage.setItem('busqueda', inputBuscador.value); cargarProductos(); }); }
+
+// Carga inicial window.addEventListener('DOMContentLoaded', cargarProductos);
+
