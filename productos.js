@@ -1,38 +1,37 @@
-const tipoCambio = 16.33; // Puedes cambiar este valor desde Google Sheets más adelante si se conecta
+const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-async function cargarProductos() {
+const tipoCambio = 16.33;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const contenedor = document.getElementById("contenedor-productos");
+  const tipo = localStorage.getItem('cliente_registrado') || '';
+  const pin = localStorage.getItem('pin_cliente') || '';
+
   try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv');
+    const response = await fetch(urlCSV);
     const data = await response.text();
-    const filas = data.trim().split('\n').slice(1); // saltar encabezado
-    const contenedor = document.getElementById("contenedor-productos");
-    contenedor.innerHTML = "";
-
+    const filas = data.split("\n").slice(1);
     filas.forEach(fila => {
-      const columnas = fila.split(',');
-      const [codigo, producto, precioUSD, , , , , , , , , , imagenBase64] = columnas;
-      const pin = localStorage.getItem('pin_cliente');
-      const tipo = localStorage.getItem('cliente_registrado') || 'no definido';
+      const columnas = fila.split(",");
+      if (columnas.length < 4) return;
 
-      let precioFinal = precioUSD ? (parseFloat(precioUSD) * tipoCambio).toFixed(2) : '0.00';
-      let precioVisible = pin ? `Bs ${precioFinal}` : '<em>Precio con PIN autorizado</em>';
+      const [codigo, producto, , , , precioBase, , , , , , , , imagen, qrData] = columnas;
 
-      const tarjeta = document.createElement('div');
-      tarjeta.className = 'producto';
-      tarjeta.innerHTML = `
-        <img src="${imagenBase64 || 'https://via.placeholder.com/100'}" alt="QR">
-        <div class="info">
-          <strong>${producto}</strong><br>
-          Código: ${codigo}<br>
-          Precio: <span class="precio">${precioVisible}</span><br>
-          <button onclick="solicitarAccesoProducto('${codigo}')">Ver más / Contactar</button>
+      const precio = tipo && pin ? `Bs ${(parseFloat(precioBase) * tipoCambio).toFixed(2)}` : "Precio con PIN autorizado";
+      const qr = qrData ? `<img src="${qrData}" alt="QR">` : `<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}" alt="QR">`;
+
+      contenedor.innerHTML += `
+        <div class="producto">
+          <h3>${producto}</h3>
+          <p><strong>Código:</strong> ${codigo}</p>
+          <p class="precio"><strong>Precio:</strong> <span style="color:green">${precio}</span></p>
+          ${qr}
+          ${!pin ? `<button onclick="solicitarAccesoProducto('${codigo}')">Solicitar Acceso</button>` : ""}
         </div>
       `;
-      contenedor.appendChild(tarjeta);
     });
   } catch (error) {
-    document.getElementById("contenedor-productos").innerHTML = '<p style="color:red;">❌ Error al cargar productos. Revisa el enlace del CSV o la estructura.</p>';
+    contenedor.innerHTML = `<p style="color:red">❌ Error al cargar productos. Verifica el enlace del CSV.</p>`;
+    console.error("Error cargando CSV:", error);
   }
-}
-
-document.addEventListener("DOMContentLoaded", cargarProductos);
+});
