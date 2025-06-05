@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo Oficial MACFORT 2025</title>
+    <link rel="stylesheet" href="estilo.css" />
+    <script defer src="formulario.js"></script>
+    <script defer src="productos.js"></script>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Logo MACPro" class="logo">
-    <h1>Catálogo Oficial MACFORT 2025</h1>
-    <p>Seleccione su tipo de cliente para ver precios personalizados</p>
-    <div class="filtros">
-      <button>Distribuidor</button>
-      <button>Mayorista</button>
-      <button>Cliente Final</button>
-      <button>Licitación</button>
-    </div>
-  </header>
-  <main id="contenedor-productos">
-    <p>Cargando productos...</p>
-  </main>
-  <footer>
-    <p>© 2025 MACFORT | Todos los derechos reservados</p>
-    <a href="https://wa.me/59168099278" class="btn-wsp">Contáctanos por WhatsApp</a>
-  </footer>
-  <script src="productos.js"></script>
+    <header>
+        <img src="logo.png" alt="Logo MACPro" id="logo-macpro" />
+        <h1>Catálogo Oficial MACFORT 2025</h1>
+    </header>
+    <main>
+        <div id="formulario-cliente" class="modal">
+            <form id="cliente-form">
+                <h2>Ingrese sus datos para continuar</h2>
+                <input type="text" placeholder="Nombre completo" required id="nombre" />
+                <input type="text" placeholder="Nombre del negocio" id="negocio" />
+                <input type="tel" placeholder="Número de WhatsApp" required id="whatsapp" />
+                <select id="tipo-cliente" required>
+                    <option value="">Seleccione tipo de cliente</option>
+                    <option value="Distribuidor">Distribuidor</option>
+                    <option value="Mayorista">Mayorista</option>
+                    <option value="Cliente Final">Cliente Final</option>
+                    <option value="Licitación">Licitación</option>
+                </select>
+                <button type="submit">Continuar</button>
+            </form>
+        </div>
+        <div id="contenedor-productos">Cargando productos...</div>
+    </main>
+    <footer>
+        <p>&copy; 2025 MACFORT | Todos los derechos reservados</p>
+        <a href="https://wa.me/59168099278" class="whatsapp-link">Contáctanos por WhatsApp</a>
+    </footer>
 </body>
 </html>
