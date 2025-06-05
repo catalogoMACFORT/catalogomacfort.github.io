@@ -1,4 +1,5 @@
-<!-- index.html FINAL mejorado para catalogomacfort.github.io --><!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,6 @@
       <input type="text" id="buscador" placeholder="🔍 Buscar producto...">
       <select id="filtroCategoria">
         <option value="">Todas las categorías</option>
-        <!-- Opciones cargadas automáticamente -->
       </select>
       <button onclick="reiniciarFiltros()">🔄 Reiniciar</button>
     </nav>
@@ -24,10 +24,13 @@
       <button onclick="solicitarPin('final')">Cliente Final</button>
       <button onclick="solicitarPin('licitacion')">Licitación</button>
     </div>
-  </header>  <main id="contenedor-productos"></main>  <footer>
+  </header>
+  <main id="contenedor-productos"></main>
+  <footer>
     <p>© 2025 MACFORT - Todos los derechos reservados</p>
     <a id="boton-wsp" href="https://wa.me/59168099278" target="_blank">📞 Contáctanos por WhatsApp</a>
-  </footer>  <script>
+  </footer>
+  <script>
     function solicitarPin(tipo) {
       const pin = prompt("🔐 Ingrese su PIN personalizado:");
       if (pin) {
@@ -36,7 +39,6 @@
         location.reload();
       }
     }
-
     function reiniciarFiltros() {
       document.getElementById('buscador').value = '';
       document.getElementById('filtroCategoria').value = '';
@@ -44,5 +46,6 @@
       localStorage.removeItem('busqueda');
       cargarProductos();
     }
-  </script></body>
+  </script>
+</body>
 </html>

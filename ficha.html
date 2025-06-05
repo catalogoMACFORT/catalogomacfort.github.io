@@ -1,35 +1,16 @@
-<!-- ficha.html - Ficha técnica por producto (ejemplo dinámico adaptable) --><!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ficha Técnica - Producto MACFORT</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Ficha Técnica Producto</title>
 </head>
-<body style="padding: 20px; max-width: 800px; margin: auto;">
-  <h1>Ficha Técnica del Producto</h1>
-  <section class="producto" style="display: flex; flex-direction: row; align-items: center; gap: 20px;">
-    <img id="imagenProducto" src="https://via.placeholder.com/120" alt="Imagen del producto" style="width: 120px; height: auto;">
-    <div class="info">
-      <h2 id="nombreProducto">Nombre del producto</h2>
-      <p><strong>Código:</strong> <span id="codigoProducto">MF-000</span></p>
-      <p><strong>Marca:</strong> <span id="marcaProducto">MACFORT</span></p>
-      <p><strong>Categoría:</strong> <span id="categoriaProducto">General</span></p>
-      <p><strong>Precio referencial Bs:</strong> <span id="precioProducto">0.00</span></p>
-    </div>
-  </section>
-  <section style="margin-top: 30px;">
-    <h3>Descripción técnica</h3>
-    <p id="descripcionTecnica">
-      Este producto está fabricado con materiales de alta resistencia, diseñado para uso industrial o profesional.
-    </p>
-  </section>  <script>
-    // Parámetros recibidos vía URL (ejemplo: ficha.html?codigo=MF-001&nombre=Escalera&marca=MACPRO...)
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById("nombreProducto").textContent = decodeURIComponent(params.get("nombre") || "Producto desconocido");
-    document.getElementById("codigoProducto").textContent = params.get("codigo") || "-";
-    document.getElementById("marcaProducto").textContent = params.get("marca") || "-";
-    document.getElementById("categoriaProducto").textContent = params.get("categoria") || "-";
-    document.getElementById("precioProducto").textContent = params.get("precio") || "0.00";
-    document.getElementById("imagenProducto").src = decodeURIComponent(params.get("imagen")) || "https://via.placeholder.com/120";
-  </script></body>
+<body>
+  <h2>Ficha Técnica del Producto</h2>
+  <p>Nombre del producto: Escalera Multipropósito Reforzada</p>
+  <p>Material: Aluminio reforzado</p>
+  <p>Presentación: Caja 1 unidad</p>
+  <p>Categoría: Escaleras</p>
+  <p>Subcategoría: Multipropósito</p>
+  <p>Código: MF-503</p>
+</body>
 </html>
