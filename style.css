@@ -1,102 +1,89 @@
 /* estilo.css */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f6f8;
-  color: #2c3e50;
+  font-family: Arial, sans-serif;
+  background: #f5f7f9;
   margin: 0;
   padding: 0;
+  color: #2c3e50;
 }
 
 header {
   text-align: center;
-  padding: 25px;
-  background-color: #ffffff;
+  padding: 20px;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-header h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-header p {
-  color: #7f8c8d;
-  margin: 8px 0;
+h1 {
+  margin-bottom: 5px;
+  color: #1e3a8a;
 }
 
 .botones-pin {
-  margin: 10px auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .botones-pin button {
-  padding: 10px 16px;
-  background-color: #2980b9;
-  color: #fff;
-  font-weight: bold;
+  padding: 10px 15px;
+  background: #2563eb;
   border: none;
+  color: white;
+  font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
-  width: 80%;
-  max-width: 300px;
-}
-
-.botones-pin button:hover {
-  background-color: #3498db;
 }
 
 #contenedor-productos {
   padding: 20px;
-  display: grid;
-  gap: 16px;
-  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 700px;
   margin: auto;
 }
 
 .tarjeta-producto {
-  background: #ffffff;
-  padding: 16px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  flex-wrap: wrap;
-}
-
-.contenido-producto {
-  flex: 1;
-  min-width: 200px;
-}
-
-.qr-contenedor img {
-  width: 100px;
-  height: 100px;
+  padding: 15px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .precio {
-  font-size: 18px;
-  font-weight: bold;
   color: green;
+  font-weight: bold;
 }
 
 .pin-requerido {
-  font-size: 14px;
   color: #e67e22;
+  font-size: 14px;
+}
+
+.qr-contenedor img {
+  width: 70px;
+  height: 70px;
 }
 
 footer {
   text-align: center;
-  padding: 20px;
+  margin-top: 20px;
+  padding-bottom: 30px;
 }
 
-footer a {
+#boton-wsp {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 25px;
   background-color: #25D366;
   color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
   font-weight: bold;
+  border-radius: 6px;
   text-decoration: none;
 }
