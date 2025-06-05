@@ -1,57 +1,35 @@
-const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-// Asignación de PIN por tipo de cliente
-const PINES = {
-  distribuidor: "MACD2025",
-  mayorista: "MACM2025",
-  final: "MACF2025",
-  licitacion: "MACL2025"
-};
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
 
-const PIN = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
-
-fetch(URL_CSV)
+fetch(CSV_URL)
   .then(res => res.text())
-  .then(csv => {
-    const filas = csv.split("\n").slice(1); // omitir encabezado
+  .then(data => {
     const contenedor = document.getElementById("contenedor-productos");
+    const filas = data.trim().split("\n").slice(1); // omitir encabezado
 
     filas.forEach(fila => {
       const columnas = fila.split(",");
-      const [
-        codigo,
-        producto,
-        precioUSD,
-        marca,
-        categoria,
-        urlQR,
-        imagenURL,
-        pinDistribuidor,
-        pinMayorista,
-        pinFinal,
-        pinLicitacion
-      ] = columnas;
+      const [codigo, nombre, precioUSD, marca, procedencia, , , , , , , , , imagen, qr] = columnas;
 
-      let precio = null;
-
-      if (PIN === PINES.distribuidor) precio = parseFloat(pinDistribuidor);
-      else if (PIN === PINES.mayorista) precio = parseFloat(pinMayorista);
-      else if (PIN === PINES.final) precio = parseFloat(pinFinal);
-      else if (PIN === PINES.licitacion) precio = parseFloat(pinLicitacion);
-
-      if (precio) {
-        contenedor.innerHTML += `
-          <div class="producto">
-            <img src="${imagenURL}" alt="${producto}">
-            <div class="info">
-              <h2>${producto}</h2>
-              <p><strong>Código:</strong> ${codigo}</p>
-              <p><strong>Precio:</strong> Bs ${precio.toFixed(2)}</p>
-              <p class="nota">Precio visible solo con PIN autorizado</p>
-            </div>
-            <img src="${urlQR}" alt="QR" class="qr">
+      const tarjeta = `
+        <div class="producto">
+          <img class="producto-img" src="${imagen || 'https://via.placeholder.com/100'}" alt="${nombre}">
+          <div class="producto-info">
+            <h2>${nombre}</h2>
+            <p><strong>Código:</strong> ${codigo}</p>
+            <p><strong>Marca:</strong> ${marca}</p>
+            <p><strong>Procedencia:</strong> ${procedencia}</p>
+            <p><strong>Precio:</strong> Bs ${parseFloat(precioUSD).toFixed(2)}</p>
+            <p class="nota">*Precio personalizado según tipo de cliente</p>
           </div>
-        `;
-      }
+          <img class="qr" src="${qr || 'https://via.placeholder.com/100'}" alt="QR">
+        </div>
+      `;
+
+      contenedor.innerHTML += tarjeta;
     });
+  })
+  .catch(error => {
+    console.error('Error al cargar el CSV:', error);
+    document.getElementById("contenedor-productos").innerHTML = "<p>Error al cargar los productos.</p>";
   });
