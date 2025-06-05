@@ -1,4 +1,4 @@
-// productos.js FINAL para catalogomacfort.github.io mejorado const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv'; const contenedor = document.getElementById('contenedor-productos'); const tipoCambio = 16.33;
+// productos.js ADAPTADO a tu Google Sheets real const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv'; const contenedor = document.getElementById('contenedor-productos'); const tipoCambio = 16.33; // puedes actualizar este valor manualmente si cambia el tipo de cambio
 
 let tipoCliente = localStorage.getItem('tipo_cliente') || ''; let pinCliente = localStorage.getItem('pin_cliente') || ''; let categoriaSeleccionada = localStorage.getItem('categoria_filtro') || ''; let textoBusqueda = localStorage.getItem('busqueda') || '';
 
@@ -8,13 +8,12 @@ async function cargarProductos() { try { const res = await fetch(CSV_URL); const
 
 filas.forEach(fila => {
   const columnas = fila.split(',');
+  if (columnas.length < 11) return; // evitar errores por filas vacías o incompletas
+
   const [codigo, nombre, precioUSD, marca, categoria, urlQR, imagenURL, pinDist, pinMay, pinFinal, pinLici] = columnas;
-  
-  if (!nombre || !codigo) return;
+  if (!nombre || !codigo || isNaN(precioUSD)) return;
 
   categorias.add(categoria);
-
-  // Filtros aplicados
   if (categoriaSeleccionada && categoria !== categoriaSeleccionada) return;
   if (textoBusqueda && !nombre.toLowerCase().includes(textoBusqueda.toLowerCase())) return;
 
@@ -26,7 +25,6 @@ filas.forEach(fila => {
 
   const div = document.createElement('div');
   div.className = 'producto';
-
   const precioMostrar = precio ? `Bs ${precio.toFixed(2)} / USD ${(precio / tipoCambio).toFixed(2)}` : '🔒 Requiere PIN';
 
   div.innerHTML = `
@@ -47,13 +45,13 @@ filas.forEach(fila => {
 
 cargarCategorias(Array.from(categorias));
 
-} catch (e) { contenedor.innerHTML = '<p style="color:red;">Error al cargar productos. Verifique su conexión o el enlace CSV.</p>'; } }
+} catch (e) { contenedor.innerHTML = '<p style="color:red;">❌ Error al cargar productos. Verifique su conexión o el enlace CSV.</p>'; } }
 
 function cargarCategorias(lista) { const select = document.getElementById('filtroCategoria'); select.innerHTML = '<option value="">Todas las categorías</option>'; lista.sort().forEach(cat => { const opt = document.createElement('option'); opt.value = cat; opt.textContent = cat; if (cat === categoriaSeleccionada) opt.selected = true; select.appendChild(opt); });
 
 select.addEventListener('change', () => { localStorage.setItem('categoria_filtro', select.value); location.reload(); }); }
 
-// Buscador const inputBuscador = document.getElementById('buscador'); if (inputBuscador) { inputBuscador.value = textoBusqueda; inputBuscador.addEventListener('input', () => { localStorage.setItem('busqueda', inputBuscador.value); cargarProductos(); }); }
+const inputBuscador = document.getElementById('buscador'); if (inputBuscador) { inputBuscador.value = textoBusqueda; inputBuscador.addEventListener('input', () => { localStorage.setItem('busqueda', inputBuscador.value); cargarProductos(); }); }
 
-// Carga inicial window.addEventListener('DOMContentLoaded', cargarProductos);
+window.addEventListener('DOMContentLoaded', cargarProductos);
 
