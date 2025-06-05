@@ -1,73 +1,41 @@
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f4f6f8;
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  background: #f4f4f4;
+  color: #333;
 }
-
 header {
+  background: #002a5c;
+  color: white;
+  padding: 20px;
   text-align: center;
-  background: #1b365d;
-  color: white;
-  padding: 20px;
 }
-
-.logo {
-  max-width: 130px;
-  margin-bottom: 10px;
+.logo-img {
+  max-width: 180px;
+  margin: auto;
 }
-
-.botones-pin button {
+.formulario {
+  margin: 15px auto;
+}
+.formulario input, .formulario select, .formulario button {
   margin: 5px;
-  padding: 10px 15px;
-  font-weight: bold;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 8px;
 }
-
-main {
-  padding: 20px;
-}
-
 .producto {
   background: white;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.producto img {
-  width: 100px;
-  height: auto;
+  border: 1px solid #ccc;
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 500px;
   border-radius: 6px;
 }
-
-.info {
-  margin-top: 10px;
+.producto-img, .qr {
+  max-width: 100px;
+  height: auto;
 }
-
-.qr {
-  width: 80px;
-  height: 80px;
-}
-
 footer {
   text-align: center;
-  padding: 20px;
-  background: #f1f1f1;
-}
-
-#boton-wsp {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 5px;
+  padding: 15px;
+  background: #eee;
 }

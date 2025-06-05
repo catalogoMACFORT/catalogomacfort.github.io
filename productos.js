@@ -6,29 +6,26 @@ fetch(CSV_URL)
   .then(data => {
     const contenedor = document.getElementById("contenedor-productos");
     const filas = data.trim().split("\n").slice(1);
-
     filas.forEach(fila => {
       const columnas = fila.split(",");
-      const [codigo, nombre, precioUSD, marca, procedencia, , , , , , , , , imagen, qr] = columnas;
-
-      const tarjeta = `
+      const [codigo, nombre, precio, marca, procedencia, , , , , , , , , imagen, qr] = columnas;
+      const productoHTML = `
         <div class="producto">
-          <img class="producto-img" src="${imagen || 'https://via.placeholder.com/100'}" alt="${nombre}">
+          <img class="producto-img" src="${imagen || 'https://via.placeholder.com/100?text=Producto'}" alt="${nombre}" />
           <div class="producto-info">
             <h2>${nombre}</h2>
             <p><strong>Código:</strong> ${codigo}</p>
             <p><strong>Marca:</strong> ${marca}</p>
             <p><strong>Procedencia:</strong> ${procedencia}</p>
-            <p><strong>Precio:</strong> Bs ${(parseFloat(precioUSD) * 6.96).toFixed(2)}</p>
+            <p><strong>Precio:</strong> Bs ${parseFloat(precio).toFixed(2)}</p>
             <p class="nota">*Precio personalizado según tipo de cliente</p>
           </div>
-          <img class="qr" src="${qr || 'https://via.placeholder.com/100'}" alt="QR">
-        </div>
-      `;
-
-      contenedor.innerHTML += tarjeta;
+          <img class="qr" src="${qr || 'https://via.placeholder.com/100?text=QR'}" alt="QR" />
+        </div>`;
+      contenedor.innerHTML += productoHTML;
     });
   })
-  .catch(error => {
-    document.getElementById("contenedor-productos").innerHTML = "<p>Error al cargar los productos.</p>";
+  .catch(err => {
+    console.error("Error al cargar productos", err);
+    document.getElementById("contenedor-productos").innerHTML = "<p>Error al cargar productos.</p>";
   });
