@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MACFORT - Productos</title>
+  <title>Catálogo Oficial MACFORT 2025</title>
   <link rel="stylesheet" href="estilo.css">
   <script defer src="productos.js"></script>
 </head>
 <body>
   <header>
     <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
+    <p>Cargando productos...</p>
     <div class="botones-pin">
       <button onclick="enviarWhatsapp('distribuidor')">Soy Cliente Distribuidor</button>
       <button onclick="enviarWhatsapp('mayorista')">Soy Cliente Mayorista</button>
@@ -18,9 +19,7 @@
     </div>
   </header>
 
-  <main id="contenedor-productos">
-    <p>Cargando productos...</p>
-  </main>
+  <main id="contenedor-productos"></main>
 
   <footer>
     <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
@@ -30,8 +29,17 @@
 
   <script>
     function enviarWhatsapp(tipo) {
-      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
+      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
       window.open(url, '_blank');
+    }
+
+    // Captura y guarda ubicación GPS del visitante
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        localStorage.setItem('ubicacion_cliente', `${lat},${lng}`);
+      });
     }
   </script>
 </body>
