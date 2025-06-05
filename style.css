@@ -1,88 +1,106 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  background: #f9f9f9;
+}
+
+header {
+  background: #1d3557;
+  color: white;
+  text-align: center;
+  padding: 20px 10px;
 }
 
 h1 {
-  text-align: center;
-  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+p {
+  margin: 5px 0;
+  color: #eee;
 }
 
 .botones-pin {
-  text-align: center;
-  margin: 20px 0;
+  margin-top: 10px;
 }
 
 .botones-pin button {
-  margin: 10px;
-  padding: 10px 20px;
+  margin: 5px;
+  padding: 10px 15px;
   border: none;
-  background-color: #3498db;
-  color: white;
-  border-radius: 5px;
+  border-radius: 6px;
   font-weight: bold;
+  background-color: #457b9d;
+  color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.producto {
+.botones-pin button:hover {
+  background-color: #1d3557;
+}
+
+#contenedor-productos {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 15px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.tarjeta-producto {
   background: white;
-  margin: 15px auto;
-  max-width: 500px;
-  padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px #ccc;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.producto img.qr {
-  width: 80px;
-  height: 80px;
+.contenido-producto h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.contenido-producto p {
+  font-size: 14px;
+  color: #333;
 }
 
 .precio {
-  color: green;
-  font-size: 18px;
-}
-
-.pin-alerta {
-  font-size: 12px;
-  color: #e67e22;
-}
-
-#formulario-datos {
-  max-width: 500px;
-  background: #fff;
-  margin: 30px auto;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-#formulario-datos h2 {
-  text-align: center;
-}
-
-#formulario-datos label {
-  display: block;
-  margin: 10px 0 5px;
-}
-
-#formulario-datos input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-
-#formulario-datos button {
-  width: 100%;
-  padding: 10px;
-  background: #2ecc71;
-  color: white;
-  border: none;
   font-weight: bold;
+  color: green;
+}
+
+.pin-requerido {
+  color: #e67e22;
+  font-weight: bold;
+}
+
+.qr-contenedor img {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  margin: 30px 0;
+}
+
+footer a {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #25D366;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 10px;
 }
