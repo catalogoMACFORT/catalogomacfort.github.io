@@ -1,33 +1,45 @@
-const contenedor = document.getElementById("contenedor-productos");
-const hojaCSV = "catálogo_macfort_2025.csv";
+const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-fetch(hojaCSV)
+// Asignación de PIN por tipo de cliente
+const PINES = {
+  distribuidor: "MACD2025",
+  mayorista: "MACM2025",
+  final: "MACF2025",
+  licitacion: "MACL2025"
+};
+
+const PIN = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+
+fetch(URL_CSV)
   .then(res => res.text())
-  .then(data => {
-    const filas = data.split("\n").slice(1);
+  .then(csv => {
+    const filas = csv.split("\n").slice(1); // omitir encabezado
+    const contenedor = document.getElementById("contenedor-productos");
+
     filas.forEach(fila => {
       const columnas = fila.split(",");
+      const [codigo, producto, precioUSD, marca, categoria, urlQR, imagenURL, pinDistribuidor, pinMayorista, pinFinal, pinLicitacion] = columnas;
 
-      const codigo = columnas[0]?.trim();
-      const nombre = columnas[1]?.trim();
-      const precioBase = parseFloat(columnas[5]) || 0;
-      const imagenURL = columnas[12]?.trim() || `https://via.placeholder.com/150?text=${nombre.replace(/ /g, "+")}`;
-      const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${codigo}%20${nombre}%20MACFORT`;
+      let precio = null;
 
-      const producto = document.createElement("div");
-      producto.classList.add("producto");
+      if (PIN === PINES.distribuidor) precio = parseFloat(pinDistribuidor);
+      else if (PIN === PINES.mayorista) precio = parseFloat(pinMayorista);
+      else if (PIN === PINES.final) precio = parseFloat(pinFinal);
+      else if (PIN === PINES.licitacion) precio = parseFloat(pinLicitacion);
 
-      producto.innerHTML = `
-        <img src="${imagenURL}" alt="${nombre}" class="imagen-producto">
-        <div class="info">
-          <strong>${nombre}</strong><br>
-          Código: ${codigo}<br>
-          <span class="precio oculto" id="precio-${codigo}">Precio: 🔒 PIN requerido</span><br>
-          <button onclick="solicitarAccesoProducto('${codigo}')">Ver precio</button>
-        </div>
-        <img src="${qrURL}" alt="QR ${codigo}" class="qr">
-      `;
-
-      contenedor.appendChild(producto);
+      if (precio) {
+        contenedor.innerHTML += `
+          <div class="producto">
+            <img src="${imagenURL}" alt="${producto}">
+            <div class="info">
+              <h2>${producto}</h2>
+              <p><strong>Código:</strong> ${codigo}</p>
+              <p><strong>Precio:</strong> Bs ${precio.toFixed(2)}</p>
+              <p class="nota">Precio visible solo con PIN autorizado</p>
+            </div>
+            <img src="${urlQR}" alt="QR" class="qr">
+          </div>
+        `;
+      }
     });
   });
