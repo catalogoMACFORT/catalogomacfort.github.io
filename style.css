@@ -1,87 +1,97 @@
+/* estilo.css */
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
   margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #2c3e50;
 }
 
-header, footer {
+header {
   text-align: center;
   padding: 20px;
+  background: #ecf0f1;
 }
 
 h1 {
-  color: #2c3e50;
   font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 10px;
 }
 
 .botones-pin {
-  margin: 15px 0;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .botones-pin button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
+  background-color: #3498db;
   color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .botones-pin button:hover {
-  background-color: #0056b3;
-}
-
-#contenedor-productos {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px;
-  max-width: 800px;
-  margin: auto;
+  background-color: #2980b9;
 }
 
 .tarjeta-producto {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 600px;
 }
 
-.tarjeta-producto img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 5px;
+.contenido-producto {
+  flex: 1;
 }
 
 .precio {
   font-weight: bold;
-  font-size: 18px;
   color: green;
 }
 
 .pin-requerido {
-  font-weight: normal;
+  font-weight: bold;
   color: orange;
 }
 
-footer a {
-  background-color: #25D366;
-  color: white;
-  font-weight: bold;
-  padding: 12px 20px;
-  display: inline-block;
+.qr-contenedor img {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+footer {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+footer a {
+  background-color: #25d366;
+  color: white;
   text-decoration: none;
-  margin-top: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  display: inline-block;
+  font-weight: bold;
 }
 
 footer a:hover {
-  background-color: #1da851;
+  background-color: #20b954;
 }
