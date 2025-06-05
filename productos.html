@@ -1,55 +1,74 @@
-const URL_GOOGLE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
-const contenedor = document.getElementById('contenedor-productos');
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Oficial MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script defer src="productos.js"></script>
+  <script defer src="precio.js"></script>
+</head>
+<body>
+  <header>
+    <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
+    <p>Cargando productos...</p>
+    <div class="botones-pin">
+      <button onclick="solicitarPin('distribuidor')">Soy Cliente Distribuidor</button>
+      <button onclick="solicitarPin('mayorista')">Soy Cliente Mayorista</button>
+      <button onclick="solicitarPin('final')">Soy Cliente Final</button>
+      <button onclick="solicitarPin('licitacion')">Soy Cliente de Licitación u Otros</button>
+    </div>
+  </header>  <main id="contenedor-productos"></main>  <footer>
+    <p style="text-align:center; color:#888; font-size:12px;">© 2025 MACFORT | Todos los derechos reservados</p>
+  </footer>  <script>
+    let tipoCliente = '';
+    let clienteRegistrado = localStorage.getItem('cliente_registrado');
 
-// Simular PIN ingresado manualmente (tú lo actualizarás dinámicamente según cliente)
-const tipoCliente = localStorage.getItem('cliente_tipo') || '';
-const PINES = {
-  distribuidor: "12345",
-  mayorista: "23456",
-  final: "34567",
-  licitacion: "45678"
-};
-
-// Usar tipo de cambio editable desde Google Sheets o por defecto
-let tipoCambio = 16.33;
-
-fetch(URL_GOOGLE_SHEET)
-  .then(response => response.text())
-  .then(csv => {
-    const filas = csv.split('\n').slice(1);
-    filas.forEach(linea => {
-      const datos = linea.split(',');
-
-      const codigo = datos[0];
-      const nombre = datos[1];
-      const precioUSD = parseFloat(datos[4]);
-      const qr = datos[10];
-
-      // Mostrar precios solo si se tiene PIN correcto
-      let precioVisible = 'Precio con PIN autorizado';
-      let mostrarPrecio = false;
-
-      const pinActual = localStorage.getItem('pin_ingresado');
-
-      if (pinActual) {
-        if (pinActual === PINES[tipoCliente]) {
-          const precioBs = (precioUSD * tipoCambio).toFixed(2);
-          precioVisible = `Precio: Bs ${precioBs}`;
-          mostrarPrecio = true;
-        } else {
-          precioVisible = 'PIN incorrecto';
-        }
+    function solicitarPin(tipo) {
+      tipoCliente = tipo;
+      const rubro = prompt("¿A qué rubro o sector pertenece su negocio? (Ej: Ferretería, Construcción, Seguridad, Pescadería, Otros)");
+      const nombre = prompt("Nombre de su negocio o empresa:");
+      const contacto = prompt("Nombre y apellido del responsable:");
+      const celular = prompt("Número de contacto (WhatsApp):");
+      const direccion = prompt("Dirección exacta o punto de referencia:");
+      const factura = prompt("¿Requiere factura? (Sí/No):");
+      const pin = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+      if (pin) {
+        localStorage.setItem('cliente_registrado', tipoCliente);
+        localStorage.setItem('pin_cliente', pin);
+        localStorage.setItem('rubro_cliente', rubro);
+        localStorage.setItem('nombre_negocio', nombre);
+        localStorage.setItem('nombre_persona', contacto);
+        localStorage.setItem('telefono_cliente', celular);
+        localStorage.setItem('direccion_cliente', direccion);
+        localStorage.setItem('factura_cliente', factura);
+        window.location.reload();
       }
+    }
 
-      contenedor.innerHTML += `
-        <div class="producto">
-          <div class="info">
-            <strong>${nombre}</strong><br>
-            Código: ${codigo}<br>
-            ${mostrarPrecio ? `<span class="precio">${precioVisible}</span>` : `<span class="pin-alerta">${precioVisible}</span>`}
-          </div>
-          <img src="${qr}" alt="QR">
-        </div>
-      `;
-    });
-  });
+    function solicitarAccesoProducto(codigo) {
+      const tipo = localStorage.getItem('cliente_registrado') || 'no definido';
+      const pin = localStorage.getItem('pin_cliente') || '';
+      const rubro = localStorage.getItem('rubro_cliente') || '';
+      const contacto = localStorage.getItem('nombre_persona') || '';
+      const nombre = localStorage.getItem('nombre_negocio') || '';
+      const celular = localStorage.getItem('telefono_cliente') || '';
+      const direccion = localStorage.getItem('direccion_cliente') || '';
+      const ubicacion = localStorage.getItem('ubicacion_cliente') || '';
+      const factura = localStorage.getItem('factura_cliente') || 'Sin especificar';
+      if (pin) {
+        const mensaje = `Hola, soy cliente ${tipo}.\nNegocio: ${nombre}\nContacto: ${contacto}\nRubro: ${rubro}\nTeléfono: ${celular}\nDirección: ${direccion}\nUbicación GPS: ${ubicacion}\nProducto de interés: ${codigo}\nPIN: ${pin}\nFactura: ${factura}`;
+        const url = `https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+      }
+    }
+
+    // Captura y registro de ubicación GPS
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        localStorage.setItem('ubicacion_cliente', `${lat},${lng}`);
+      });
+    }
+  </script></body>
+</html>
