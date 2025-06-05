@@ -1,66 +1,42 @@
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
-const contenedor = document.getElementById('contenedor-productos');
-const tipoCambio = 16.33; // Cambiar manualmente según necesidad
-const pinCorrecto = {
-  distribuidor: "1234",
-  mayorista: "5678",
-  final: "0000",
-  licitacion: "9999"
-};
+// productos.js FINAL para catalogomacfort.github.io mejorado const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv'; const contenedor = document.getElementById('contenedor-productos'); const tipoCambio = 16.33;
 
-let pinIngresado = null;
-let tipoCliente = null;
+let tipoCliente = localStorage.getItem('tipo_cliente') || ''; let pinCliente = localStorage.getItem('pin_cliente') || ''; let categoriaSeleccionada = localStorage.getItem('categoria_filtro') || ''; let textoBusqueda = localStorage.getItem('busqueda') || '';
 
-async function cargarProductos() {
-  try {
-    const respuesta = await fetch(CSV_URL);
-    const datos = await respuesta.text();
-    const filas = datos.split("\n").slice(1);
+const PINES = { distribuidor: 'MACD2025', mayorista: 'MACM2025', final: 'MACF2025', licitacion: 'MACL2025' };
 
-    filas.forEach(fila => {
-      const columnas = fila.split(",");
-      const [codigo, nombre, precioUSD, , , , , , , , , , , imagen, qr] = columnas;
+async function cargarProductos() { try { const res = await fetch(CSV_URL); const data = await res.text(); const filas = data.split("\n").slice(1); const categorias = new Set(); contenedor.innerHTML = '';
 
-      if (!codigo || !nombre || !precioUSD) return;
+filas.forEach(fila => {
+  const columnas = fila.split(',');
+  const [codigo, nombre, precioUSD, marca, categoria, urlQR, imagenURL, pinDist, pinMay, pinFinal, pinLici] = columnas;
+  
+  if (!nombre || !codigo) return;
 
-      const div = document.createElement("div");
-      div.className = "producto";
+  categorias.add(categoria);
 
-      const precioBs = (parseFloat(precioUSD) * tipoCambio).toFixed(2);
-      const mostrarPrecio = pinIngresado ? `Bs ${precioBs}` : '🔒 Precio con PIN autorizado';
-      const clasePrecio = pinIngresado ? 'visible' : 'oculto';
+  // Filtros aplicados
+  if (categoriaSeleccionada && categoria !== categoriaSeleccionada) return;
+  if (textoBusqueda && !nombre.toLowerCase().includes(textoBusqueda.toLowerCase())) return;
 
-      div.innerHTML = `
-        <img src="${imagen || 'https://via.placeholder.com/100'}" alt="${nombre}">
-        <div class="info">
-          <strong>${nombre}</strong><br>
-          Código: ${codigo}<br>
-          <span class="precio ${clasePrecio}">Precio: ${mostrarPrecio}</span><br>
-          <span class="pin-alerta">${!pinIngresado ? 'Solicite su PIN para acceder al precio' : ''}</span>
-        </div>
-        <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(nombre)}" alt="QR">
-      `;
+  let precio = null;
+  if (pinCliente === PINES.distribuidor) precio = parseFloat(pinDist);
+  else if (pinCliente === PINES.mayorista) precio = parseFloat(pinMay);
+  else if (pinCliente === PINES.final) precio = parseFloat(pinFinal);
+  else if (pinCliente === PINES.licitacion) precio = parseFloat(pinLici);
 
-      contenedor.appendChild(div);
-    });
+  const div = document.createElement('div');
+  div.className = 'producto';
 
-  } catch (error) {
-    contenedor.innerHTML = "<p style='color:red;'>❌ Error al cargar productos. Verifica el enlace del CSV.</p>";
-  }
-}
+  const precioMostrar = precio ? `Bs ${precio.toFixed(2)} / USD ${(precio / tipoCambio).toFixed(2)}` : '🔒 Requiere PIN';
 
-// Almacenar tipo de cliente y solicitar PIN
-window.enviarWhatsapp = function(tipo) {
-  tipoCliente = tipo;
-  const pin = prompt(`Ingresa el PIN de acceso para cliente ${tipo.toUpperCase()}:`);
-  if (pin === pinCorrecto[tipo]) {
-    pinIngresado = true;
-    contenedor.innerHTML = '';
-    cargarProductos();
-  } else {
-    alert("PIN incorrecto. Solicite su PIN autorizado por WhatsApp.");
-    pinIngresado = false;
-  }
-};
+  div.innerHTML = `
+    <img src="${imagenURL || 'https://via.placeholder.com/100'}" alt="${nombre}">
+    <div class="info">
+      <h2>${nombre}</h2>
+      <p><strong>Código:</strong> ${codigo}</p>
+      <p><strong>Precio:</strong> ${precioMostrar}</p>
+      <p><strong>Marca:</strong> ${marca || 'No especificada'}</p>
+      <p><strong>Categoría:</strong> ${categoria || 'General'}</p>
+      ${!
 
-document.addEventListener("DOMContentLoaded", cargarProductos);
+        
