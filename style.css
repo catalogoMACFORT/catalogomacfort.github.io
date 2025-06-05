@@ -1,67 +1,76 @@
 body {
-  font-family: 'Arial', sans-serif;
-  background: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
   margin: 0;
   padding: 0;
 }
 
 header {
-  background: #fff;
-  padding: 20px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-h1 {
-  color: #2c3e50;
-  margin-bottom: 5px;
-}
-
-.botones-pin {
-  margin-top: 15px;
+  padding: 20px;
+  background: #1b365d;
+  color: white;
 }
 
 .botones-pin button {
   margin: 5px;
-  padding: 10px 16px;
-  background: #2ecc71;
-  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #28a745;
   border: none;
-  border-radius: 6px;
+  color: white;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 main {
   padding: 20px;
+}
+
+.producto {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-.producto-card {
+  justify-content: space-between;
+  align-items: center;
   background: white;
-  width: 280px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  overflow: hidden;
-  padding: 10px;
-  text-align: center;
+  margin: 15px 0;
+  padding: 15px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.producto-card img {
-  max-width: 100%;
+.producto img {
+  width: 100px;
   height: auto;
+  border-radius: 5px;
 }
 
-.producto-card .qr {
+.info {
+  flex-grow: 1;
+  margin: 0 15px;
+}
+
+.qr {
   width: 80px;
-  margin-top: 10px;
+  height: 80px;
+}
+
+.nota {
+  color: #e67e22;
+  font-size: 13px;
 }
 
 footer {
-  margin-top: 30px;
   text-align: center;
-  font-size: 12px;
-  color: #888;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+#boton-wsp {
+  display: inline-block;
+  background: #25d366;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
 }
