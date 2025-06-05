@@ -1,58 +1,79 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
   background: #f4f4f4;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  color: #2c3e50;
 }
 header {
   text-align: center;
-  padding: 20px;
-  background: #fff;
-}
-h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #2c3e50;
+  margin-bottom: 20px;
 }
 .botones-pin button {
   margin: 5px;
-  padding: 10px 20px;
-  background: #27ae60;
+  padding: 10px 15px;
+  background-color: #2c3e50;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
-main {
-  padding: 20px;
+.botones-pin button:hover {
+  background-color: #34495e;
 }
-.producto {
-  background: #fff;
-  margin: 10px auto;
-  max-width: 600px;
-  padding: 15px;
-  border-radius: 10px;
+main#contenedor-productos {
+  max-width: 1100px;
+  margin: auto;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+.producto-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  width: 250px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-.producto img {
-  width: 100px;
+.producto-card img {
+  width: 150px;
   height: auto;
-  border-radius: 6px;
-  margin-right: 15px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
 }
-.info {
-  flex: 1;
+.producto-card .info-producto {
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.4;
 }
-.precio {
-  font-weight: bold;
-  color: green;
+.producto-card .info-producto strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 5px;
+  color: #222;
+}
+.producto-card .qr {
+  width: 100px;
+  margin-top: 10px;
 }
 footer {
+  max-width: 1100px;
+  margin: 30px auto 0 auto;
   text-align: center;
-  font-size: 12px;
-  padding: 15px;
-  background: #f0f0f0;
-  color: #999;
+}
+footer a {
+  background: #25D366;
+  color: white;
+  font-weight: bold;
+  padding: 12px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+footer a:hover {
+  background: #1ebe57;
 }
