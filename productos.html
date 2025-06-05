@@ -1,48 +1,172 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Catálogo Oficial MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="estilo.css" />
   <script defer src="productos.js"></script>
 </head>
 <body>
   <header>
     <h1>CATÁLOGO OFICIAL MACFORT 2025</h1>
-    <p>Cargando productos...</p>
+    <p id="mensaje-carga">Cargando productos...</p>
     <div class="botones-pin">
       <button onclick="solicitarPin('distribuidor')">Soy Cliente Distribuidor</button>
       <button onclick="solicitarPin('mayorista')">Soy Cliente Mayorista</button>
       <button onclick="solicitarPin('final')">Soy Cliente Final</button>
       <button onclick="solicitarPin('licitacion')">Soy Cliente de Licitación</button>
     </div>
-  </header>  <main id="contenedor-productos"></main>  <footer>
-    <a id="boton-wsp" href="https://wa.me/59168099278?text=Hola%2C%20estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Mi%20tipo%20de%20cliente%20es%3A%20" target="_blank">
-      Solicitar PIN vía WhatsApp
-    </a>
-  </footer>  <script>
-    let tipoCliente = '';
+  </header>
 
+  <main id="contenedor-productos"></main>
+
+  <footer>
+    <a id="link-whatsapp" href="" target="_blank">Solicitar PIN vía WhatsApp</a>
+  </footer>
+
+  <script>
+    // URL pública del Google Sheets CSV (reemplaza con el tuyo)
+    const urlCSV =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+
+    // PINs por tipo de cliente (personaliza aquí)
+    const pins = {
+      distribuidor: "1234D",
+      mayorista: "5678M",
+      final: "9012F",
+      licitacion: "3456L"
+    };
+
+    // Tipo de cliente seleccionado
+    let tipoCliente = null;
+
+    // Función para solicitar PIN vía WhatsApp
     function solicitarPin(tipo) {
       tipoCliente = tipo;
-      const url = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Estoy%20interesado%20en%20el%20cat%C3%A1logo%20de%20productos%20MACFORT.%20Por%20favor%20facilítame%20el%20PIN.`;
-      window.open(url, '_blank');
+      const whatsappLink = `https://wa.me/59168099278?text=Hola%2C%20soy%20cliente%20${tipo}.%20Por%20favor%20facil%C3%ADtame%20el%20PIN%20para%20acceder%20al%20cat%C3%A1logo.`;
+      document.getElementById("link-whatsapp").href = whatsappLink;
+      alert(
+        `Por favor, envía tu solicitud de PIN para el tipo de cliente "${tipo}" a través del botón WhatsApp.`
+      );
     }
 
-    function solicitarAccesoProducto(codigo) {
-      const pin = prompt("Ingresa el PIN autorizado para ver el precio de este producto:");
-      if (pin) {
-        window.location.href = `https://wa.me/59168099278?text=Hola%2C%20ingresé%20el%20PIN%20para%20el%20producto%20${codigo}%20y%20mi%20tipo%20de%20cliente%20es%20${tipoCliente}.%20Mi%20PIN%20es%3A%20${pin}`;
+    // Función para obtener precios según tipo de cliente
+    function obtenerPrecio(item, tipo) {
+      switch (tipo) {
+        case "distribuidor":
+          return item.PrecioDistribuidor || "N/A";
+        case "mayorista":
+          return item.PrecioMayorista || "N/A";
+        case "final":
+          return item.PrecioClienteFinal || "N/A";
+        case "licitacion":
+          return item.PrecioLicitacion || "N/A";
+        default:
+          return "N/A";
       }
     }
 
-    // Captura y envío de ubicación GPS
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        localStorage.setItem('ubicacion_cliente', `${lat},${lng}`);
-      });
+    // Función para mostrar productos en la página
+    async function mostrarProductos() {
+      try {
+        const res = await fetch(urlCSV);
+        const csvText = await res.text();
+
+        // Parsear CSV con PapaParse (necesitarás incluir librería PapaParse o usar otro método)
+        const datos = Papa.parse(csvText, { header: true }).data;
+
+        if (!datos || datos.length === 0) {
+          document.getElementById("mensaje-carga").innerText =
+            "No se encontraron productos.";
+          return;
+        }
+
+        const contenedor = document.getElementById("contenedor-productos");
+        contenedor.innerHTML = "";
+        document.getElementById("mensaje-carga").style.display = "none";
+
+        datos.forEach((item) => {
+          // Crear tarjeta producto
+          const div = document.createElement("div");
+          div.classList.add("producto-item");
+
+          // Imagen QR, extraída del CSV (debe contener URL base64 o URL imagen)
+          const imgQR = document.createElement("img");
+          imgQR.src = item["Código QR"] || "";
+          imgQR.alt = "QR";
+          imgQR.classList.add("imagen-qr");
+
+          // Nombre producto y código
+          const nombre = document.createElement("h2");
+          nombre.textContent = item.Producto || "Sin nombre";
+
+          const codigo = document.createElement("p");
+          codigo.textContent = `Código: ${item.Código || "-"}`;
+
+          // Precio oculto hasta validar PIN
+          const precio = document.createElement("p");
+          if (tipoCliente) {
+            precio.innerHTML = `<strong>Precio: Bs ${obtenerPrecio(
+              item,
+              tipoCliente
+            )}</strong>`;
+          } else {
+            precio.textContent = "Precio con PIN autorizado";
+          }
+          precio.classList.add("precio");
+
+          // Botón contacto
+          const botonContacto = document.createElement("button");
+          botonContacto.textContent = "Ver más / Contactar";
+          botonContacto.onclick = () => {
+            window.open(
+              `https://wa.me/59168099278?text=Estoy%20interesado%20en%20el%20producto%20${encodeURIComponent(
+                item.Producto
+              )}%20(codigo%20${item.Código}).`,
+              "_blank"
+            );
+          };
+
+          // Agregar elementos al div
+          div.appendChild(nombre);
+          div.appendChild(codigo);
+          div.appendChild(precio);
+          div.appendChild(imgQR);
+          div.appendChild(botonContacto);
+
+          // Añadir al contenedor
+          contenedor.appendChild(div);
+        });
+      } catch (error) {
+        document.getElementById("mensaje-carga").innerText =
+          "Error al cargar productos. Revisa el enlace CSV o la estructura.";
+        console.error(error);
+      }
     }
-  </script></body>
+
+    // Función para validar PIN ingresado por usuario
+    function validarPIN() {
+      const pinIngresado = prompt("🔒 Ingrese su PIN para acceder a precios personalizados:");
+      if (pinIngresado && Object.values(pins).includes(pinIngresado)) {
+        // Detectar tipo cliente por PIN
+        tipoCliente = Object.keys(pins).find((key) => pins[key] === pinIngresado);
+        alert(`PIN válido. Accediendo como cliente tipo: ${tipoCliente}`);
+        mostrarProductos();
+      } else {
+        alert("PIN inválido o cancelado. No podrá acceder a precios.");
+      }
+    }
+
+    // Al cargar la página, mostrar productos sin precios (con PIN solicitar)
+    window.onload = function () {
+      mostrarProductos();
+
+      // Opcionalmente, pedir PIN para mostrar precios (descomentar si quieres)
+      // validarPIN();
+    };
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+</body>
 </html>
