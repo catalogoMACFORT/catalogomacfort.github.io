@@ -1,50 +1,47 @@
-const urlCsv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv';
-
-const contenedor = document.getElementById('contenedor-productos');
+const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
 async function cargarProductos() {
-  try {
-    const response = await fetch(urlCsv);
-    const data = await response.text();
-
-    const filas = data.trim().split('\n');
-    const encabezados = filas[0].split(',');
-
-    // Se omite fila 0 porque es encabezado
-    const productos = filas.slice(1).map((fila) => {
-      const columnas = fila.split(',');
-      const producto = {};
-      encabezados.forEach((enc, i) => {
-        producto[enc.trim()] = columnas[i]?.trim();
-      });
-      return producto;
-    });
-
-    mostrarProductos(productos);
-  } catch (error) {
-    contenedor.innerHTML =
-      '<p style="color:red;">❌ Error al cargar productos. Revisar el CSV o la estructura.</p>';
-    console.error(error);
+  const resp = await fetch(urlCSV);
+  if (!resp.ok) {
+    document.getElementById("productos-container").innerText = "Error al cargar productos.";
+    return;
   }
+  const data = await resp.text();
+  mostrarProductos(parseCSV(data));
 }
 
-function mostrarProductos(productos) {
-  contenedor.innerHTML = '';
-  productos.forEach((prod) => {
-    // Aquí generamos QR dinámicamente
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(prod['Código'] + ' ' + prod['Producto'])}`;
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines.shift().split(',');
 
-    // Si quieres que los precios estén ocultos hasta el PIN, aquí puedes ocultarlos.
-    const htmlProducto = `
-      <article class="producto-card">
-        <h3>${prod['Producto']}</h3>
-        <p><b>Código:</b> ${prod['Código']}</p>
-        <p class="precio">Precio: <span class="oculto">Solicita PIN para ver precio</span></p>
-        <img src="${qrUrl}" alt="QR ${prod['Producto']}" />
-      </article>
-    `;
-    contenedor.insertAdjacentHTML('beforeend', htmlProducto);
+  return lines.map(line => {
+    const obj = {};
+    const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g); // maneja valores entre comillas
+    headers.forEach((header, i) => {
+      obj[header.trim()] = values[i].replace(/(^"|"$)/g, '');
+    });
+    return obj;
   });
 }
 
-cargarProductos();
+function mostrarProductos(productos) {
+  const contenedor = document.getElementById("productos-container");
+  contenedor.innerHTML = "";
+
+  productos.forEach(producto => {
+    const div = document.createElement("div");
+    div.className = "producto";
+
+    div.innerHTML = `
+      <strong>${producto.Producto || 'Producto sin nombre'}</strong><br>
+      Código: ${producto.Codigo || 'N/A'}<br>
+      Precio: Bs <span class="precio">${producto.PrecioBaseBolivianos || '0.00'}</span><br>
+      <img src="${producto.CodigoQR || ''}" alt="QR" style="width: 80px; float: right;" />
+      <p class="nota-precio">Precio con PIN autorizado</p>
+    `;
+
+    contenedor.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", cargarProductos);
