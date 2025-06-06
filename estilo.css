@@ -1,1 +1,40 @@
-/* Estilos aprobados y adaptados al nuevo diseño */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f2f2f2;
+}
+header {
+  background: #002f5e;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+.logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
+form {
+  margin-top: 10px;
+}
+form input, form select, form button {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+}
+main {
+  padding: 20px;
+}
+.producto {
+  background: white;
+  margin: 15px auto;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 500px;
+}
+.producto-img, .qr {
+  width: 100px;
+  height: 100px;
+}

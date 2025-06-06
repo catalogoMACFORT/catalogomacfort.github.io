@@ -1,1 +1,36 @@
-<!-- Contenido HTML generado correctamente -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css"/>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="MACFORT Logo" class="logo"/>
+    <h1>Catálogo Oficial MACFORT 2025</h1>
+    <form id="cliente-form">
+      <input type="text" id="nombre" placeholder="Nombre completo" required/>
+      <input type="text" id="negocio" placeholder="Nombre del negocio" required/>
+      <input type="text" id="contacto" placeholder="Número de WhatsApp" required/>
+      <select id="tipo-cliente" required>
+        <option value="">Seleccione tipo de cliente</option>
+        <option value="distribuidor">Distribuidor</option>
+        <option value="mayorista">Mayorista</option>
+        <option value="final">Cliente Final</option>
+        <option value="licitacion">Licitación</option>
+      </select>
+      <button type="submit">Continuar</button>
+    </form>
+  </header>
+  <main id="contenedor-productos">
+    <p>Cargando productos...</p>
+  </main>
+  <footer>
+    <p>&copy; 2025 MACFORT | Todos los derechos reservados</p>
+    <a href="https://wa.me/59160597261" target="_blank">Contáctanos por WhatsApp</a>
+  </footer>
+  <script src="productos.js"></script>
+</body>
+</html>
