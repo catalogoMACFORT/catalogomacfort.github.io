@@ -1,21 +1,23 @@
-const tipoCliente = localStorage.getItem("clienteTipo");
-const preciosIndex = {
-  distribuidor: 2,
-  mayorista: 3,
-  cliente: 4,
-  licitacion: 5
-};
 
-fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vSAMPLEID/pub?output=csv")
-  .then(res => res.text())
-  .then(text => {
-    const rows = text.split("\n").map(r => r.split(","));
-    const contenedor = document.getElementById("productos");
-    rows.slice(1).forEach(prod => {
-      const div = document.createElement("div");
-      div.className = "producto";
-      const precio = tipoCliente ? prod[preciosIndex[tipoCliente]] : "Registrarse para ver";
-      div.innerHTML = `<h3>${prod[0]}</h3><p>${prod[1]}</p><strong>Precio: ${precio} Bs</strong>`;
-      contenedor.appendChild(div);
-    });
-  });
+const productos = [
+    {
+        "codigo": "MF-001",
+        "nombre": "Escalera Multipropósito 4x3",
+        "marca": "MAC FOR-T",
+        "procedencia": "España",
+        "precio_cliente_final": 277.70,
+        "precio_distribuidor": 255.50,
+        "precio_mayorista": 230.00,
+        "precio_licitacion": 210.00
+    },
+    {
+        "codigo": "MF-002",
+        "nombre": "Escalera Multipropósito 4x5",
+        "marca": "MAC FOR-T",
+        "procedencia": "España",
+        "precio_cliente_final": 377.84,
+        "precio_distribuidor": 340.00,
+        "precio_mayorista": 315.00,
+        "precio_licitacion": 295.00
+    }
+];
