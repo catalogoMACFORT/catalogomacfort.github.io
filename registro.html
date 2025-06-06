@@ -1,1 +1,28 @@
-Contenido de ejemplo para registro.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - MACFORT</title>
+  <link rel="stylesheet" href="estilos.css"/>
+</head>
+<body>
+  <main>
+    <h2>Registro de Cliente</h2>
+    <form id="registro-form">
+      <input type="text" name="nombre" placeholder="Nombre completo" required />
+      <input type="email" name="email" placeholder="Correo electrónico" required />
+      <select name="tipo" required>
+        <option value="">Seleccione tipo de cliente</option>
+        <option value="distribuidor">Distribuidor</option>
+        <option value="mayorista">Mayorista</option>
+        <option value="cliente">Cliente Final</option>
+        <option value="licitacion">Licitación</option>
+      </select>
+      <input type="password" name="pin" placeholder="PIN de acceso" required />
+      <button type="submit">Acceder</button>
+    </form>
+    <script src="registro.js"></script>
+  </main>
+</body>
+</html>
