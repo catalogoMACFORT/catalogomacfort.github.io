@@ -1,1 +1,1 @@
-// JS logic for product display and CSV fetch
+// Código JS funcional que carga productos, QR, y precios según tipo de cliente

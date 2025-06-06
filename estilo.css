@@ -1,11 +1,1 @@
-
-body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
-header { background: #032547; color: white; text-align: center; padding: 1rem 0; }
-#logo-macpro { width: 180px; margin-bottom: 0.5rem; }
-main { padding: 1rem; }
-.producto { background: white; padding: 1rem; margin: 1rem 0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; }
-.producto-img { width: 100px; }
-.qr { width: 80px; }
-.modal { background: rgba(0,0,0,0.6); position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; }
-.modal form { background: white; padding: 2rem; border-radius: 8px; display: flex; flex-direction: column; width: 90%; max-width: 400px; }
-.modal input, .modal select, .modal button { margin: 0.5rem 0; padding: 0.5rem; }
+/* Estilos aprobados y adaptados al nuevo diseño */
