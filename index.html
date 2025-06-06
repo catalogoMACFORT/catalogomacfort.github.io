@@ -1,15 +1,52 @@
-
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo MACFORT</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo MACFORT 2025</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      width: 250px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Bienvenido al Catálogo MACFORT 2025</h1>
-    <p>Ingrese su PIN para continuar.</p>
-    <script src="script.js"></script>
-</body>
+  <h1>Bienvenido al Catálogo <br> MACFORT 2025</h1>
+  <p>Ingrese su PIN para continuar.</p>  <input type="password" id="pin" placeholder="PIN de acceso">
+  <button onclick="verificarPIN()">Acceder</button>  <script>
+    function verificarPIN() {
+      const pinIngresado = document.getElementById("pin").value;
+
+      // Puedes cambiar estos pines por los reales
+      const pinesValidos = {
+        "CLIENTE": "MAC4",
+        "MAYORISTA": "MAC3",
+        "DISTRIBUIDOR": "MAC2",
+        "LICITACION": "MAC1"
+      };
+
+      const tipo = "CLIENTE"; // Reemplaza si tienes una selección de tipo
+
+      if (pinIngresado === pinesValidos[tipo]) {
+        window.location.href = "productos.html"; // o donde esté el catálogo real
+      } else {
+        alert("PIN incorrecto. Intente de nuevo.");
+      }
+    }
+  </script></body>
 </html>
