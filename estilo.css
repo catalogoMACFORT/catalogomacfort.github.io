@@ -1,0 +1,43 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: #002F5E;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.logo {
+  width: 100px;
+  margin-bottom: 10px;
+}
+main {
+  padding: 20px;
+}
+.filtros, #formularioAcceso, #productos {
+  margin: 20px auto;
+  max-width: 500px;
+}
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+}
+button {
+  background-color: #002F5E;
+  color: white;
+  border: none;
+}
+footer {
+  background-color: #002F5E;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+.oculto {
+  display: none;
+}
