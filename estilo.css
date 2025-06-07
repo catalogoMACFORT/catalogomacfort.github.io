@@ -1,33 +1,37 @@
-
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
   background: #f4f4f4;
+  color: #333;
+  text-align: center;
 }
 header {
-  background: #003f66;
+  background-color: #003459;
   color: white;
-  text-align: center;
-  padding: 20px;
+  padding: 20px 10px;
 }
-.logo {
-  width: 80px;
+.slogan {
+  font-style: italic;
+}
+footer {
+  background-color: #003459;
+  color: white;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+input, select, button {
   display: block;
-  margin: 0 auto 10px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
 }
-main {
-  padding: 20px;
+button {
+  background-color: #003459;
+  color: white;
+  border: none;
 }
 .oculto {
   display: none;
-}
-footer {
-  text-align: center;
-  padding: 10px;
-  background: #003f66;
-  color: white;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }
