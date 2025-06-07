@@ -40,3 +40,47 @@
         <button type="submit">Solicitar PIN por WhatsApp</button>
       </form>
     </section>
+<section id="ingresarPin" class="oculto">
+  <h2>Ingresa el PIN que te enviamos por WhatsApp</h2>
+  <input type="text" id="codigoPin" placeholder="Ej: 1234" required />
+  <button onclick="validarPin()">Ver precios</button>
+</section>
+
+<section id="cotizador" class="oculto">
+  <h2>Productos seleccionados para cotización</h2>
+  <ul id="listaCotizacion"></ul>
+  <label for="cantidadProductos">Cantidad por ítem (opcional):</label>
+  <input type="number" id="cantidadProductos" placeholder="Ej: 5" min="1" />
+  <button onclick="enviarCotizacion()">Solicitar cotización por WhatsApp</button>
+</section>
+
+<script>
+  const pinValido = "2025"; // <-- Aquí defines tú el PIN general
+
+  function validarPin() {
+    const pinIngresado = document.getElementById("codigoPin").value;
+    if (pinIngresado === pinValido) {
+      document.querySelectorAll(".precio").forEach(el => el.classList.remove("oculto"));
+      document.getElementById("cotizador").classList.remove("oculto");
+      alert("¡Acceso concedido! Ya puedes ver los precios.");
+    } else {
+      alert("PIN incorrecto. Solicita tu PIN por WhatsApp.");
+    }
+  }
+
+  // Agregar a cotización
+  function agregarACotizacion(nombreProducto) {
+    const lista = document.getElementById("listaCotizacion");
+    const li = document.createElement("li");
+    li.textContent = nombreProducto;
+    lista.appendChild(li);
+  }
+
+  // Enviar a WhatsApp
+  function enviarCotizacion() {
+    const productos = [...document.querySelectorAll("#listaCotizacion li")].map(li => li.textContent);
+    const cantidad = document.getElementById("cantidadProductos").value || "N/D";
+    const mensaje = `Hola, deseo cotizar los siguientes productos:\n\n${productos.map(p => `- ${p} (Cantidad: ${cantidad})`).join('\n')}\n\nMi nombre es: ${document.getElementById("nombre").value}`;
+    window.open(`https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`, "_blank");
+  }
+</script>
