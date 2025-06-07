@@ -13,6 +13,7 @@
   </header>
 
   <main>
+    <!-- Filtros -->
     <section class="filtros">
       <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
       <select id="tipoCliente">
@@ -24,10 +25,12 @@
       </select>
     </section>
 
+    <!-- Productos (sin precios) -->
     <section class="productos" id="listaProductos">
       <!-- Aquí se cargan los productos desde Google Sheets -->
     </section>
 
+    <!-- Formulario para solicitar PIN -->
     <section id="formularioSecreto" class="oculto">
       <h2>Completa el formulario para solicitar acceso</h2>
       <form id="formularioDatos">
@@ -40,47 +43,93 @@
         <button type="submit">Solicitar PIN por WhatsApp</button>
       </form>
     </section>
-<section id="ingresarPin" class="oculto">
-  <h2>Ingresa el PIN que te enviamos por WhatsApp</h2>
-  <input type="text" id="codigoPin" placeholder="Ej: 1234" required />
-  <button onclick="validarPin()">Ver precios</button>
-</section>
 
-<section id="cotizador" class="oculto">
-  <h2>Productos seleccionados para cotización</h2>
-  <ul id="listaCotizacion"></ul>
-  <label for="cantidadProductos">Cantidad por ítem (opcional):</label>
-  <input type="number" id="cantidadProductos" placeholder="Ej: 5" min="1" />
-  <button onclick="enviarCotizacion()">Solicitar cotización por WhatsApp</button>
-</section>
+    <!-- Ingreso del PIN -->
+    <section id="ingresarPin" class="oculto">
+      <h2>Ingresa el PIN que te enviamos por WhatsApp</h2>
+      <input type="text" id="inputPin" placeholder="Ej: 123456" />
+      <button onclick="validarPin()">Ver precios</button>
+    </section>
 
-<script>
-  const pinValido = "2025"; // <-- Aquí defines tú el PIN general
+    <!-- Cotizador -->
+    <section id="cotizador" class="oculto">
+      <h2>Solicita cotización</h2>
+      <div id="carritoProductos"></div>
+      <label for="cantidad">Cantidad estimada por producto:</label>
+      <input type="number" id="cantidad" min="1" placeholder="Cantidad (opcional)" />
+      <button onclick="enviarCotizacion()">Solicitar cotización vía WhatsApp</button>
+    </section>
+  </main>
 
-  function validarPin() {
-    const pinIngresado = document.getElementById("codigoPin").value;
-    if (pinIngresado === pinValido) {
-      document.querySelectorAll(".precio").forEach(el => el.classList.remove("oculto"));
-      document.getElementById("cotizador").classList.remove("oculto");
-      alert("¡Acceso concedido! Ya puedes ver los precios.");
-    } else {
-      alert("PIN incorrecto. Solicita tu PIN por WhatsApp.");
+  <script>
+    // Datos simulados de ejemplo: puedes reemplazar esto con datos reales desde Google Sheets
+    const productos = [
+      { id: 1, nombre: "Escalera Multipropósito 4x4", categoria: "Escaleras", imagen: "img/escalera44.jpg" },
+      { id: 2, nombre: "Grampa para Malla Tipo U", categoria: "Grampas", imagen: "img/grampa-u.jpg" }
+    ];
+
+    // Renderizar productos
+    const lista = document.getElementById("listaProductos");
+    productos.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "producto";
+      div.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}" />
+        <h3>${p.nombre}</h3>
+        <button onclick="agregarAlCarrito('${p.nombre}')">Agregar para cotizar</button>
+      `;
+      lista.appendChild(div);
+    });
+
+    // Mostrar formulario cuando se selecciona tipo de cliente
+    document.getElementById("tipoCliente").addEventListener("change", () => {
+      document.getElementById("formularioSecreto").classList.remove("oculto");
+    });
+
+    // Enviar PIN por WhatsApp (simulación)
+    document.getElementById("formularioDatos").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const mensaje = `Hola, soy ${nombre}. Solicito mi PIN para ver los precios del catálogo.`;
+      window.open(`https://wa.me/591${whatsapp.replace("+591", "")}?text=${encodeURIComponent(mensaje)}`);
+      document.getElementById("ingresarPin").classList.remove("oculto");
+    });
+
+    // Validar PIN
+    function validarPin() {
+      const pin = document.getElementById("inputPin").value;
+      if (pin === "123456") {
+        alert("¡Acceso concedido!");
+        document.getElementById("cotizador").classList.remove("oculto");
+      } else {
+        alert("PIN incorrecto");
+      }
     }
-  }
 
-  // Agregar a cotización
-  function agregarACotizacion(nombreProducto) {
-    const lista = document.getElementById("listaCotizacion");
-    const li = document.createElement("li");
-    li.textContent = nombreProducto;
-    lista.appendChild(li);
-  }
+    // Carrito de productos
+    let carrito = [];
+    function agregarAlCarrito(nombre) {
+      carrito.push(nombre);
+      document.getElementById("carritoProductos").innerHTML = carrito.map(item => `<li>${item}</li>`).join("");
+    }
 
-  // Enviar a WhatsApp
-  function enviarCotizacion() {
-    const productos = [...document.querySelectorAll("#listaCotizacion li")].map(li => li.textContent);
-    const cantidad = document.getElementById("cantidadProductos").value || "N/D";
-    const mensaje = `Hola, deseo cotizar los siguientes productos:\n\n${productos.map(p => `- ${p} (Cantidad: ${cantidad})`).join('\n')}\n\nMi nombre es: ${document.getElementById("nombre").value}`;
-    window.open(`https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`, "_blank");
-  }
-</script>
+    function enviarCotizacion() {
+      const cantidad = document.getElementById("cantidad").value;
+      const mensaje = `Hola, solicito cotización para:\n${carrito.map(item => `- ${item}${cantidad ? ` x${cantidad}` : ""}`).join("\n")}`;
+      window.open(`https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`);
+    }
+  </script>
+
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    header { text-align: center; background: #002244; color: white; padding: 20px; }
+    .slogan { font-style: italic; }
+    .producto { background: white; padding: 10px; margin: 10px; border-radius: 10px; box-shadow: 0 0 10px #ccc; display: inline-block; width: 200px; vertical-align: top; }
+    .producto img { width: 100%; height: auto; }
+    .oculto { display: none; }
+    input, select, button { margin: 5px 0; padding: 8px; width: 100%; }
+    section { margin-top: 30px; }
+  </style>
+</body>
+</html>
