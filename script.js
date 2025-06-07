@@ -1,34 +1,56 @@
 
-const pinesValidos = {
-  "Distribuidor":"MACD2025",
-  "Mayorista":"MACMA2025",
-  "ClienteFinal":"MACF2025",
-  "Licitación":"MACL2025"
-};
+document.addEventListener("DOMContentLoaded", function () {
+  const tipoCliente = document.getElementById("tipoCliente");
+  const formularioSecreto = document.getElementById("formularioSecreto");
+  const formularioDatos = document.getElementById("formularioDatos");
+  const pinSection = document.getElementById("pinSection");
+  const inputPin = document.getElementById("inputPin");
+  const verificarPin = document.getElementById("verificarPin");
+  const listaProductos = document.getElementById("listaProductos");
 
-document.getElementById('tipoCliente').addEventListener('change', function () {
-  const formulario = document.getElementById('formularioAcceso');
-  formulario.classList.remove('oculto');
+  let clienteSeleccionado = "";
+
+  tipoCliente.addEventListener("change", function () {
+    if (this.value) {
+      clienteSeleccionado = this.value;
+      formularioSecreto.classList.remove("oculto");
+    } else {
+      formularioSecreto.classList.add("oculto");
+    }
+  });
+
+  formularioDatos.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value;
+    const whatsapp = document.getElementById("whatsapp").value;
+    const ciudad = document.getElementById("ciudad").value;
+    const empresa = document.getElementById("empresa").value;
+    const cargo = document.getElementById("cargo").value;
+    const rubro = document.getElementById("rubro").value;
+
+    const mensaje = \`Hola, soy \${nombre}.\nCategoría: \${clienteSeleccionado}\nWhatsApp: \${whatsapp}\nCiudad: \${ciudad}\nEmpresa: \${empresa}\nCargo: \${cargo}\nRubro: \${rubro}\nSolicito el PIN de acceso al catálogo.\`;
+
+    const url = \`https://wa.me/59168099278?text=\${encodeURIComponent(mensaje)}\`;
+    window.open(url, "_blank");
+
+    formularioSecreto.classList.add("oculto");
+    pinSection.classList.remove("oculto");
+  });
+
+  verificarPin.addEventListener("click", function () {
+    const pinesValidos = {
+      Distribuidor: "MAC2025D",
+      Mayorista: "MAC2025M",
+      ClienteFinal: "MAC2025C",
+      Licitacion: "MAC2025L"
+    };
+
+    const pinIngresado = inputPin.value.trim().toUpperCase();
+    if (pinIngresado === pinesValidos[clienteSeleccionado]) {
+      pinSection.classList.add("oculto");
+      listaProductos.classList.remove("oculto");
+    } else {
+      alert("PIN incorrecto. Por favor, solicita el PIN correcto por WhatsApp.");
+    }
+  });
 });
-
-function solicitarPin() {
-  const nombre = document.getElementById('nombre').value;
-  const whatsapp = document.getElementById('whatsapp').value;
-  const tipoCliente = document.getElementById('tipoCliente').value;
-
-  if (!nombre || !whatsapp || !tipoCliente) {
-    alert('Por favor, completa todos los campos obligatorios.');
-    return;
-  }
-
-  const pin = prompt(`Hola ${nombre} , por favor ingresa el PIN que recibiste por WhatsApp:`);
-
-  if (pin === pinesValidos[tipoCliente]) {
-    document.getElementById('formularioAcceso').classList.add('oculto');
-    const bienvenida = document.getElementById('bienvenida');
-    bienvenida.innerHTML = `<h2>Bienvenido, ${nombre}. Aquí verás los productos con sus precios para <strong>${tipoCliente}</strong>.</h2>`;
-    bienvenida.classList.remove('oculto');
-  } else {
-    alert('PIN incorrecto para el tipo seleccionado.');
-  }
-}
