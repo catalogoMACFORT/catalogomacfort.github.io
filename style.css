@@ -1,0 +1,37 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #092c4c;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.slogan {
+  font-style: italic;
+}
+
+main {
+  padding: 20px;
+}
+
+.filtros {
+  margin-bottom: 20px;
+}
+
+.oculto {
+  display: none;
+}
+
+footer {
+  background-color: #092c4c;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
