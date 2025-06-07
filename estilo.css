@@ -1,36 +1,31 @@
+
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
-  color: #333;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 header {
-  background-color: #003459;
+  background-color: #002c54;
   color: white;
-  padding: 20px 10px;
+  padding: 20px;
 }
-.slogan {
-  font-style: italic;
+.logo {
+  width: 300px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+main {
+  margin: 20px;
 }
 footer {
-  background-color: #003459;
+  background-color: #002c54;
   color: white;
   padding: 10px;
   position: relative;
   bottom: 0;
   width: 100%;
-}
-input, select, button {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 90%;
-  max-width: 400px;
-}
-button {
-  background-color: #003459;
-  color: white;
-  border: none;
 }
 .oculto {
   display: none;
