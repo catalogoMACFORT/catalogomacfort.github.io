@@ -1,86 +1,80 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
+  background-color: #f3f3f3;
+  color: #333;
 }
 
 header {
-  background-color: #003366;
+  background-color: #1b4f72;
   color: white;
-  padding: 20px;
+  padding: 1rem;
   text-align: center;
 }
 
-.slogan {
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+header .slogan {
   font-style: italic;
-  font-size: 16px;
-  margin-top: 5px;
+  font-size: 0.95rem;
 }
 
 main {
-  padding: 20px;
+  padding: 2rem;
 }
 
 .filtros {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
-#tipoCliente {
-  padding: 8px;
-  font-size: 16px;
-}
-
-.productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.item-producto {
-  background-color: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-}
-
-.item-producto h3 {
-  margin-top: 0;
-  color: #003366;
+select {
+  padding: 0.5rem;
+  font-size: 1rem;
 }
 
 #formularioSecreto {
-  background-color: #e0e0e0;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
-#formularioSecreto input, #formularioSecreto button {
+input, button {
   display: block;
-  margin: 10px 0;
-  padding: 10px;
   width: 100%;
-  font-size: 16px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-#formularioSecreto button {
-  background-color: #003366;
+button {
+  background-color: #1b4f72;
   color: white;
-  border: none;
   cursor: pointer;
+  border: none;
 }
 
-footer {
-  text-align: center;
-  padding: 15px;
-  background-color: #003366;
-  color: white;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+button:hover {
+  background-color: #154360;
 }
 
 .oculto {
   display: none;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #ddd;
+  margin-top: 2rem;
+  font-size: 0.9rem;
 }
