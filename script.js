@@ -1,41 +1,51 @@
-const pinesValidos = {
-  "Distribuidor": "MACD2025",
-  "Mayorista": "MACMA2025",
-  "ClienteFinal": "MACF2025",
-  "Licitación": "MACL2025"
-};
 
 document.getElementById("tipoCliente").addEventListener("change", function () {
-  const tipo = this.value;
-  if (tipo) {
-    document.getElementById("formularioSecreto").classList.remove("oculto");
-  } else {
-    document.getElementById("formularioSecreto").classList.add("oculto");
-  }
+  document.getElementById("formularioSecreto").classList.remove("oculto");
 });
 
 document.getElementById("formularioDatos").addEventListener("submit", function (e) {
   e.preventDefault();
-
-  const tipoCliente = document.getElementById("tipoCliente").value;
   const nombre = document.getElementById("nombre").value;
   const whatsapp = document.getElementById("whatsapp").value;
   const ciudad = document.getElementById("ciudad").value;
   const empresa = document.getElementById("empresa").value;
   const cargo = document.getElementById("cargo").value;
   const rubro = document.getElementById("rubro").value;
+  const tipoCliente = document.getElementById("tipoCliente").value;
 
-  const pin = prompt(`Hola ${nombre}, por favor ingresa el PIN que recibiste por WhatsApp:`);
+  const mensaje = `Hola, soy ${nombre} y deseo solicitar el PIN.\n
+🔸 Tipo de Cliente: ${tipoCliente}
+👤 Nombre: ${nombre}
+📞 WhatsApp: ${whatsapp}
+🏢 Empresa: ${empresa}
+📍 Ciudad: ${ciudad}
+🧰 Rubro: ${rubro}
+🎯 Cargo: ${cargo}`;
 
-  if (pin === pinesValidos[tipoCliente]) {
-    alert("¡Acceso concedido!");
-    document.getElementById("formularioSecreto").classList.add("oculto");
-    document.querySelector(".filtros").classList.add("oculto");
-    document.getElementById("listaProductos").classList.remove("oculto");
+  const url = `https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
 
-    document.getElementById("listaProductos").innerHTML = `<p>Bienvenido, ${nombre}. Aquí verás los productos con sus precios para <strong>${tipoCliente}</strong>.</p>`;
-    // Aquí puedes agregar llamada para cargar productos reales
-  } else {
-    alert("PIN incorrecto para el tipo seleccionado.");
-  }
+  document.getElementById("formularioSecreto").classList.add("oculto");
+  document.getElementById("accesoPin").classList.remove("oculto");
 });
+
+function verificarPIN() {
+  const pinesValidos = {
+    "Distribuidor": "MACD2025",
+    "Mayorista": "MACMA2025",
+    "ClienteFinal": "MACF2025",
+    "Licitación": "MACL2025"
+  };
+  const tipoCliente = document.getElementById("tipoCliente").value;
+  const pinIngresado = document.getElementById("pin").value;
+
+  if (pinIngresado === pinesValidos[tipoCliente]) {
+    const nombre = document.getElementById("nombre").value;
+    document.getElementById("accesoPin").classList.add("oculto");
+    document.getElementById("mensajeBienvenida").classList.remove("oculto");
+    document.getElementById("mensajeBienvenida").innerHTML =
+      `<h3>Bienvenido, ${nombre}. Aquí verás los productos con sus precios para <strong>${tipoCliente}</strong>.</h3>`;
+  } else {
+    alert("❌ PIN incorrecto para el tipo seleccionado.");
+  }
+}

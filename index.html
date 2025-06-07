@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="estilo.css" />
 </head>
 <body>
   <header>
@@ -24,8 +24,6 @@
       </select>
     </section>
 
-    <section class="productos oculto" id="listaProductos"></section>
-
     <section id="formularioSecreto" class="oculto">
       <h2>Completa el formulario para solicitar acceso</h2>
       <form id="formularioDatos">
@@ -38,6 +36,15 @@
         <button type="submit">Solicitar PIN por WhatsApp</button>
       </form>
     </section>
+
+    <section id="accesoPin" class="oculto">
+      <h2>Ingrese el PIN que recibió por WhatsApp</h2>
+      <input type="password" id="pin" placeholder="Ingrese su PIN" required />
+      <button onclick="verificarPIN()">Acceder</button>
+    </section>
+
+    <section id="mensajeBienvenida" class="oculto"></section>
+    <section class="productos" id="listaProductos"></section>
   </main>
 
   <footer>
