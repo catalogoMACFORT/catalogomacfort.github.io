@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
   <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
   <header>
+    <img src="logo_macfort.png" alt="Logo MACFORT" class="logo" />
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p class="slogan">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
   </header>
@@ -20,11 +23,11 @@
         <option value="Distribuidor">Distribuidor</option>
         <option value="Mayorista">Mayorista</option>
         <option value="ClienteFinal">Cliente Final</option>
-        <option value="Licitación">Licitación</option>
+        <option value="Licitacion">Licitación</option>
       </select>
     </section>
 
-    <section id="formulario">
+    <section id="formularioSecreto" class="oculto">
       <h2>Completa el formulario para solicitar acceso</h2>
       <form id="formularioDatos">
         <input type="text" placeholder="Nombre completo" required id="nombre" />
@@ -36,12 +39,17 @@
         <button type="submit">Solicitar PIN por WhatsApp</button>
       </form>
     </section>
+
+    <section id="pinSection" class="oculto">
+      <h2>Ingresa el PIN recibido</h2>
+      <input type="text" id="inputPin" placeholder="Escribe el PIN aquí" />
+      <button id="verificarPin">Verificar PIN</button>
+    </section>
+
+    <section id="listaProductos" class="oculto">
+      <h2>Lista de Productos</h2>
+      <p>Acceso concedido. Aquí aparecerán los productos según tu categoría.</p>
+    </section>
   </main>
-
-  <footer>
-    <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
