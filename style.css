@@ -1,20 +1,21 @@
-
 body {
   font-family: Arial, sans-serif;
-  background: #f8f9fa;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
 }
 
 header {
-  background-color: #092c4c;
+  background-color: #003366;
   color: white;
-  text-align: center;
   padding: 20px;
+  text-align: center;
 }
 
 .slogan {
   font-style: italic;
+  font-size: 16px;
+  margin-top: 5px;
 }
 
 main {
@@ -25,13 +26,61 @@ main {
   margin-bottom: 20px;
 }
 
-.oculto {
-  display: none;
+#tipoCliente {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.item-producto {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
+
+.item-producto h3 {
+  margin-top: 0;
+  color: #003366;
+}
+
+#formularioSecreto {
+  background-color: #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+#formularioSecreto input, #formularioSecreto button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+#formularioSecreto button {
+  background-color: #003366;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 footer {
-  background-color: #092c4c;
-  color: white;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
+  background-color: #003366;
+  color: white;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.oculto {
+  display: none;
 }
