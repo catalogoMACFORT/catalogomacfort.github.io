@@ -2,8 +2,17 @@ const pinesValidos = {
   "Distribuidor": "MACD2025",
   "Mayorista": "MACMA2025",
   "ClienteFinal": "MACF2025",
-  "Licitacion": "MACL2025"
+  "Licitación": "MACL2025"
 };
+
+document.getElementById("tipoCliente").addEventListener("change", function () {
+  const tipo = this.value;
+  if (tipo) {
+    document.getElementById("formularioSecreto").classList.remove("oculto");
+  } else {
+    document.getElementById("formularioSecreto").classList.add("oculto");
+  }
+});
 
 document.getElementById("formularioDatos").addEventListener("submit", function (e) {
   e.preventDefault();
@@ -20,15 +29,13 @@ document.getElementById("formularioDatos").addEventListener("submit", function (
 
   if (pin === pinesValidos[tipoCliente]) {
     alert("¡Acceso concedido!");
-    
-    // Ocultar formulario y filtros
-    document.getElementById("formularioSecreto").style.display = "none";
-    document.querySelector(".filtros").style.display = "none";
-    
-    // Mostrar productos con precios (si tienes una función que lo hace)
+    document.getElementById("formularioSecreto").classList.add("oculto");
+    document.querySelector(".filtros").classList.add("oculto");
     document.getElementById("listaProductos").classList.remove("oculto");
-    cargarProductosConPrecios(tipoCliente); // Esta función debe existir para mostrar precios
+
+    document.getElementById("listaProductos").innerHTML = `<p>Bienvenido, ${nombre}. Aquí verás los productos con sus precios para <strong>${tipoCliente}</strong>.</p>`;
+    // Aquí puedes agregar llamada para cargar productos reales
   } else {
-    alert("PIN incorrecto para el tipo de cliente seleccionado.");
+    alert("PIN incorrecto para el tipo seleccionado.");
   }
 });
