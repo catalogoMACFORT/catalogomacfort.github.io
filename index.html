@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,13 +10,13 @@
 </head>
 <body>
   <header>
-    <img src="logotipo_macpro.png" alt="Logo MAC Pro" class="logo" />
+    <img src="logotipo_macpro.png" alt="Logo MAC Pro" class="logo"/>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p class="slogan">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
   </header>
 
   <main>
-    <section class="filtros">
+    <section class="selector">
       <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
       <select id="tipoCliente">
         <option value="">-- Selecciona --</option>
@@ -26,21 +27,20 @@
       </select>
     </section>
 
-    <section id="formularioAcceso" class="oculto">
+    <section id="formularioSecreto" class="oculto">
       <h2>Completa el formulario para solicitar acceso</h2>
-      <input type="text" id="nombre" placeholder="Nombre completo" required>
-      <input type="text" id="whatsapp" placeholder="WhatsApp (+591...)" required>
-      <input type="text" id="ciudad" placeholder="Ciudad o región" required>
-      <input type="text" id="empresa" placeholder="Empresa (opcional)">
-      <input type="text" id="cargo" placeholder="Cargo que ocupa" required>
-      <input type="text" id="rubro" placeholder="Rubro del negocio o empresa" required>
-      <button onclick="SolicitarPIN()">Solicitar PIN por WhatsApp</button>
+      <form id="formularioDatos">
+        <input type="text" placeholder="Nombre completo" required id="nombre" />
+        <input type="text" placeholder="WhatsApp (+591...)" required id="whatsapp" />
+        <input type="text" placeholder="Ciudad o región" required id="ciudad" />
+        <input type="text" placeholder="Empresa (opcional)" id="empresa" />
+        <input type="text" placeholder="Cargo que ocupa" required id="cargo" />
+        <input type="text" placeholder="Rubro del negocio o empresa" required id="rubro" />
+        <button type="submit">Solicitar PIN por WhatsApp</button>
+      </form>
     </section>
 
-    <section id="productos" class="oculto">
-      <h2 id="saludoCliente"></h2>
-      <div id="listaProductos"></div>
-    </section>
+    <section id="bienvenida" class="oculto"></section>
   </main>
 
   <footer>
