@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
+    <p class="slogan">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
+  </header>
+
+  <main>
+    <section class="filtros">
+      <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
+      <select id="tipoCliente">
+        <option value="">-- Selecciona --</option>
+        <option value="Distribuidor">Distribuidor</option>
+        <option value="Mayorista">Mayorista</option>
+        <option value="ClienteFinal">Cliente Final</option>
+        <option value="Licitacion">Licitación</option>
+      </select>
+    </section>
+
+    <section class="productos" id="listaProductos">
+      <!-- Aquí se cargan los productos desde Google Sheets -->
+    </section>
+
+    <section id="formularioSecreto" class="oculto">
+      <h2>Completa el formulario para solicitar acceso</h2>
+      <form id="formularioDatos">
+        <input type="text" placeholder="Nombre completo" required id="nombre" />
+        <input type="text" placeholder="WhatsApp (+591...)" required id="whatsapp" />
+        <input type="text" placeholder="Ciudad o región" required id="ciudad" />
+        <input type="text" placeholder="Empresa (opcional)" id="empresa" />
+        <input type="text" placeholder="Cargo que ocupa" required id="cargo" />
+        <input type="text" placeholder="Rubro del negocio o empresa" required id="rubro" />
+        <button type="submit">Solicitar PIN por WhatsApp</button>
+      </form>
+    </section>
