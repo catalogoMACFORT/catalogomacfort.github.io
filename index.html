@@ -19,17 +19,13 @@
         <option value="">-- Selecciona --</option>
         <option value="Distribuidor">Distribuidor</option>
         <option value="Mayorista">Mayorista</option>
-        <option value="Cliente Final">Cliente Final</option>
-        <option value="Licitación">Licitación</option>
+        <option value="ClienteFinal">Cliente Final</option>
+        <option value="Licitacion">Licitación</option>
       </select>
     </section>
 
-    <section class="productos" id="listaProductos">
-      <!-- Aquí se cargan los productos desde Google Sheets (sin precios hasta que se valide el pin) -->
-    </section>
-
     <section id="formularioSecreto" class="oculto">
-      <h2>Completa el formulario para solicitar acceso</h2>
+      <h2>Solicita tu PIN para ver precios</h2>
       <form id="formularioDatos">
         <input type="text" placeholder="Nombre completo" required id="nombre" />
         <input type="text" placeholder="WhatsApp (+591...)" required id="whatsapp" />
@@ -41,18 +37,103 @@
       </form>
     </section>
 
-    <section id="ingresarPin" class="oculto">
-      <h2>Ya tienes tu PIN de acceso</h2>
-      <input type="text" id="pinIngresado" placeholder="Ingresa tu PIN aquí" />
-      <button onclick="validarPin()">Ver Precios</button>
+    <section id="mensajeBienvenida" class="oculto">
+      <h2>Gracias. Solicita el PIN en WhatsApp y vuelve aquí para ingresar.</h2>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
+    <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
   </footer>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+  <script>
+    const tipoCliente = document.getElementById("tipoCliente");
+    const formularioSecreto = document.getElementById("formularioSecreto");
+    const formulario = document.getElementById("formularioDatos");
+    const mensaje = document.getElementById("mensajeBienvenida");
+
+    tipoCliente.addEventListener("change", () => {
+      if (tipoCliente.value !== "") {
+        formularioSecreto.classList.remove("oculto");
+      } else {
+        formularioSecreto.classList.add("oculto");
+      }
+    });
+
+    formulario.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
+      const whatsapp = document.getElementById("whatsapp").value;
+      const ciudad = document.getElementById("ciudad").value;
+      const empresa = document.getElementById("empresa").value;
+      const cargo = document.getElementById("cargo").value;
+      const rubro = document.getElementById("rubro").value;
+      const tipo = tipoCliente.value;
+
+      const mensajeWhatsApp = `Hola, soy *${nombre}* (${tipo}) y deseo solicitar el PIN para ver precios.\n📞 WhatsApp: ${whatsapp}\n📍 Ciudad: ${ciudad}\n🏢 Empresa: ${empresa || "(sin empresa)"}\n👔 Cargo: ${cargo}\n🏷️ Rubro: ${rubro}`;
+
+      const numero = "59168099278"; // reemplaza por tu número real
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+      window.open(url, "_blank");
+
+      formularioSecreto.classList.add("oculto");
+      mensaje.classList.remove("oculto");
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #222;
+    }
+
+    header {
+      background-color: #002E5D;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .slogan {
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    .filtros, form, #mensajeBienvenida {
+      max-width: 400px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.7rem 1.5rem;
+      background-color: #002E5D;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #002E5D;
+      color: white;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
 </body>
 </html>
