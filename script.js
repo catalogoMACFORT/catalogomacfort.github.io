@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 📂 Rubro: ${rubro}
 🧾 Tipo de cliente: ${cliente}`;
 
-    const numero = "59168099278"; // Cambia esto si es otro número
+    const numero = "59168099278"; // Cambia si es otro
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank");
   });
