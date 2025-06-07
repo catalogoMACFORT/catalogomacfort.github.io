@@ -3,31 +3,38 @@ const pinesValidos = {
   Distribuidor: "MACD2025",
   Mayorista: "MACMA2025",
   ClienteFinal: "MACF2025",
-  Licitación: "MACL2025"
+  Licitación: "MACL2025",
 };
 
 function mostrarFormulario() {
-  document.getElementById('formulario').classList.remove('oculto');
+  document.getElementById("formulario").classList.remove("oculto");
+  document.getElementById("seccionPIN").classList.add("oculto");
+  document.getElementById("accesoProductos").classList.add("oculto");
 }
 
-function solicitarPIN() {
-  const tipo = document.getElementById("tipoCliente").value;
+function solicitarPin() {
   const nombre = document.getElementById("nombre").value;
-  const numero = document.getElementById("WhatsApp").value;
-  const link = `https://wa.me/59168099278?text=Hola,%20soy%20${nombre},%20solicito%20el%20PIN%20como%20${tipo}`;
-  window.open(link, "_blank");
-  document.getElementById("ingresoPIN").classList.remove("oculto");
+  const whatsapp = document.getElementById("whatsapp").value;
+  const tipo = document.getElementById("tipoCliente").value;
+  if (!nombre || !whatsapp || !tipo) return alert("Completa todos los datos.");
+
+  const mensaje = `Hola, soy ${nombre} y deseo acceder como ${tipo}. Mi número es: ${whatsapp}`;
+  const url = `https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, "_blank");
+
+  document.getElementById("seccionPIN").classList.remove("oculto");
 }
 
 function verificarPIN() {
   const tipo = document.getElementById("tipoCliente").value;
-  const pin = document.getElementById("pinIngresado").value;
-  const correcto = pinesValidos[tipo];
-  if (pin === correcto) {
-    document.getElementById("mensajeBienvenida").classList.remove("oculto");
-    document.getElementById("mensajeBienvenida").innerHTML =
-      `Bienvenido, aquí verás los productos con precios para ${tipo}`;
+  const pinIngresado = document.getElementById("pin").value;
+  const pinEsperado = pinesValidos[tipo];
+
+  if (pinIngresado === pinEsperado) {
+    document.getElementById("mensajeBienvenida").innerText = `Bienvenido. Aquí verás los productos con precios para ${tipo}.`;
+    document.getElementById("productosFrame").src = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pubhtml?widget=true&amp;headers=false";
+    document.getElementById("accesoProductos").classList.remove("oculto");
   } else {
-    alert("PIN incorrecto");
+    alert("PIN incorrecto. Solicita nuevamente por WhatsApp.");
   }
 }
