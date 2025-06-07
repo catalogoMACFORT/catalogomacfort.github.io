@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -10,9 +9,7 @@
   <header>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p class="slogan">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
-  </header>
-
-  <main>
+  </header>  <main>
     <section class="filtros">
       <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
       <select id="tipoCliente">
@@ -22,118 +19,31 @@
         <option value="ClienteFinal">Cliente Final</option>
         <option value="Licitacion">Licitación</option>
       </select>
-    </section>
+    </section><section id="formularioSecreto" class="oculto">
+  <h2>Completa el formulario para solicitar acceso</h2>
+  <form id="formularioDatos">
+    <input type="text" placeholder="Nombre completo" required id="nombre" />
+    <input type="text" placeholder="WhatsApp (+591...)" required id="whatsapp" />
+    <input type="text" placeholder="Ciudad o región" required id="ciudad" />
+    <input type="text" placeholder="Empresa (opcional)" id="empresa" />
+    <input type="text" placeholder="Cargo que ocupa" required id="cargo" />
+    <input type="text" placeholder="Rubro del negocio o empresa" required id="rubro" />
+    <button type="submit">Solicitar PIN por WhatsApp</button>
+  </form>
+</section>
 
-    <section id="formularioSecreto" class="oculto">
-      <h2>Solicita tu PIN para ver precios</h2>
-      <form id="formularioDatos">
-        <input type="text" placeholder="Nombre completo" required id="nombre" />
-        <input type="text" placeholder="WhatsApp (+591...)" required id="whatsapp" />
-        <input type="text" placeholder="Ciudad o región" required id="ciudad" />
-        <input type="text" placeholder="Empresa (opcional)" id="empresa" />
-        <input type="text" placeholder="Cargo que ocupa" required id="cargo" />
-        <input type="text" placeholder="Rubro del negocio o empresa" required id="rubro" />
-        <button type="submit">Solicitar PIN por WhatsApp</button>
-      </form>
-    </section>
+<section id="accesoPin" class="oculto">
+  <h2>Ingresa tu PIN de acceso</h2>
+  <input type="password" id="pinInput" placeholder="PIN de acceso" />
+  <button onclick="verificarPin()">Ver precios</button>
+  <p id="mensajePin"></p>
+</section>
 
-    <section id="mensajeBienvenida" class="oculto">
-      <h2>Gracias. Solicita el PIN en WhatsApp y vuelve aquí para ingresar.</h2>
-    </section>
-  </main>
+<section class="productos" id="listaProductos">
+  <!-- Los productos se cargarán aquí -->
+</section>
 
-  <footer>
+  </main>  <footer>
     <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
-  </footer>
-
-  <script>
-    const tipoCliente = document.getElementById("tipoCliente");
-    const formularioSecreto = document.getElementById("formularioSecreto");
-    const formulario = document.getElementById("formularioDatos");
-    const mensaje = document.getElementById("mensajeBienvenida");
-
-    tipoCliente.addEventListener("change", () => {
-      if (tipoCliente.value !== "") {
-        formularioSecreto.classList.remove("oculto");
-      } else {
-        formularioSecreto.classList.add("oculto");
-      }
-    });
-
-    formulario.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nombre = document.getElementById("nombre").value;
-      const whatsapp = document.getElementById("whatsapp").value;
-      const ciudad = document.getElementById("ciudad").value;
-      const empresa = document.getElementById("empresa").value;
-      const cargo = document.getElementById("cargo").value;
-      const rubro = document.getElementById("rubro").value;
-      const tipo = tipoCliente.value;
-
-      const mensajeWhatsApp = `Hola, soy *${nombre}* (${tipo}) y deseo solicitar el PIN para ver precios.\n📞 WhatsApp: ${whatsapp}\n📍 Ciudad: ${ciudad}\n🏢 Empresa: ${empresa || "(sin empresa)"}\n👔 Cargo: ${cargo}\n🏷️ Rubro: ${rubro}`;
-
-      const numero = "59168099278"; // reemplaza por tu número real
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-      window.open(url, "_blank");
-
-      formularioSecreto.classList.add("oculto");
-      mensaje.classList.remove("oculto");
-    });
-  </script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f9f9f9;
-      color: #222;
-    }
-
-    header {
-      background-color: #002E5D;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .slogan {
-      font-style: italic;
-      margin-top: 0.5rem;
-    }
-
-    .filtros, form, #mensajeBienvenida {
-      max-width: 400px;
-      margin: 2rem auto;
-      text-align: center;
-    }
-
-    form input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.7rem;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 0.7rem 1.5rem;
-      background-color: #002E5D;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .oculto {
-      display: none;
-    }
-
-    footer {
-      text-align: center;
-      background-color: #002E5D;
-      color: white;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-  </style>
-</body>
+  </footer>  <script src="script.js"></script></body>
 </html>
