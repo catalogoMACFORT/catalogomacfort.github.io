@@ -1,40 +1,62 @@
-
 const pinesValidos = {
-  Distribuidor: "MACD2025",
-  Mayorista: "MACMA2025",
-  ClienteFinal: "MACF2025",
-  Licitación: "MACL2025",
+  "Distribuidor": "MACD2025",
+  "Mayorista": "MACMA2025",
+  "ClienteFinal": "MACF2025",
+  "Licitación": "MACL2025"
 };
 
 function mostrarFormulario() {
-  document.getElementById("formulario").classList.remove("oculto");
-  document.getElementById("seccionPIN").classList.add("oculto");
-  document.getElementById("accesoProductos").classList.add("oculto");
+  document.getElementById('formularioAcceso').classList.remove('oculto');
+  document.getElementById('contenidoProductos').classList.add('oculto');
 }
 
-function solicitarPin() {
-  const nombre = document.getElementById("nombre").value;
-  const whatsapp = document.getElementById("whatsapp").value;
-  const tipo = document.getElementById("tipoCliente").value;
-  if (!nombre || !whatsapp || !tipo) return alert("Completa todos los datos.");
-
-  const mensaje = `Hola, soy ${nombre} y deseo acceder como ${tipo}. Mi número es: ${whatsapp}`;
+function solicitarPIN() {
+  const nombre = document.getElementById('nombre').value;
+  const whatsapp = document.getElementById('whatsapp').value;
+  const tipoCliente = document.getElementById('tipoCliente').value;
+  if (!nombre || !whatsapp || !tipoCliente) {
+    alert("Completa todos los campos antes de solicitar el PIN.");
+    return;
+  }
+  const mensaje = `Hola, soy ${nombre}, quiero solicitar el PIN como cliente ${tipoCliente}.`;
   const url = `https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`;
   window.open(url, "_blank");
-
-  document.getElementById("seccionPIN").classList.remove("oculto");
 }
 
 function verificarPIN() {
-  const tipo = document.getElementById("tipoCliente").value;
-  const pinIngresado = document.getElementById("pin").value;
-  const pinEsperado = pinesValidos[tipo];
+  const tipoCliente = document.getElementById('tipoCliente').value;
+  const pinIngresado = document.getElementById('pin').value;
+  const pinCorrecto = pinesValidos[tipoCliente];
 
-  if (pinIngresado === pinEsperado) {
-    document.getElementById("mensajeBienvenida").innerText = `Bienvenido. Aquí verás los productos con precios para ${tipo}.`;
-    document.getElementById("productosFrame").src = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pubhtml?widget=true&amp;headers=false";
-    document.getElementById("accesoProductos").classList.remove("oculto");
+  if (pinIngresado === pinCorrecto) {
+    document.getElementById('formularioAcceso').classList.add('oculto');
+    document.getElementById('contenidoProductos').classList.remove('oculto');
+    document.getElementById('bienvenida').textContent = `Bienvenido. Aquí verás los productos con precios para ${tipoCliente}.`;
+    cargarProductos();
   } else {
-    alert("PIN incorrecto. Solicita nuevamente por WhatsApp.");
+    alert("PIN incorrecto. Verifica o solicita uno nuevo.");
   }
+}
+
+function cargarProductos() {
+  const urlCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+  fetch(urlCSV)
+    .then(res => res.text())
+    .then(data => {
+      const filas = data.split("\n");
+      let tablaHTML = "<table border='1'><tr>";
+      const encabezados = filas[0].split(",");
+      encabezados.forEach(col => tablaHTML += `<th>${col.trim()}</th>`);
+      tablaHTML += "</tr>";
+
+      for (let i = 1; i < filas.length; i++) {
+        const celdas = filas[i].split(",");
+        tablaHTML += "<tr>";
+        celdas.forEach(celda => tablaHTML += `<td>${celda.trim()}</td>`);
+        tablaHTML += "</tr>";
+      }
+
+      tablaHTML += "</table>";
+      document.getElementById("tablaProductos").innerHTML = tablaHTML;
+    });
 }
