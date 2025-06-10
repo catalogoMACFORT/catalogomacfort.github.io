@@ -1,44 +1,43 @@
 
-document.getElementById('tipoCliente').addEventListener('change', () => {
-  document.getElementById('formularioSecreto').classList.remove('oculto');
-});
+const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-document.getElementById('formularioDatos').addEventListener('submit', function(e) {
-  e.preventDefault();
+const pins = {
+  "1234": "Distribuidor",
+  "5678": "Mayorista",
+  "9999": "Cliente Final",
+  "0000": "Licitación"
+};
 
-  const nombre = document.getElementById('nombre').value.trim();
-  const whatsapp = document.getElementById('whatsapp').value.trim();
-  const ciudad = document.getElementById('ciudad').value.trim();
-  const empresa = document.getElementById('empresa').value.trim();
-  const cargo = document.getElementById('cargo').value.trim();
-  const rubro = document.getElementById('rubro').value.trim();
-  const tipoCliente = document.getElementById('tipoCliente').value;
-
-  if (!nombre || !whatsapp || !ciudad || !cargo || !rubro || !tipoCliente) {
-    alert("Por favor completa todos los campos obligatorios.");
-    return;
-  }
-
-  const mensaje = `Hola, soy ${nombre}, soy ${cargo} en ${empresa || 'mi negocio'} ubicado en ${ciudad}. Me interesa ver precios como ${tipoCliente}. Mi rubro: ${rubro}. Mi número es: ${whatsapp}`;
-  const url = `https://wa.me/59168099278?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
-
-  const pin = prompt(`Hola ${nombre}, por favor ingresa el PIN que recibiste por WhatsApp:`);
-
-  const pinesValidos = {
-    "Distribuidor": "MACD2025",
-    "Mayorista": "MACMA2025",
-    "ClienteFinal": "MACF2025",
-    "Licitación": "MACL2025"
-  };
-
-  if (pin === pinesValidos[tipoCliente]) {
-    document.getElementById('accesoProductos').classList.remove('oculto');
-    document.getElementById('accesoProductos').innerHTML = `
-      <h2>Bienvenido, ${nombre}</h2>
-      <p>Aquí verás los productos con sus precios para <strong>${tipoCliente}</strong>.</p>
-    `;
+function verificarPIN() {
+  const pin = document.getElementById("pinInput").value;
+  if (pins[pin]) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("contenido").style.display = "block";
+    cargarCatalogo(pin);
   } else {
-    alert("❌ PIN incorrecto para el tipo seleccionado.");
+    alert("PIN incorrecto");
   }
-});
+}
+
+function cargarCatalogo(pin) {
+  fetch(URL_CSV)
+    .then(response => response.text())
+    .then(data => {
+      const filas = data.trim().split("\n").map(linea => linea.split(","));
+      const tabla = document.getElementById("catalogo");
+      const headers = filas[0];
+      const tipoCliente = pins[pin];
+
+      let html = "<tr>";
+      headers.forEach(header => html += `<th>${header}</th>`);
+      html += "</tr>";
+
+      for (let i = 1; i < filas.length; i++) {
+        html += "<tr>";
+        filas[i].forEach(columna => html += `<td>${columna}</td>`);
+        html += "</tr>";
+      }
+
+      tabla.innerHTML = html;
+    });
+}
