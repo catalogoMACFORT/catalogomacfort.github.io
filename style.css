@@ -1,1 +1,27 @@
-body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f8f9fa;
+}
+header {
+    background: #111;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+.logo {
+    height: 80px;
+}
+main {
+    padding: 1rem;
+}
+footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
