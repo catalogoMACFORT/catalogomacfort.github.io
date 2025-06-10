@@ -2,22 +2,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catálogo MACFORT</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAC FOR-T & MAC PRO 2025</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="logo_macfort.png" alt="MACFORT Logo" class="logo">
-        <h1>Bienvenido al Catálogo Oficial</h1>
-    </header>
-    <main id="catalogo">
-        <!-- Productos se cargarán aquí dinámicamente -->
-    </main>
-    <footer>
-        <p>&copy; 2025 MACFORT. Todos los derechos reservados.</p>
-    </footer>
-    <script src="script.js"></script>
+  <header>
+    <img src="logo.png" alt="MAC FOR-T & MAC PRO" class="logo">
+    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
+    <p class="slogan">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
+  </header>
+  <main>
+    <section id="tipo-cliente">
+      <label>Selecciona tu tipo de cliente:</label>
+      <select id="clienteTipo">
+        <option value="">Seleccionar</option>
+        <option value="distribuidor">Distribuidor</option>
+        <option value="mayorista">Mayorista</option>
+        <option value="cliente_final">Cliente Final</option>
+        <option value="licitacion">Licitación</option>
+      </select>
+    </section>
+    <section id="productos"></section>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
