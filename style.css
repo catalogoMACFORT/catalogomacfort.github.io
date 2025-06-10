@@ -1,42 +1,41 @@
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background: #f3f3f3;
-    color: #222;
+    padding: 0;
+    background-color: #f9f9f9;
 }
 header {
-    background: #002855;
+    background-color: #002a5c;
     color: white;
-    padding: 1em;
     text-align: center;
+    padding: 20px;
 }
 .logo {
-    width: 180px;
+    width: 100px;
 }
-main {
-    padding: 1em;
+main, section {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+input, select, button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+.producto {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: white;
+    border-radius: 10px;
 }
 footer {
-    background: #002855;
+    background-color: #002a5c;
     color: white;
     text-align: center;
-    padding: 0.5em;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    padding: 10px;
 }
-#formulario-acceso input, #formulario-acceso select, #formulario-acceso button {
-    display: block;
-    margin: 0.5em auto;
-    padding: 0.5em;
-    width: 80%;
-}
-.tarjeta {
-    background: white;
-    padding: 1em;
-    margin: 1em auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #aaa;
-    width: 90%;
-    max-width: 400px;
-}
+    
