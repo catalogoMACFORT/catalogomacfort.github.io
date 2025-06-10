@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,12 +9,37 @@
 </head>
 <body>
     <header>
-        <img src="img/logo_macfort.png" alt="Logo MACFORT" class="logo">
-        <h1>Bienvenido al Catálogo MACFORT</h1>
+        <img src="logo.png" alt="MACFORT Logo" class="logo">
+        <h1>CATÁLOGO DIGITAL MACFORT</h1>
     </header>
-    <main id="contenido">
-        <p>Cargando productos...</p>
-    </main>
+
+    <section id="formulario">
+        <h2>Seleccione su tipo de cliente</h2>
+        <select id="tipoCliente">
+            <option value="">Seleccione...</option>
+            <option value="distribuidor">Distribuidor</option>
+            <option value="mayorista">Mayorista</option>
+            <option value="cliente_final">Cliente Final</option>
+            <option value="licitacion">Licitación</option>
+        </select>
+        <button onclick="solicitarPIN()">Solicitar PIN</button>
+    </section>
+
+    <section id="ingresoPIN" style="display:none;">
+        <h2>Ingrese su PIN</h2>
+        <input type="text" id="pin" placeholder="Ej. 123456">
+        <button onclick="verificarPIN()">Ver catálogo</button>
+    </section>
+
+    <section id="catalogo" style="display:none;">
+        <h2>Catálogo de Productos</h2>
+        <div id="productosContainer"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 MACFORT. Todos los derechos reservados.</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
