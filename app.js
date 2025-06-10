@@ -1,58 +1,65 @@
 
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
+const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4jvq-eB9Fn1bZQjdtiboCyn-0sGswn24iWNdJsWqw0MCz0AOhNoId6BKw8ZLFSg/pub?output=csv";
 
-let tipoCliente = '';
-let preciosColumnas = {
-    distribuidor: "Precio Distribuidor",
-    mayorista: "Precio Mayorista",
-    cliente_final: "Precio Final",
-    licitacion: "Precio Licitación"
+const PINES = {
+  distribuidor: "MACD2025",
+  mayorista: "MACM2025",
+  final: "MACF2025",
+  licitacion: "MACL2025"
 };
 
-function solicitarPIN() {
-    tipoCliente = document.getElementById("tipoCliente").value;
-    if (!tipoCliente) {
-        alert("Seleccione un tipo de cliente");
-        return;
-    }
-    window.open("https://wa.me/59168099278?text=Hola,%20solicito%20mi%20PIN%20MACFORT%20para%20cliente%20" + tipoCliente, "_blank");
-    document.getElementById("ingresoPIN").style.display = "block";
+let tipoCliente = null;
+let PIN = null;
+
+function seleccionarCliente(tipo) {
+  tipoCliente = tipo;
+  PIN = prompt("🔐 Ingrese su PIN para acceder a precios personalizados:");
+  if (PIN === PINES[tipo]) {
+    cargarProductos();
+  } else {
+    alert("PIN incorrecto. Solicite su PIN autorizado.");
+  }
 }
 
-function verificarPIN() {
-    const pinIngresado = document.getElementById("pin").value;
-    if (pinIngresado === "MACFORT2025") {
-        document.getElementById("catalogo").style.display = "block";
-        cargarCatalogo();
-    } else {
-        alert("PIN incorrecto. Solicítalo por WhatsApp.");
-    }
-}
+function cargarProductos() {
+  fetch(URL_CSV)
+    .then(res => res.text())
+    .then(csv => {
+      const filas = csv.split("\n").slice(1); // omitir encabezado
+      const contenedor = document.getElementById("contenedor-productos");
+      contenedor.innerHTML = "";
 
-async function cargarCatalogo() {
-    const response = await fetch(CSV_URL);
-    const data = await response.text();
-    const filas = data.split("\n");
-    const headers = filas[0].split(",");
-    const productos = filas.slice(1).map(fila => fila.split(","));
+      filas.forEach(fila => {
+        const columnas = fila.split(",");
+        const [codigo, producto, precioUSD, marca, categoria, urlQR, imagenURL, pinDistribuidor, pinMayorista, pinFinal, pinLicitacion] = columnas;
 
-    const contenedor = document.getElementById("productosContainer");
-    contenedor.innerHTML = "";
+        let precio = null;
+        if (PIN === PINES.distribuidor) precio = parseFloat(pinDistribuidor);
+        else if (PIN === PINES.mayorista) precio = parseFloat(pinMayorista);
+        else if (PIN === PINES.final) precio = parseFloat(pinFinal);
+        else if (PIN === PINES.licitacion) precio = parseFloat(pinLicitacion);
 
-    productos.forEach(prod => {
-        const codigo = prod[0];
-        const descripcion = prod[1];
-        const unidad = prod[2];
-        const precio = prod[headers.indexOf(preciosColumnas[tipoCliente])];
-
-        const card = document.createElement("div");
-        card.className = "producto";
-        card.innerHTML = `
-            <h4>${codigo}</h4>
-            <p>${descripcion}</p>
-            <p><strong>Unidad:</strong> ${unidad}</p>
-            <p><strong>Precio:</strong> Bs ${precio}</p>
-        `;
-        contenedor.appendChild(card);
+        if (precio && imagenURL) {
+          const productoHTML = \`
+            <div class="producto">
+              <img src="\${imagenURL}" alt="\${producto}" />
+              <div class="info">
+                <h2>\${producto}</h2>
+                <p><strong>Código:</strong> \${codigo}</p>
+                <p><strong>Marca:</strong> \${marca}</p>
+                <p><strong>Categoría:</strong> \${categoria}</p>
+                <p><strong>Precio:</strong> Bs \${precio.toFixed(2)}</p>
+                <p class="nota">*Precio personalizado según tipo de cliente</p>
+              </div>
+              <img src="\${urlQR}" alt="QR" class="qr" />
+            </div>
+          \`;
+          contenedor.innerHTML += productoHTML;
+        }
+      });
+    })
+    .catch(err => {
+      document.getElementById("contenedor-productos").innerHTML = "<p style='color:red;'>❌ Error al cargar productos.</p>";
+      console.error(err);
     });
 }
