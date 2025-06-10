@@ -1,51 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
+    <link rel="stylesheet" href="estilo.css" />
 </head>
 <body>
-  <header>
-    <img src="img/logo_macpro_sinfondo.png" alt="Logo MAC Pro" class="logo">
+    <div class="logo-container">
+        <img src="logotipo_macpro.png" alt="Logo MAC Pro" class="logo" />
+    </div>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
-    <p><em>“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</em></p>
-  </header>
+    <p class="subtitulo">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
 
-  <section>
-    <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
-    <select id="tipoCliente" onchange="mostrarFormulario()">
-      <option value="">-- Selecciona --</option>
-      <option value="Distribuidor">Distribuidor</option>
-      <option value="Mayorista">Mayorista</option>
-      <option value="ClienteFinal">Cliente Final</option>
-      <option value="Licitación">Licitación</option>
-    </select>
-
-    <div id="datosFormulario" class="oculto">
-      <input type="text" id="nombre" placeholder="Nombre completo">
-      <input type="text" id="whatsapp" placeholder="WhatsApp (+591...)">
-      <input type="text" id="ciudad" placeholder="Ciudad o región">
-      <input type="text" id="empresa" placeholder="Empresa">
-      <input type="text" id="cargo" placeholder="Cargo que ocupa">
-      <input type="text" id="rubro" placeholder="Rubro del negocio o empresa">
-      <button onclick="solicitarPIN()">Solicitar PIN por WhatsApp</button>
+    <div class="formulario">
+        <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
+        <select id="tipoCliente">
+            <option value="">-- Selecciona --</option>
+            <option value="Distribuidor">Distribuidor</option>
+            <option value="Mayorista">Mayorista</option>
+            <option value="ClienteFinal">Cliente Final</option>
+            <option value="Licitación">Licitación</option>
+        </select>
+        <div id="formularioExtra"></div>
     </div>
 
-    <div id="ingresoPIN" class="oculto">
-      <label for="pin">Ingresa el PIN que recibiste:</label>
-      <input type="password" id="pin" placeholder="PIN">
-      <button onclick="verificarPIN()">Ingresar</button>
+    <div class="footer">
+        <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
     </div>
-  </section>
 
-  <section id="productos" class="oculto"></section>
-
-  <footer>
-    <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
