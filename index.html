@@ -2,46 +2,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catálogo MACFORT 2025</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo MACFORT 2025</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <img src="logo_macfort_transparente.png" alt="Logo MACFORT" class="logo" />
-        <h1>Catálogo MACFORT 2025</h1>
-    </header>
-
-    <section id="seleccion-cliente">
-        <label for="tipo-cliente">Selecciona tu tipo de cliente:</label>
-        <select id="tipo-cliente">
-            <option value="">-- Seleccionar --</option>
-            <option value="distribuidor">Distribuidor</option>
-            <option value="mayorista">Mayorista</option>
-            <option value="minorista">Minorista</option>
+  <header>
+    <img src="logo_macfort.png" alt="MACFORT Logo" class="logo" />
+    <h1>Catálogo Digital 2025</h1>
+  </header>
+  <main>
+    <section id="catalogo">
+      <div id="productos" class="grid"></div>
+    </section>
+    <section id="registro">
+      <h2>Registro</h2>
+      <form id="formulario">
+        <input type="text" id="nombre" placeholder="Nombre completo" required>
+        <input type="text" id="ciudad" placeholder="Ciudad">
+        <input type="tel" id="telefono" placeholder="WhatsApp" required>
+        <select id="tipoCliente">
+          <option value="">Selecciona tipo de cliente</option>
+          <option value="mayorista">Mayorista</option>
+          <option value="distribuidor">Distribuidor</option>
+          <option value="ferreteria">Ferretería</option>
+          <option value="particular">Particular</option>
         </select>
+        <input type="text" id="pin" placeholder="PIN de acceso">
+        <button type="submit">Ver precios</button>
+      </form>
     </section>
-
-    <section id="registro-datos" class="oculto">
-        <h3>Registra tus datos</h3>
-        <input type="text" placeholder="Nombre Completo" id="nombre" />
-        <input type="tel" placeholder="Teléfono" id="telefono" />
-        <button onclick="solicitarPin()">Solicitar PIN por WhatsApp</button>
-    </section>
-
-    <section id="ingreso-pin" class="oculto">
-        <input type="text" placeholder="Ingresa tu PIN" id="pin" />
-        <button onclick="validarPin()">Validar PIN</button>
-    </section>
-
-    <section id="productos" class="oculto">
-        <h2>Productos</h2>
-        <div id="catalogo">
-            <!-- Aquí se insertarán las tarjetas de productos -->
-        </div>
-    </section>
-
-    <script src="app.js"></script>
+  </main>
+  <footer>
+    <a href="https://wa.me/59168099278" id="whatsapp" target="_blank">Solicitar PIN por WhatsApp</a>
+  </footer>
+  <script src="app.js"></script>
 </body>
 </html>
