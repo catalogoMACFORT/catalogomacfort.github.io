@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f3f3f3;
+    color: #222;
+}
+header {
+    background: #002855;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+.logo {
+    width: 180px;
+}
+main {
+    padding: 1em;
+}
+footer {
+    background: #002855;
+    color: white;
+    text-align: center;
+    padding: 0.5em;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+#formulario-acceso input, #formulario-acceso select, #formulario-acceso button {
+    display: block;
+    margin: 0.5em auto;
+    padding: 0.5em;
+    width: 80%;
+}
+.tarjeta {
+    background: white;
+    padding: 1em;
+    margin: 1em auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #aaa;
+    width: 90%;
+    max-width: 400px;
+}
