@@ -1,32 +1,50 @@
-
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
   margin: 0;
-  padding: 0;
+  background-color: #f4f4f4;
   text-align: center;
 }
+
 header {
-  background-color: #002c54;
+  background-color: #003366;
   color: white;
   padding: 20px;
 }
-.logo {
-  width: 300px;
-  max-width: 90%;
-  margin: 0 auto;
+
+#logo {
+  width: 150px;
+  margin: 0 auto 10px;
+  display: block;
 }
+
 main {
-  margin: 20px;
+  padding: 20px;
 }
-footer {
-  background-color: #002c54;
+
+input, select, button {
+  display: block;
+  margin: 10px auto;
+  padding: 8px;
+  width: 90%;
+  max-width: 300px;
+}
+
+button {
+  background-color: #003366;
   color: white;
-  padding: 10px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  border: none;
+  cursor: pointer;
 }
+
 .oculto {
   display: none;
+}
+
+footer {
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
