@@ -4,32 +4,44 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catálogo MAC FOR-T & MAC PRO 2025</title>
-    <link rel="stylesheet" href="estilo.css" />
+    <title>Catálogo MACFORT 2025</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="logo-container">
-        <img src="logotipo_macpro.png" alt="Logo MAC Pro" class="logo" />
-    </div>
-    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
-    <p class="subtitulo">“Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado”</p>
+    <header>
+        <img src="logo_macfort_transparente.png" alt="Logo MACFORT" class="logo" />
+        <h1>Catálogo MACFORT 2025</h1>
+    </header>
 
-    <div class="formulario">
-        <label for="tipoCliente">Selecciona tu tipo de cliente:</label>
-        <select id="tipoCliente">
-            <option value="">-- Selecciona --</option>
-            <option value="Distribuidor">Distribuidor</option>
-            <option value="Mayorista">Mayorista</option>
-            <option value="ClienteFinal">Cliente Final</option>
-            <option value="Licitación">Licitación</option>
+    <section id="seleccion-cliente">
+        <label for="tipo-cliente">Selecciona tu tipo de cliente:</label>
+        <select id="tipo-cliente">
+            <option value="">-- Seleccionar --</option>
+            <option value="distribuidor">Distribuidor</option>
+            <option value="mayorista">Mayorista</option>
+            <option value="minorista">Minorista</option>
         </select>
-        <div id="formularioExtra"></div>
-    </div>
+    </section>
 
-    <div class="footer">
-        <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
-    </div>
+    <section id="registro-datos" class="oculto">
+        <h3>Registra tus datos</h3>
+        <input type="text" placeholder="Nombre Completo" id="nombre" />
+        <input type="tel" placeholder="Teléfono" id="telefono" />
+        <button onclick="solicitarPin()">Solicitar PIN por WhatsApp</button>
+    </section>
 
-    <script src="script.js"></script>
+    <section id="ingreso-pin" class="oculto">
+        <input type="text" placeholder="Ingresa tu PIN" id="pin" />
+        <button onclick="validarPin()">Validar PIN</button>
+    </section>
+
+    <section id="productos" class="oculto">
+        <h2>Productos</h2>
+        <div id="catalogo">
+            <!-- Aquí se insertarán las tarjetas de productos -->
+        </div>
+    </section>
+
+    <script src="app.js"></script>
 </body>
 </html>
