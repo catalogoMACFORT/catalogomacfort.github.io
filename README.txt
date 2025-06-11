@@ -1,1 +1,1 @@
-Este archivo describe el contenido del catálogo web app MACFORT 2025.
+Proyecto MACFORT 2025 - Web funcional enlazada con Google Sheets
