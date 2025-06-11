@@ -1,9 +1,27 @@
-// Ejemplo base: Configuración de comisiones para afiliados const nivelesAfiliado = [ { nivel: "Bronce", desde: 0, hasta: 99, comision: 0.04 }, { nivel: "Plata", desde: 100, hasta: 299, comision: 0.05 }, { nivel: "Oro", desde: 300, hasta: 599, comision: 0.06 }, { nivel: "Diamante", desde: 600, hasta: 999, comision: 0.07 }, { nivel: "Elite", desde: 1000, hasta: Infinity, comision: 0.08 }, ];
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css" />
+</head>
+<body>
+  <header>
+    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
+    <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
+  </header>
 
-// Función para obtener el nivel según ventas en USD function obtenerNivelAfiliado(ventasUSD) { return nivelesAfiliado.find(n => ventasUSD >= n.desde && ventasUSD <= n.hasta); }
+  <div>
+    <label>Filtrar por categoría: 
+      <select id="filtro" onchange="filtrarCategoria()">
+        <option value="Todos">Todos</option>
+      </select>
+    </label>
+  </div>
 
-// Función para calcular comisión total function calcularComision(ventasUSD) { const nivel = obtenerNivelAfiliado(ventasUSD); return { nivel: nivel.nivel, porcentaje: nivel.comision, comisionTotal: ventasUSD * nivel.comision, }; }
+  <div id="catalogo"></div>
 
-// Simulación de uso const ventasAfiliado = 385; // valor de ejemplo en USD const resultado = calcularComision(ventasAfiliado); console.log(Nivel: ${resultado.nivel}, Comisión: ${resultado.porcentaje * 100}%, Total: $${resultado.comisionTotal.toFixed(2)});
-
-// Este módulo puede integrarse con la plataforma web, app móvil o dashboard de administración para automatizar la gestión de comisiones. // También puede usarse para mostrar el nivel alcanzado en el perfil del afiliado.
+  <script src="script.js"></script>
+</body>
+</html>
