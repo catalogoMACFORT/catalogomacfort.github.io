@@ -4,28 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="estilo.css" />
 </head>
 <body>
   <header>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
+    <select id="filtroCategoria">
+      <option value="todos">Filtrar por categoría: Todos</option>
+    </select>
   </header>
 
-  <main>
-    <section>
-      <label for="filtroCategoria">Filtrar por categoría:</label>
-      <select id="filtroCategoria" onchange="filtrarCategoria()">
-        <option value="Todos">Todos</option>
-        <!-- Las categorías se generarán dinámicamente -->
-      </select>
-    </section>
-
-    <div id="catalogo"></div>
-  </main>
+  <main id="catalogo"></main>
 
   <footer>
-    <p>&copy; 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
+    <p>© 2025 MACFORT. Todos los derechos reservados.</p>
   </footer>
 
   <script src="script.js"></script>
