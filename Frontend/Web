@@ -1,0 +1,27 @@
+[
+  {
+    "nivel": "Bronce",
+    "rangoUSD": "$0 - $99",
+    "beneficios": ["Comisión del 4%", "Acceso a catálogo básico"]
+  },
+  {
+    "nivel": "Plata",
+    "rangoUSD": "$100 - $299",
+    "beneficios": ["Comisión del 5%", "Acceso a promociones", "Certificado digital"]
+  },
+  {
+    "nivel": "Oro",
+    "rangoUSD": "$300 - $599",
+    "beneficios": ["Comisión del 6%", "Logo de afiliado Oro", "Soporte personalizado"]
+  },
+  {
+    "nivel": "Diamante",
+    "rangoUSD": "$600 - $999",
+    "beneficios": ["Comisión del 7%", "Premios físicos", "Prioridad en eventos"]
+  },
+  {
+    "nivel": "Élite",
+    "rangoUSD": "$1000 o más",
+    "beneficios": ["Comisión del 8%", "Bonos VIP", "Recomendado en la app"]
+  }
+]
