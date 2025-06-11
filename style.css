@@ -1,24 +1,8 @@
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-header {
-  background-color: #002F6C;
-  color: white;
-  text-align: center;
-  padding: 1em;
-}
-.logo {
-  max-height: 80px;
-  margin-bottom: 10px;
-}
-.slogan {
-  font-style: italic;
-  margin-top: 5px;
-}
-#product-list {
-  padding: 1em;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    color: #333;
 }
