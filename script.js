@@ -1,1 +1,1 @@
-Contenido simulado para script.js
+console.log('Catálogo MACFORT cargado correctamente.');
