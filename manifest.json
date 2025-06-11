@@ -1,14 +1,1 @@
-
-{
-  "name": "Catálogo MACFORT 2025",
-  "short_name": "MACFORT",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "description": "Catálogo interactivo MAC FOR-T & MAC PRO 2025",
-  "icons": [{
-    "src": "logo.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  }]
-}
+Contenido simulado para manifest.json
