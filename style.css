@@ -1,38 +1,43 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f6f6f6;
-  color: #222;
+  background: #f8f8f8;
+  color: #111;
 }
 
-header {
-  background: #003366;
+header, footer {
+  background-color: #002B5B;
   color: white;
   text-align: center;
-  padding: 20px 10px;
+  padding: 15px;
 }
 
-.filtro {
-  text-align: center;
-  padding: 15px;
+h1 {
+  font-size: 1.5em;
+}
+
+main {
+  padding: 20px;
 }
 
 .producto {
   background: white;
-  margin: 20px auto;
+  margin: 15px auto;
   padding: 15px;
-  max-width: 90%;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 }
 
-.producto h2 {
-  color: #003366;
-}
-
-.total {
+.precio, .total {
   font-weight: bold;
-  color: #003366;
   margin-top: 10px;
+  color: #003366;
+}
+
+select, input[type="number"] {
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
