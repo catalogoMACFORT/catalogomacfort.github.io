@@ -1,0 +1,1 @@
+Este archivo describe el contenido del catálogo web app MACFORT 2025.
