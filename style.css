@@ -1,16 +1,33 @@
 body {
   font-family: Arial, sans-serif;
+  background: #f4f4f4;
   margin: 0;
   padding: 0;
-  background: #f4f4f4;
-  color: #222;
 }
-header, footer {
-  background-color: #003366;
-  color: #fff;
+
+header {
+  background: #003366;
+  color: white;
   text-align: center;
-  padding: 1em;
+  padding: 20px;
 }
-main {
-  padding: 2em;
+
+.producto {
+  background: white;
+  margin: 15px auto;
+  padding: 15px;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.precio {
+  font-weight: bold;
+  color: #003366;
+}
+
+.total {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #007b00;
 }
