@@ -1,8 +1,26 @@
 
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
     color: #333;
+}
+header {
+    background-color: #002f6c;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+main {
+    padding: 2rem;
+}
+footer {
+    background-color: #002f6c;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

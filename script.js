@@ -1,1 +1,1 @@
-// JavaScript funcional (vacío por ahora)
+// Script general aún no implementado.
