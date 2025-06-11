@@ -1,22 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>Catálogo MACFORT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+        header { background: #222; color: #fff; padding: 1em; text-align: center; }
+        main { padding: 2em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 2em; }
+        th, td { padding: 1em; border: 1px solid #ccc; text-align: center; }
+        input, select { padding: 0.5em; }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
-    <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
-  </header>
-  <main id="catalogo">
-    <p>Cargando productos desde Google Sheets...</p>
-  </main>
-  <footer>
-    <p>© 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
-  </footer>
-  <script src="script.js"></script>
+    <header>
+        <h1>Catálogo MACFORT 2025</h1>
+    </header>
+    <main>
+        <label for="exchangeRate">Tipo de cambio Bs/USD:</label>
+        <input type="number" id="exchangeRate" value="16.3" step="0.01" onchange="updatePrices()"><br><br>
+
+        <label for="presentation">Tipo de presentación:</label>
+        <select id="presentation" onchange="updatePrices()">
+            <option value="unidad">Unidad</option>
+            <option value="paquete">Paquete (12 unidades)</option>
+            <option value="caja">Caja (240 unidades)</option>
+        </select>
+
+        <table id="catalogTable">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Precio USD</th>
+                    <th>Precio Bs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>MF-001</td>
+                    <td>Guantes de seguridad industrial</td>
+                    <td class="usd">10.00</td>
+                    <td class="bs"></td>
+                </tr>
+                <tr>
+                    <td>MF-002</td>
+                    <td>Casco de obra profesional</td>
+                    <td class="usd">15.00</td>
+                    <td class="bs"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        function updatePrices() {
+            const rate = parseFloat(document.getElementById("exchangeRate").value);
+            const presentation = document.getElementById("presentation").value;
+            const usdCells = document.querySelectorAll(".usd");
+            const bsCells = document.querySelectorAll(".bs");
+
+            usdCells.forEach((cell, index) => {
+                let basePrice = parseFloat(cell.textContent);
+                if (presentation === "paquete") basePrice *= 12;
+                else if (presentation === "caja") basePrice *= 240;
+                bsCells[index].textContent = (basePrice * rate).toFixed(2);
+            });
+        }
+
+        window.onload = updatePrices;
+    </script>
 </body>
 </html>
