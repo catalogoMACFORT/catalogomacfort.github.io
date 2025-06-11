@@ -1,35 +1,22 @@
 [
   {
-    "codigo": "MF-001",
-    "nombre": "Guantes de Nitrilo",
-    "descripcion": "Guantes resistentes, de alta protección, ideales para trabajo industrial.",
-    "categoria": "Guantes",
-    "subcategoria": "Guantes de protección",
-    "marca": "MACPRO",
-    "procedencia": "China",
-    "unidad": "1 par",
-    "paquete": "12 pares",
-    "caja": "240 pares",
-    "precio_unidad": 10.0,
-    "precio_paquete": 120.0,
-    "precio_caja": 2400.0,
-    "tipo_precio_base": "USD",
-    "precios_bs": {
-      "distribuidor": 130.0,
-      "mayorista": 144.45,
-      "cliente_final": 160.5,
-      "licitacion": 178.3
-    },
-    "con_iva": {
-      "distribuidor": 134.03,
-      "mayorista": 148.93,
-      "cliente_final": 165.47,
-      "licitacion": 183.83
-    },
-    "imagen_url": "https://catalogomacfort.github.io/img/MF-001.jpg",
-    "qr_url": "https://catalogomacfort.github.io/qr/MF-001.png",
-    "stock": 850,
-    "disponibilidad": "En stock",
-    "destacado": true
+    "codigo": "MF-503",
+    "descripcion": "Escalera Multipropósito 4x3",
+    "precioUSD": 39.90
+  },
+  {
+    "codigo": "MF-504",
+    "descripcion": "Escalera Multipropósito 4x4",
+    "precioUSD": 47.15
+  },
+  {
+    "codigo": "MF-505",
+    "descripcion": "Escalera Multipropósito 4x5",
+    "precioUSD": 54.28
+  },
+  {
+    "codigo": "MF-506",
+    "descripcion": "Escalera Multipropósito 4x6",
+    "precioUSD": 61.42
   }
 ]
