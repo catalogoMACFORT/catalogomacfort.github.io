@@ -2,61 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo MACFORT 2025</title>
   <link rel="stylesheet" href="estilo.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f7f7f7;
-      color: #222;
-    }
-    header {
-      background-color: #003366;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    h1, h2 {
-      margin: 5px 0;
-    }
-    .filtro {
-      padding: 15px;
-      background: #eee;
-      text-align: center;
-    }
-    .producto {
-      background: white;
-      margin: 15px auto;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 500px;
-    }
-    .producto h3 {
-      margin-bottom: 5px;
-      color: #003366;
-    }
-    .producto p {
-      margin: 5px 0;
-    }
-    .precio {
-      font-weight: bold;
-      margin: 10px 0;
-    }
-    select, input {
-      padding: 6px;
-      margin-top: 6px;
-      margin-bottom: 10px;
-      width: 100%;
-      max-width: 200px;
-    }
-    .total {
-      color: #003366;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -64,78 +12,22 @@
     <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
   </header>
 
-  <div class="filtro">
-    <label for="filtroCategoria">Filtrar por categoría:</label>
-    <select id="filtroCategoria" onchange="filtrarProductos()">
-      <option value="Todos">Todos</option>
-      <option value="Escaleras">Escaleras</option>
-      <option value="Grampas">Grampas</option>
-      <option value="Herramientas">Herramientas</option>
-      <!-- Puedes agregar más categorías -->
-    </select>
-  </div>
+  <main>
+    <section>
+      <label for="filtroCategoria">Filtrar por categoría:</label>
+      <select id="filtroCategoria" onchange="filtrarCategoria()">
+        <option value="Todos">Todos</option>
+        <!-- Las categorías se generarán dinámicamente -->
+      </select>
+    </section>
 
-  <div id="catalogo"></div>
+    <div id="catalogo"></div>
+  </main>
 
-  <script>
-    const productos = [
-      { codigo: "MF-503", descripcion: "Escalera Multipropósito 4x3", categoria: "Escaleras", precio: 650.37 },
-      { codigo: "MF-504", descripcion: "Escalera Multipropósito 4x4", categoria: "Escaleras", precio: 768.71 },
-      { codigo: "MF-505", descripcion: "Escalera Multipropósito 4x5", categoria: "Escaleras", precio: 884.89 },
-      { codigo: "MF-506", descripcion: "Escalera Multipropósito 4x6", categoria: "Escaleras", precio: 1001.08 },
-    ];
+  <footer>
+    <p>&copy; 2025 MAC FOR-T Import & Export S.R.L. | Todos los derechos reservados</p>
+  </footer>
 
-    const cantidades = {
-      unidad: 1,
-      paquete: 12,
-      caja: 240
-    };
-
-    function cargarCatalogo(productosFiltrados = productos) {
-      const catalogo = document.getElementById("catalogo");
-      catalogo.innerHTML = "";
-
-      productosFiltrados.forEach(producto => {
-        const card = document.createElement("div");
-        card.className = "producto";
-        card.innerHTML = `
-          <h3>${producto.codigo}</h3>
-          <p>${producto.descripcion}</p>
-          <p class="precio">Precio Base Bs. ${producto.precio.toFixed(2)}</p>
-          <label>Selecciona presentación:</label>
-          <select onchange="actualizarTotal(this)">
-            <option value="unidad">Unidad</option>
-            <option value="paquete">Paquete (x12)</option>
-            <option value="caja">Caja (x240)</option>
-          </select>
-          <input type="number" value="1" min="1" onchange="actualizarTotal(this)">
-          <div class="total">Total: Bs. ${producto.precio.toFixed(2)}</div>
-        `;
-        catalogo.appendChild(card);
-      });
-    }
-
-    function actualizarTotal(elemento) {
-      const contenedor = elemento.closest(".producto");
-      const tipo = contenedor.querySelector("select").value;
-      const cantidad = parseInt(contenedor.querySelector("input").value) || 1;
-      const precioTexto = contenedor.querySelector(".precio").innerText;
-      const precioBase = parseFloat(precioTexto.replace(/[^0-9.]/g, ''));
-      const multiplicador = cantidades[tipo] || 1;
-      const total = (precioBase * cantidad * multiplicador).toFixed(2);
-      contenedor.querySelector(".total").innerText = `Total: Bs. ${total}`;
-    }
-
-    function filtrarProductos() {
-      const categoriaSeleccionada = document.getElementById("filtroCategoria").value;
-      const filtrados = categoriaSeleccionada === "Todos"
-        ? productos
-        : productos.filter(p => p.categoria === categoriaSeleccionada);
-      cargarCatalogo(filtrados);
-    }
-
-    // Inicializa
-    cargarCatalogo();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
