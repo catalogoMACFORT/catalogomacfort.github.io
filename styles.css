@@ -1,8 +1,0 @@
-
-body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; color: #222; }
-header, footer { background-color: #002c66; color: white; text-align: center; padding: 1em; }
-main, section { padding: 1.5em; }
-input, select, button { display: block; margin: 0.5em auto; padding: 0.6em; width: 90%; max-width: 400px; }
-#productos-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 1em; margin-top: 1em; }
-.product-card { border: 1px solid #ccc; padding: 1em; width: 280px; background: white; border-radius: 6px; box-shadow: 0 0 10px #ccc; }
-#logo-container img { max-width: 120px; margin: 1em auto; display: block; }
