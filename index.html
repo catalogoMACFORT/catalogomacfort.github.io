@@ -1,79 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo MACFORT 2025</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f8f9fa; }
-    h1 { color: #003366; }
-    .producto {
-      border-bottom: 1px solid #ccc;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-    }
-    .total {
-      font-weight: bold;
-      color: #003366;
-      margin-top: 10px;
-    }
-    select, input[type="number"] {
-      margin-top: 5px;
-      padding: 4px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo General MAC FOR-T & MAC PRO 2025</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
-  <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
+  <header>
+    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
+    <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
+  </header>
+
+  <div class="filtro">
+    <label for="categoria">Filtrar por categoría:</label>
+    <select id="categoria" onchange="filtrarCategoria(this.value)">
+      <option value="Todos">Todos</option>
+    </select>
+  </div>
+
   <div id="catalogo"></div>
 
-  <script>
-    const productos = [
-      { codigo: "MF-503", descripcion: "Escalera Multipropósito 4x3", precioBs: 650.37 },
-      { codigo: "MF-504", descripcion: "Escalera Multipropósito 4x4", precioBs: 768.71 },
-      { codigo: "MF-505", descripcion: "Escalera Multipropósito 4x5", precioBs: 884.89 }
-    ];
-
-    const cantidades = {
-      unidad: 1,
-      paquete: 12,
-      caja: 240
-    };
-
-    const catalogo = document.getElementById("catalogo");
-    productos.forEach(prod => {
-      const div = document.createElement("div");
-      div.className = "producto";
-      div.innerHTML = `
-        <h2>${prod.codigo}</h2>
-        <p>${prod.descripcion}</p>
-        <p><strong>Precio Base:</strong> Bs. ${prod.precioBs}</p>
-        <label>Selecciona presentación:</label>
-        <select onchange="actualizarTotal(this)">
-          <option value="unidad">Unidad</option>
-          <option value="paquete">Paquete (x12)</option>
-          <option value="caja">Caja (x240)</option>
-        </select>
-        <input type="number" value="1" min="1" onchange="actualizarTotal(this)">
-        <div class="total">Total: Bs. ${prod.precioBs}</div>
-      `;
-      catalogo.appendChild(div);
-    });
-
-    function actualizarTotal(elemento) {
-      const contenedor = elemento.closest(".producto");
-      const tipo = contenedor.querySelector("select").value;
-      const cantidad = parseInt(contenedor.querySelector("input").value) || 1;
-      const precioBaseTexto = contenedor.querySelector("p strong + text")?.textContent || contenedor.querySelector("p:nth-of-type(2)").innerText;
-      const precioBase = parseFloat(precioBaseTexto.replace(/[^0-9.]/g, ''));
-      const multiplicador = cantidades[tipo] || 1;
-      const total = (precioBase * cantidad * multiplicador).toFixed(2);
-      contenedor.querySelector(".total").innerText = `Total: Bs. ${total}`;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
