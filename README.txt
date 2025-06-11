@@ -1,1 +1,1 @@
-Proyecto MACFORT 2025 - Web funcional enlazada con Google Sheets
+Catálogo funcional MACFORT 2025 para despliegue directo en GitHub Pages
