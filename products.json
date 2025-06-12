@@ -1,22 +1,26 @@
 [
   {
     "codigo": "MF-503",
-    "descripcion": "Escalera Multipropósito 4x3",
-    "precioUSD": 39.90
+    "nombre": "Escalera Multipropósito 4x3",
+    "precioUSD": 39.9,
+    "categoria": "Escaleras"
   },
   {
     "codigo": "MF-504",
-    "descripcion": "Escalera Multipropósito 4x4",
-    "precioUSD": 47.15
+    "nombre": "Escalera Multipropósito 4x4",
+    "precioUSD": 47.15,
+    "categoria": "Escaleras"
   },
   {
     "codigo": "MF-505",
-    "descripcion": "Escalera Multipropósito 4x5",
-    "precioUSD": 54.28
+    "nombre": "Escalera Multipropósito 4x5",
+    "precioUSD": 54.28,
+    "categoria": "Escaleras"
   },
   {
     "codigo": "MF-506",
-    "descripcion": "Escalera Multipropósito 4x6",
-    "precioUSD": 61.42
+    "nombre": "Escalera Multipropósito 4x6",
+    "precioUSD": 61.4,
+    "categoria": "Escaleras"
   }
 ]
