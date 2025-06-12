@@ -1,1 +1,0 @@
-Catálogo funcional MACFORT 2025 para despliegue directo en GitHub Pages
