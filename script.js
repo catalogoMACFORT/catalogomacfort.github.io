@@ -1,42 +1,39 @@
-const tipoCambio = 16.3;
-const cantidades = { unidad: 1, paquete: 12, caja: 240 };
-const preciosPorTipo = ["publico", "mayorista", "distribuidor"];
+const productos = [
+  { codigo: "MF-503", descripcion: "Escalera Multipropósito 4x3", precio: 650.37 },
+  { codigo: "MF-504", descripcion: "Escalera Multipropósito 4x4", precio: 768.71 },
+  { codigo: "MF-505", descripcion: "Escalera Multipropósito 4x5", precio: 884.89 },
+  { codigo: "MF-506", descripcion: "Escalera Multipropósito 4x6", precio: 1001.08 }
+];
 
-async function cargarProductos() {
-  const res = await fetch("productos.json");
-  const productos = await res.json();
-  const contenedor = document.getElementById("catalogo");
+const catalogo = document.getElementById("catalogo");
+const totalCarrito = document.getElementById("totalCarrito");
+let total = 0;
 
-  productos.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = "producto";
-    const precioBs = (item.precioUSD * tipoCambio).toFixed(2);
+productos.forEach(prod => {
+  const div = document.createElement("div");
+  div.className = "producto";
+  div.innerHTML = `
+    <h3>${prod.codigo}</h3>
+    <p>${prod.descripcion}</p>
+    <p><strong>Precio Base Bs. ${prod.precio.toFixed(2)}</strong></p>
+    <label>Selecciona presentación:</label>
+    <select class="presentacion">
+      <option value="1">Unidad</option>
+      <option value="12">Paquete (x12)</option>
+      <option value="240">Caja (x240)</option>
+    </select>
+    <input type="number" class="cantidad" min="1" value="1" />
+    <button onclick="agregarCarrito(${prod.precio}, this)">Agregar al carrito</button>
+  `;
+  catalogo.appendChild(div);
+});
 
-    div.innerHTML = `
-      <h3>${item.codigo}</h3>
-      <p>${item.descripcion}</p>
-      <p><strong>Precio Base Bs.</strong> ${precioBs}</p>
-      <label>Selecciona presentación:</label><br/>
-      <select onchange="actualizarTotal(this)">
-        <option value="unidad">Unidad</option>
-        <option value="paquete">Paquete (x12)</option>
-        <option value="caja">Caja (x240)</option>
-      </select>
-      <input type="number" value="1" min="1" onchange="actualizarTotal(this)" />
-      <div class="total">Total: Bs. ${precioBs}</div>
-    `;
-    contenedor.appendChild(div);
-  });
+function agregarCarrito(precioBase, boton) {
+  const contenedor = boton.parentElement;
+  const select = contenedor.querySelector(".presentacion");
+  const cantidad = contenedor.querySelector(".cantidad").value;
+  const factor = parseInt(select.value);
+  const subtotal = precioBase * factor * parseInt(cantidad);
+  total += subtotal;
+  totalCarrito.innerText = `Bs. ${total.toFixed(2)}`;
 }
-
-function actualizarTotal(elemento) {
-  const contenedor = elemento.closest(".producto");
-  const tipo = contenedor.querySelector("select").value;
-  const cantidad = parseInt(contenedor.querySelector("input").value);
-  const precioBase = parseFloat(contenedor.querySelector("strong").nextSibling.textContent.trim());
-  const mult = cantidades[tipo] || 1;
-  const total = (precioBase * cantidad * mult).toFixed(2);
-  contenedor.querySelector(".total").innerText = `Total: Bs. ${total}`;
-}
-
-cargarProductos();
