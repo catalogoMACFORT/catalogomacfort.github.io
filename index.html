@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo MACFORT</title>
+  <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
-  <header>
-    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
-    <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
-  </header>
+  <h1>Catálogo de Productos</h1>
 
-  <div class="filtro">
-    <label>Filtrar por categoría:</label>
-    <select id="filtroCategoria" onchange="filtrarCategoria(this.value)">
-      <option value="Todos">Todos</option>
-    </select>
-  </div>
+  <label for="tipoCliente">Selecciona tipo de cliente:</label>
+  <select id="tipoCliente">
+    <option value="publico">Público</option>
+    <option value="mayorista">Mayorista</option>
+    <option value="distribuidor">Distribuidor</option>
+    <option value="afiliado">Afiliado</option>
+  </select>
 
-  <main id="catalogo"></main>
+  <div id="productos"></div>
 
-  <section id="carrito">
-    <h2>🛒 Carrito de Compras</h2>
-    <p id="total">Total: Bs. 0.00</p>
-  </section>
+  <h2>Carrito</h2>
+  <ul id="carrito"></ul>
 
-  <footer>
-    <p>© 2025 MACFORT. Todos los derechos reservados.</p>
-  </footer>
+  <div id="totalFinal"></div>
 
-  <script src="script.js"></script>
+  <script src="catalogo.js"></script>
 </body>
 </html>
