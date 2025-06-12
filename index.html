@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo MACFORT 2025</title>
-  <link rel="stylesheet" href="estilo.css" />
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <header class="encabezado">
+  <header>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
   </header>
 
-  <section class="filtro">
-    <label for="filtroCategoria">Filtrar por categoría:</label>
-    <select id="filtroCategoria">
+  <div class="filtro">
+    <label>Filtrar por categoría:</label>
+    <select id="filtroCategoria" onchange="filtrarCategoria(this.value)">
       <option value="Todos">Todos</option>
     </select>
-  </section>
+  </div>
 
-  <section id="productos"></section>
+  <main id="catalogo"></main>
 
-  <section class="carrito">
+  <section id="carrito">
     <h2>🛒 Carrito de Compras</h2>
     <p id="total">Total: Bs. 0.00</p>
   </section>
