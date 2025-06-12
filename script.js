@@ -1,75 +1,63 @@
-const productosEjemplo = [
-  { codigo: "MF-503", descripcion: "Escalera Multipropósito 4x3", precio: 650.37, categoria: "Escaleras" },
-  { codigo: "MF-504", descripcion: "Escalera Multipropósito 4x4", precio: 768.71, categoria: "Escaleras" },
-  { codigo: "MF-505", descripcion: "Escalera Multipropósito 4x5", precio: 884.89, categoria: "Escaleras" },
-  { codigo: "MF-506", descripcion: "Escalera Multipropósito 4x6", precio: 1001.08, categoria: "Escaleras" }
-];
+let productos = [];
+let tipoCambio = 16.3;
 
-const carrito = [];
-const cantidades = { unidad: 1, paquete: 12, caja: 240 };
+async function cargarProductos() {
+  const res = await fetch('productos.json');
+  productos = await res.json();
+  mostrarProductos(productos);
+  cargarCategorias(productos);
+}
 
-function cargarCatalogo() {
-  const contenedor = document.getElementById("productos");
-  const filtro = document.getElementById("filtroCategoria");
-
-  // Llenar filtro con categorías únicas
-  const categorias = ["Todos", ...new Set(productosEjemplo.map(p => p.categoria))];
-  categorias.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat;
-    opt.innerText = cat;
-    filtro.appendChild(opt);
+function mostrarProductos(lista) {
+  const catalogo = document.getElementById('catalogo');
+  catalogo.innerHTML = '';
+  lista.forEach(p => {
+    const precioBs = (p.precioUSD * tipoCambio).toFixed(2);
+    const div = document.createElement('div');
+    div.className = 'producto';
+    div.innerHTML = `
+      <h3>${p.codigo}</h3>
+      <p>${p.nombre}</p>
+      <p><strong>Precio Base Bs. ${precioBs}</strong></p>
+      <label>Selecciona presentación:</label>
+      <select onchange="calcularTotal(this, ${precioBs})">
+        <option value="1">Unidad</option>
+        <option value="12">Paquete (x12)</option>
+        <option value="240">Caja (x240)</option>
+      </select>
+      <input type="number" value="1" min="1" onchange="calcularTotal(this.previousElementSibling, ${precioBs})">
+      <p class="total">Total: Bs. ${precioBs}</p>
+    `;
+    catalogo.appendChild(div);
   });
-
-  filtro.addEventListener("change", () => renderizarCatalogo(filtro.value));
-  renderizarCatalogo("Todos");
 }
 
-function renderizarCatalogo(categoria) {
-  const contenedor = document.getElementById("productos");
-  contenedor.innerHTML = "";
-
-  productosEjemplo
-    .filter(p => categoria === "Todos" || p.categoria === categoria)
-    .forEach(producto => {
-      const div = document.createElement("div");
-      div.className = "producto";
-      div.innerHTML = `
-        <h3>${producto.codigo}</h3>
-        <p>${producto.descripcion}</p>
-        <p><strong>Precio Base Bs. ${producto.precio.toFixed(2)}</strong></p>
-        <label>Selecciona presentación:</label>
-        <select class="presentacion">
-          <option value="unidad">Unidad</option>
-          <option value="paquete">Paquete</option>
-          <option value="caja">Caja</option>
-        </select>
-        <input type="number" min="1" value="1" class="cantidad" />
-        <button onclick="agregarAlCarrito('${producto.codigo}')">Añadir</button>
-      `;
-      contenedor.appendChild(div);
-    });
+function calcularTotal(select, precioBase) {
+  const cantidad = parseInt(select.nextElementSibling.value) || 1;
+  const multiplicador = parseInt(select.value);
+  const total = (precioBase * cantidad * multiplicador).toFixed(2);
+  select.parentElement.querySelector('.total').innerText = `Total: Bs. ${total}`;
+  document.getElementById('total').innerText = `Total: Bs. ${total}`;
 }
 
-function agregarAlCarrito(codigo) {
-  const productos = document.querySelectorAll(".producto");
-  productos.forEach(div => {
-    if (div.querySelector("h3").innerText === codigo) {
-      const presentacion = div.querySelector(".presentacion").value;
-      const cantidad = parseInt(div.querySelector(".cantidad").value);
-      const item = productosEjemplo.find(p => p.codigo === codigo);
-      const multiplicador = cantidades[presentacion];
-      const total = item.precio * cantidad * multiplicador;
-
-      carrito.push({ codigo, descripcion: item.descripcion, total });
-    }
+function cargarCategorias(lista) {
+  const select = document.getElementById('filtroCategoria');
+  const categorias = [...new Set(lista.map(p => p.categoria))];
+  categorias.forEach(c => {
+    const option = document.createElement('option');
+    option.value = c;
+    option.textContent = c;
+    select.appendChild(option);
   });
-  actualizarCarrito();
 }
 
-function actualizarCarrito() {
-  const total = carrito.reduce((sum, p) => sum + p.total, 0);
-  document.getElementById("total").innerText = `Total: Bs. ${total.toFixed(2)}`;
+function filtrarCategoria(categoria) {
+  if (categoria === "Todos") {
+    mostrarProductos(productos);
+  } else {
+    const filtrados = productos.filter(p => p.categoria === categoria);
+    mostrarProductos(filtrados);
+  }
 }
 
-window.onload = cargarCatalogo;
+cargarProductos();
