@@ -10,17 +10,21 @@
   <header>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
-    <select id="filtroCategoria">
-      <option value="Todos">Filtrar por categoría: Todos</option>
-    </select>
   </header>
 
-  <main id="catalogo"></main>
+  <div class="filtro">
+    <label>Filtrar por categoría:</label>
+    <select id="filtroCategoria" onchange="filtrarCategoria(this.value)">
+      <option value="Todos">Todos</option>
+    </select>
+  </div>
 
-  <section id="carrito" class="carrito">
-    <h2>🛒 Carrito de Compras</h2>
-    <p>Total: <span id="totalCarrito">Bs. 0.00</span></p>
-  </section>
+  <div id="carrito" class="carrito">
+    🛒 <strong>Carrito de Compras</strong>
+    <p id="totalCarrito">Total: Bs. 0.00</p>
+  </div>
+
+  <main id="catalogo"></main>
 
   <footer>
     <p>© 2025 MACFORT. Todos los derechos reservados.</p>
