@@ -1,44 +1,24 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f9f9f9;
-}
-
-header {
-  background-color: #002a5e;
-  color: white;
   padding: 20px;
-  text-align: center;
+  background-color: #f4f4f4;
 }
-
-main {
-  padding: 10px;
+h1, h2 {
+  color: #333;
 }
-
 .producto {
-  background: white;
-  margin: 10px auto;
-  padding: 15px;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-
-.producto select, .producto input {
-  padding: 5px;
-  margin: 5px 0;
-}
-
-#carrito {
-  background-color: #e0f7fa;
-  padding: 20px;
-  text-align: center;
-}
-
-footer {
-  background-color: #002a5e;
-  color: white;
-  text-align: center;
+  border: 1px solid #ccc;
   padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+button {
+  padding: 5px 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #0056b3;
 }
