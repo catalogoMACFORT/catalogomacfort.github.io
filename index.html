@@ -3,34 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo MACFORT</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Catálogo MACFORT 2025</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
   <header>
-    <h1>Catálogo Oficial MACFORT 2025</h1>
+    <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
+    <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
   </header>
 
-  <main>
-    <div id="loginSection">
-      <label for="tipoCliente">Tipo de cliente:</label>
-      <select id="tipoCliente">
-        <option value="publico">Público general</option>
-        <option value="afiliado">Afiliado</option>
-        <option value="mayorista">Mayorista</option>
-        <option value="vip">Cliente VIP</option>
-      </select>
-      <button onclick="mostrarCatalogo()">Ver catálogo</button>
-    </div>
+  <div class="carrito" id="carrito">
+    🛒 <strong>Carrito de Compras</strong>
+    <p>Total: Bs. <span id="total">0.00</span></p>
+  </div>
 
-    <section id="catalogo" style="display: none;"></section>
-  </main>
+  <div class="filtro">
+    <label for="categoria">Filtrar por categoría: </label>
+    <select id="categoria" onchange="filtrarCategoria()">
+      <option value="Todos">Todos</option>
+      <option value="Escaleras">Escaleras</option>
+      <option value="Herramientas">Herramientas</option>
+      <!-- Agrega más categorías si es necesario -->
+    </select>
+  </div>
+
+  <div id="catalogo"></div>
 
   <footer>
-    <p>© 2025 MACFORT – Todos los derechos reservados</p>
+    <p>© 2025 MACFORT. Todos los derechos reservados.</p>
   </footer>
 
+  <script src="config.json" type="application/json"></script>
   <script src="productos.js"></script>
-  <script src="app.js"></script>
+  <script src="comisionesAfiliados.js"></script>
+  <script src="catalogo.js"></script>
 </body>
 </html>
