@@ -2,28 +2,35 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo MACFORT</title>
-  <link rel="stylesheet" href="estilos.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Catálogo de Productos</h1>
+  <header>
+    <h1>Catálogo Oficial MACFORT 2025</h1>
+  </header>
 
-  <label for="tipoCliente">Selecciona tipo de cliente:</label>
-  <select id="tipoCliente">
-    <option value="publico">Público</option>
-    <option value="mayorista">Mayorista</option>
-    <option value="distribuidor">Distribuidor</option>
-    <option value="afiliado">Afiliado</option>
-  </select>
+  <main>
+    <div id="loginSection">
+      <label for="tipoCliente">Tipo de cliente:</label>
+      <select id="tipoCliente">
+        <option value="publico">Público general</option>
+        <option value="afiliado">Afiliado</option>
+        <option value="mayorista">Mayorista</option>
+        <option value="vip">Cliente VIP</option>
+      </select>
+      <button onclick="mostrarCatalogo()">Ver catálogo</button>
+    </div>
 
-  <div id="productos"></div>
+    <section id="catalogo" style="display: none;"></section>
+  </main>
 
-  <h2>Carrito</h2>
-  <ul id="carrito"></ul>
+  <footer>
+    <p>© 2025 MACFORT – Todos los derechos reservados</p>
+  </footer>
 
-  <div id="totalFinal"></div>
-
-  <script src="catalogo.js"></script>
+  <script src="productos.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
