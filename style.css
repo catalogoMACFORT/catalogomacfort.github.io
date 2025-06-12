@@ -1,24 +1,43 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f4f4f4;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
-h1, h2 {
-  color: #333;
+header {
+  background-color: #202020;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+main {
+  padding: 2rem;
+}
+#catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
 }
 .producto {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
   background: #fff;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
-button {
-  padding: 5px 10px;
-  background: #007bff;
+.producto img {
+  max-width: 100%;
+  height: auto;
+}
+.precio {
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+footer {
+  text-align: center;
+  background-color: #202020;
   color: white;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background: #0056b3;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
