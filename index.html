@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo MACFORT 2025</title>
   <link rel="stylesheet" href="estilo.css">
 </head>
@@ -10,32 +10,25 @@
   <header>
     <h1>Catálogo General MAC FOR-T & MAC PRO 2025</h1>
     <p>Soluciones reales para proyectos exigentes – MAC FOR-T siempre a tu lado</p>
+    <select id="filtroCategoria">
+      <option value="Todos">Filtrar por categoría: Todos</option>
+    </select>
   </header>
 
-  <div class="carrito" id="carrito">
-    🛒 <strong>Carrito de Compras</strong>
-    <p>Total: Bs. <span id="total">0.00</span></p>
-  </div>
+  <main>
+    <section id="productos"></section>
 
-  <div class="filtro">
-    <label for="categoria">Filtrar por categoría: </label>
-    <select id="categoria" onchange="filtrarCategoria()">
-      <option value="Todos">Todos</option>
-      <option value="Escaleras">Escaleras</option>
-      <option value="Herramientas">Herramientas</option>
-      <!-- Agrega más categorías si es necesario -->
-    </select>
-  </div>
-
-  <div id="catalogo"></div>
+    <section id="carrito">
+      <h2>🛒 Carrito de Compras</h2>
+      <ul id="itemsCarrito"></ul>
+      <p id="total">Total: Bs. 0.00</p>
+    </section>
+  </main>
 
   <footer>
     <p>© 2025 MACFORT. Todos los derechos reservados.</p>
   </footer>
 
-  <script src="config.json" type="application/json"></script>
-  <script src="productos.js"></script>
-  <script src="comisionesAfiliados.js"></script>
-  <script src="catalogo.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
