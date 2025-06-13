@@ -52,3 +52,18 @@ function cerrarSesion() {
   localStorage.clear();
   location.href = "login.html";
 }
+
+function finalizarPedido() {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  if (carrito.length === 0) return;
+
+  const historial = JSON.parse(localStorage.getItem("historialPedidos")) || [];
+  const fecha = new Date().toLocaleString();
+  const totalTexto = document.getElementById("total").innerText;
+  const total = totalTexto.replace("Total: ", "").replace(" Bs", "");
+  historial.push({ fecha, total });
+  localStorage.setItem("historialPedidos", JSON.stringify(historial));
+  localStorage.removeItem("carrito");
+  alert("¡Pedido guardado exitosamente!");
+  location.href = "index.html";
+}
