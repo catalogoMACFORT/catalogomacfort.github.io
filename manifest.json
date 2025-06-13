@@ -1,0 +1,13 @@
+{
+  "name": "MAC FOR-T",
+  "short_name": "MACFOR-T",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [{
+    "src": "logo_macfort.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }]
+}
