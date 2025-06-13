@@ -38,3 +38,16 @@ footer {
     border-radius: 5px;
     font-weight: bold;
 }
+
+.login-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+}
+.login-container input, .login-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
