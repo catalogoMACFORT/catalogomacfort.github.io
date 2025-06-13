@@ -1,42 +1,4 @@
 [
-  {
-    "codigo": "MF-503",
-    "nombre": "Escalera Multipropósito 4x3",
-    "marca": "MAC FOR-T",
-    "procedencia": "España",
-    "precio_base_bs": 650.37,
-    "precio_distribuidor": 838.16,
-    "precio_mayorista": 931.3,
-    "precio_final": 1034.76
-  },
-  {
-    "codigo": "MF-504",
-    "nombre": "Escalera Multipropósito 4x4",
-    "marca": "MAC FOR-T",
-    "procedencia": "España",
-    "precio_base_bs": 768.71,
-    "precio_distribuidor": 990.67,
-    "precio_mayorista": 1100.76,
-    "precio_final": 1223.04
-  },
-  {
-    "codigo": "MF-505",
-    "nombre": "Escalera Multipropósito 4x5",
-    "marca": "MAC FOR-T",
-    "procedencia": "España",
-    "precio_base_bs": 884.89,
-    "precio_distribuidor": 1140.41,
-    "precio_mayorista": 1267.13,
-    "precio_final": 1407.9
-  },
-  {
-    "codigo": "MF-506",
-    "nombre": "Escalera Multipropósito 4x6",
-    "marca": "MAC FOR-T",
-    "procedencia": "España",
-    "precio_base_bs": 1001.08,
-    "precio_distribuidor": 1290.14,
-    "precio_mayorista": 1433.5,
-    "precio_final": 1592.76
-  }
+  {"codigo": "MF-001", "nombre": "Escalera Extensible 2x10", "precio": 2200},
+  {"codigo": "MF-002", "nombre": "Escalera Extensible 2x12", "precio": 2500}
 ]
