@@ -1,0 +1,40 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    color: #000;
+}
+header {
+    background: #000;
+    text-align: center;
+}
+.logo {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+main {
+    padding: 20px;
+}
+footer {
+    background: #000;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+.producto {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.whatsapp-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: #25d366;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
