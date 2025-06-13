@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel Administrador</title>
+  <title>Admin | Gestión de Productos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h2>⚙️ Panel del Administrador</h2>
+    <h2>🛠️ Gestión de Productos</h2>
     <button onclick="cerrarSesion()" class="logout-btn">Cerrar Sesión</button>
   </header>
 
   <main>
-    <section>
-      <h3>📦 Productos (simulados)</h3>
-      <ul id="listaProductos"></ul>
-    </section>
-    <section>
-      <h3>👥 Usuarios (simulados)</h3>
-      <ul id="listaUsuarios"></ul>
-    </section>
+    <form id="productoForm">
+      <input type="text" id="codigo" placeholder="Código" required />
+      <input type="text" id="nombre" placeholder="Nombre del producto" required />
+      <input type="number" id="precio" placeholder="Precio (Bs)" required />
+      <button type="submit">Agregar / Actualizar</button>
+    </form>
+
+    <h3>📦 Lista de Productos</h3>
+    <ul id="productosLista"></ul>
   </main>
 
-  <script src="admin.js"></script>
+  <script src="admin-gestion.js"></script>
 </body>
 </html>
