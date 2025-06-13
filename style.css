@@ -65,3 +65,18 @@ footer {
 .carrito-btn:hover {
   background: #444;
 }
+
+.logout-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background: darkred;
+}
