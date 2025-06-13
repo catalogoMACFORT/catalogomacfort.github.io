@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h2>⚙️ Panel del Administrador</h2>
+    <button onclick="cerrarSesion()" class="logout-btn">Cerrar Sesión</button>
+  </header>
+
+  <main>
+    <section>
+      <h3>📦 Productos (simulados)</h3>
+      <ul id="listaProductos"></ul>
+    </section>
+    <section>
+      <h3>👥 Usuarios (simulados)</h3>
+      <ul id="listaUsuarios"></ul>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>
