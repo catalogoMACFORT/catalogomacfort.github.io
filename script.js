@@ -1,1 +1,1 @@
-// Scripts para interacción
+console.log("Catálogo MACFORT cargado correctamente.");
