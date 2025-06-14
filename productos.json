@@ -1,4 +1,1 @@
-[
-  {"codigo": "MF-001", "nombre": "Escalera Extensible 2x10", "precio": 2200},
-  {"codigo": "MF-002", "nombre": "Escalera Extensible 2x12", "precio": 2500}
-]
+[{"codigo": "MF-001", "nombre": "Ejemplo Producto", "unidad": 10, "paquete": 120, "caja": 2400}]
