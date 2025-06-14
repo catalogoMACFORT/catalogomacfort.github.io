@@ -1,0 +1,1 @@
+Este es el paquete base de la Tienda MACFORT 2025 para desplegar en Netlify o GitHub.
