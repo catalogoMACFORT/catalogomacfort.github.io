@@ -1,1 +1,1 @@
-console.log('Tienda MACFORT iniciada.');
+// Scripts para interacción
