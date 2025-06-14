@@ -1,1 +1,1 @@
-// Componente para mostrar productos según tipo de cliente
+// Componente del catálogo dinámico

@@ -1,1 +1,1 @@
-// Panel para agregar productos
+// Panel administrativo

@@ -1,1 +1,1 @@
-// Componente para ingreso de PIN
+// Lógica de ingreso por PIN
