@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: #222;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+main {
+    padding: 2em;
+}
+.producto {
+    background: white;
+    padding: 1em;
+    margin: 1em auto;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+footer {
+    text-align: center;
+    padding: 1em;
+    background: #eee;
+}
