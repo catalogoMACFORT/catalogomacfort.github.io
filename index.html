@@ -1,91 +1,45 @@
-<!DOCTYPE html><html lang="es">
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo MACFORT</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      margin: 0;
-      padding: 2em;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      border-radius: 10px;
-      padding: 2em;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .input-section, .products {
-      margin-top: 2em;
-    }
-    input[type="password"] {
-      padding: 10px;
-      width: 100%;
-      margin-top: 0.5em;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 1em;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #008CBA;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0073a1;
-    }
-    .hidden {
-      display: none;
-    }
-    .product {
-      border: 1px solid #ccc;
-      padding: 1em;
-      margin: 1em 0;
-      border-radius: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Catálogo MACFORT</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+        h1 { color: #333; }
+        .locked, .catalog { display: none; }
+        .product { border: 1px solid #ccc; background: white; margin: 10px; padding: 10px; border-radius: 5px; }
+        .visible { display: block; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Catálogo Virtual MACFORT</h1>
-    <p>Bienvenido. Ingrese su PIN para ver los productos disponibles.</p><div class="input-section">
-  <label for="pin">PIN de acceso:</label>
-  <input type="password" id="pin" placeholder="Ingrese su PIN" />
-  <button onclick="verificarPIN()">Acceder</button>
-</div>
+    <h1>Catálogo MACFORT 2025</h1>
+    <div id="pin-access">
+        <p>Ingrese su código PIN para ver los precios:</p>
+        <input type="text" id="pin" placeholder="Código PIN">
+        <button onclick="checkPin()">Acceder</button>
+        <p id="error" style="color:red;"></p>
+    </div>
 
-<div id="productos" class="products hidden">
-  <h2>Productos Disponibles</h2>
-  <div class="product">
-    <h3>Escalera Extensible de Aluminio 2x10</h3>
-    <p>Precio: 2200 Bs</p>
-  </div>
-  <div class="product">
-    <h3>Escalera Extensible de Aluminio 2x12</h3>
-    <p>Precio: 2500 Bs</p>
-  </div>
-  <div class="product">
-    <h3>Escalera Extensible de Aluminio 2x14</h3>
-    <p>Precio: 2850 Bs</p>
-  </div>
-</div>
+    <div id="catalog" class="catalog">
+        <div class="product"><strong>Escalera Extensible 2x10</strong><br>Precio: 2200 Bs</div>
+        <div class="product"><strong>Escalera Extensible 2x12</strong><br>Precio: 2500 Bs</div>
+        <div class="product"><strong>Escalera Extensible 2x14</strong><br>Precio: 2850 Bs</div>
+    </div>
 
-  </div>  <script>
-    const PINS_VALIDOS = ["2025MAC", "PIN123", "MACFORTVIP"];
-
-    function verificarPIN() {
-      const pinIngresado = document.getElementById("pin").value;
-      if (PINS_VALIDOS.includes(pinIngresado.trim())) {
-        document.getElementById("productos").classList.remove("hidden");
-      } else {
-        alert("PIN incorrecto. Por favor intente nuevamente.");
-      }
-    }
-  </script></body>
+    <script>
+        const validPins = ['2025MAC', 'MACPRO123', 'VIP001'];
+        function checkPin() {
+            const pin = document.getElementById('pin').value.trim();
+            const error = document.getElementById('error');
+            if (validPins.includes(pin)) {
+                document.getElementById('pin-access').style.display = 'none';
+                document.getElementById('catalog').classList.add('visible');
+                error.textContent = '';
+            } else {
+                error.textContent = 'PIN inválido. Intente nuevamente.';
+            }
+        }
+    </script>
+</body>
 </html>
