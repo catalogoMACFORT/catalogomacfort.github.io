@@ -1,1 +1,1 @@
-console.log('App cargada');
+document.getElementById('catalog').innerText = 'Catálogo cargado dinámicamente';
