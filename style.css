@@ -1,23 +1,32 @@
-
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 2em;
-    background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
-h1 {
-    color: #d53e0a;
+header {
+  background-color: #002F6C;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+.slogan {
+  font-style: italic;
+}
+main {
+  padding: 2em;
 }
 button {
-    padding: 1em 2em;
-    font-size: 1em;
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    border-radius: 5px;
+  padding: 1em;
+  background-color: #0074D9;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 footer {
-    margin-top: 2em;
-    font-size: 0.9em;
-    color: #555;
+  text-align: center;
+  padding: 1em;
+  background-color: #002F6C;
+  color: white;
 }

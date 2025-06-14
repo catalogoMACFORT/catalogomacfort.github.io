@@ -1,20 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Catálogo MACFORT</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f9f9f9; }
-        h1 { color: #e44d26; }
-        .producto { margin: 10px 0; font-size: 18px; }
-        button { padding: 10px 20px; font-size: 16px; margin-top: 20px; background: #e44d26; color: white; border: none; cursor: pointer; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo MACFORT & MACPRO</title>
+  <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
-    <h1>Bienvenido al Catálogo MACFORT</h1>
-    <p>Este es un catálogo virtual editable y actualizado con tipo de cambio en tiempo real.</p>
-    <button onclick="window.location.href='catalogo.html'">Ver Catálogo</button>
-    <footer><p>© 2025 MACFORT</p></footer>
+  <header>
+    <h1>Catálogo MACFORT & MACPRO</h1>
+    <p class="slogan">¡Calidad garantizada en cada producto!</p>
+  </header>
+  <main>
+    <section id="catalogo">
+      <h2>Categorías</h2>
+      <p>Seleccione una categoría para explorar el catálogo sin precios.</p>
+    </section>
+    <section id="solicitar-precio">
+      <button onclick="solicitarPin()">Solicitar Código PIN para ver precios</button>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 MACFORT & MACPRO - Todos los derechos reservados</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
