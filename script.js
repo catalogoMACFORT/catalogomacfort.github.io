@@ -1,1 +1,0 @@
-console.log("Catálogo MACFORT cargado correctamente.");
