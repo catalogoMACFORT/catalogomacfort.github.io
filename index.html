@@ -1,19 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MACFORT Catálogo 2025</title>
-    <link rel="stylesheet" href="styles.css"/>
-</head>
-<body>
-    <header>
-        <h1>Bienvenido al Catálogo MACFORT</h1>
-        <button onclick="verCatalogo()">Ver Catálogo</button>
-    </header>
-    <main id="catalogo">
-        <!-- Productos serán cargados aquí -->
-    </main>
-    <script src="script.js"></script>
-</body>
-</html>
+// Inicio del proyecto MACFORT - Aplicación Web Editable
+
+import React from "react"; import { Card, CardContent } from "@/components/ui/card"; import { Input } from "@/components/ui/input"; import { Button } from "@/components/ui/button"; import { useState } from "react";
+
+export default function CatalogoMACFORT() { const [tipoCambio, setTipoCambio] = useState(16.4); const [iva, setIva] = useState(3.1); const [precios, setPrecios] = useState({ base: "", distribuidor: 0, mayorista: 0, afiliado: 0, final: 0, licitacion: 0 });
+
+const calcularPrecios = (baseUSD) => { const base = parseFloat(baseUSD); const dist = base * 1.25; const mayo = dist * 1.1111; const afil = mayo * 1.1; const fin = afil * 1.1; const lic = fin * 1.1; setPrecios({ base, distribuidor: dist, mayorista: mayo, afiliado: afil, final: fin, licitacion: lic }); };
+
+return ( <div className="p-6 max-w-3xl mx-auto"> <h1 className="text-2xl font-bold mb-4">Catálogo MACFORT – Calculadora de Precios</h1> <Card className="mb-6"> <CardContent className="space-y-4"> <div> <label>Tipo de Cambio (Bs/USD):</label> <Input type="number" value={tipoCambio} onChange={(e) => setTipoCambio(e.target.value)} /> </div> <div> <label>IVA (%):</label> <Input type="number" value={iva} onChange={(e) => setIva(e.target.value)} /> </div> <div> <label>Precio Base USD:</label> <Input type="number" onChange={(e) => calcularPrecios(e.target.value)} /> </div> </CardContent> </Card>
+
+<Card>
+    <CardContent className="space-y-2">
+      <p><strong>Distribuidor USD:</strong> ${precios.distribuidor.toFixed(2)}</p>
+      <p><strong>Mayorista USD:</strong> ${precios.mayorista.toFixed(2)}</p>
+      <p><strong>Afiliado USD:</strong> ${precios.afiliado.toFixed(2)}</p>
+      <p><strong>Final USD:</strong> ${precios.final.toFixed(2)}</p>
+      <p><strong>Licitación USD:</strong> ${precios.licitacion.toFixed(2)}</p>
+      <hr />
+      <p><strong>Distribuidor Bs:</strong> Bs {(precios.distribuidor * tipoCambio).toFixed(2)}</p>
+      <p><strong>Mayorista Bs:</strong> Bs {(precios.mayorista * tipoCambio).toFixed(2)}</p>
+      <p><strong>Afiliado Bs:</strong> Bs {(precios.afiliado * tipoCambio).toFixed(2)}</p>
+      <p><strong>Final Bs:</strong> Bs {(precios.final * tipoCambio).toFixed(2)}</p>
+      <p><strong>Licitación Bs:</strong> Bs {(precios.licitacion * tipoCambio).toFixed(2)}</p>
+    </CardContent>
+  </Card>
+</div>
+
+); }
+
