@@ -1,4 +1,2 @@
-
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("MACFORT 2025 App loaded");
-});
+// JavaScript principal de la aplicación
+console.log('App cargada');
