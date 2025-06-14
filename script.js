@@ -1,1 +1,1 @@
-console.log('MacFort App funcionando correctamente.');
+console.log("Catálogo MACFORT cargado correctamente.");
