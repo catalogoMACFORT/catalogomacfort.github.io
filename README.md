@@ -1,2 +1,1 @@
-# MacFort App
-Aplicación de catálogo con panel administrativo.
+# MACFORT Catálogo Virtual
