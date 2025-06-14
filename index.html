@@ -1,55 +1,91 @@
-<!-- Inicio de MACFORT Catálogo Virtual --><!DOCTYPE html><html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MACFORT - Catálogo Virtual</title>
+  <title>Catálogo MACFORT</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-    }
-    header {
-      background-color: #003366;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    h1 {
+      background: #f0f0f0;
       margin: 0;
+      padding: 2em;
     }
-    h2 {
-      color: #003366;
-      margin-left: 1rem;
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 2em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    ul {
-      list-style: disc;
-      padding-left: 2rem;
+    .input-section, .products {
+      margin-top: 2em;
     }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #eee;
-      font-size: 0.9rem;
-      color: #333;
-      position: fixed;
-      bottom: 0;
+    input[type="password"] {
+      padding: 10px;
       width: 100%;
+      margin-top: 0.5em;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 1em;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #008CBA;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0073a1;
+    }
+    .hidden {
+      display: none;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 1em;
+      margin: 1em 0;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Bienvenido a MACFORT</h1>
-    <p>Catálogo Virtual Profesional</p>
-  </header>  <main>
-    <h2>Productos Destacados</h2>
-    <ul>
-      <li>Escalera Extensible 2x10 - 2200 Bs</li>
-      <li>Escalera Extensible 2x12 - 2500 Bs</li>
-    </ul>
-  </main>  <footer>
-    &copy; 2025 MACFORT
-  </footer>
-</body>
+  <div class="container">
+    <h1>Catálogo Virtual MACFORT</h1>
+    <p>Bienvenido. Ingrese su PIN para ver los productos disponibles.</p><div class="input-section">
+  <label for="pin">PIN de acceso:</label>
+  <input type="password" id="pin" placeholder="Ingrese su PIN" />
+  <button onclick="verificarPIN()">Acceder</button>
+</div>
+
+<div id="productos" class="products hidden">
+  <h2>Productos Disponibles</h2>
+  <div class="product">
+    <h3>Escalera Extensible de Aluminio 2x10</h3>
+    <p>Precio: 2200 Bs</p>
+  </div>
+  <div class="product">
+    <h3>Escalera Extensible de Aluminio 2x12</h3>
+    <p>Precio: 2500 Bs</p>
+  </div>
+  <div class="product">
+    <h3>Escalera Extensible de Aluminio 2x14</h3>
+    <p>Precio: 2850 Bs</p>
+  </div>
+</div>
+
+  </div>  <script>
+    const PINS_VALIDOS = ["2025MAC", "PIN123", "MACFORTVIP"];
+
+    function verificarPIN() {
+      const pinIngresado = document.getElementById("pin").value;
+      if (PINS_VALIDOS.includes(pinIngresado.trim())) {
+        document.getElementById("productos").classList.remove("hidden");
+      } else {
+        alert("PIN incorrecto. Por favor intente nuevamente.");
+      }
+    }
+  </script></body>
 </html>
