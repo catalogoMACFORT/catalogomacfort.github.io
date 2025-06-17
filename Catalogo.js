@@ -1,1 +1,0 @@
-// Componente del catálogo dinámico
