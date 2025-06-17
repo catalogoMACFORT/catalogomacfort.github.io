@@ -1,1 +1,0 @@
-// App principal con estructura base
