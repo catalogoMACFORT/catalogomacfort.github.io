@@ -1,0 +1,1 @@
+// Código JS para generar QR automáticamente.
