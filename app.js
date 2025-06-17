@@ -1,1 +1,0 @@
-document.getElementById('catalog').innerText = 'Catálogo cargado dinámicamente';
