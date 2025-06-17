@@ -1,1 +1,40 @@
-<!DOCTYPE html><html><head><title>MACFORT 2025</title></head><body><div id='root'></div></body></html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MACFORT - Acceso</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+    input { padding: 10px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Bienvenido a MACFORT</h1>
+  <p>Ingrese su PIN de acceso:</p>
+  <input type="password" id="pinInput" placeholder="PIN de acceso" />
+  <button onclick="verificarPIN()">Entrar</button>
+
+  <script>
+    function verificarPIN() {
+      const pin = document.getElementById('pinInput').value;
+      switch(pin) {
+        case "mac1d234":
+          window.location.href = "cliente_distribuidor.html"; break;
+        case "MAC12M34":
+          window.location.href = "cliente_mayorista.html"; break;
+        case "mac123f4":
+          window.location.href = "cliente_final.html"; break;
+        case "mac1234l":
+          window.location.href = "cliente_licitacion.html"; break;
+        case "Mac4321":
+          window.location.href = "admin.html"; break;
+        default:
+          alert("PIN incorrecto. Intente de nuevo.");
+      }
+    }
+  </script>
+</body>
+</html>
