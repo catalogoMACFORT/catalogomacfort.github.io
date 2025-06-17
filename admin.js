@@ -1,1 +1,0 @@
-document.getElementById('login').addEventListener('submit', function(e) { e.preventDefault(); alert('PIN validado'); });
