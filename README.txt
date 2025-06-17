@@ -1,1 +1,0 @@
-MACFORT - Paquete completo listo para Netlify/GitHub. Incluye catálogo, panel admin, QR y más.
